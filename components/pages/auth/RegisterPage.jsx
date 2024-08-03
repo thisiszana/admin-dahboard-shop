@@ -7,6 +7,11 @@ import Image from "next/image";
 import CustomInp from "@/components/shared/form/CustomInp";
 import { images } from "@/constant";
 import CustomBtn from "@/components/shared/CustomBtn";
+import useServerAction from "@/hooks/useCallServerAction";
+import { createAdmin } from "@/actions/auth.action";
+import { useRouter } from "next/navigation";
+import { MESSAGES } from "@/utils/message";
+import toast from "react-hot-toast";
 
 export default function RegisterPage() {
   const [form, setForm] = useState({
@@ -16,7 +21,11 @@ export default function RegisterPage() {
     password: "",
   });
 
-  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  const { loading, res } = useServerAction(createAdmin, form, () =>
+    router.push("/login")
+  );
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
@@ -24,6 +33,11 @@ export default function RegisterPage() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!form.firstName || !form.username || !form.password)
+      return toast.error(MESSAGES.fillInp);
+
+    res();
   };
   return (
     <form

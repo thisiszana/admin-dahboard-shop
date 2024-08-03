@@ -20,7 +20,7 @@ export default function CustomBtn({
       type={type || "button"}
       className={classNames ? classNames : bassClassNames}
       disabled={disabled}
-      onClick={onclick || null}
+      onClick={onClick || null}
     >
       {isLoading ? (
         <Loader width={15} height={15} />
