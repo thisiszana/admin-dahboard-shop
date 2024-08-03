@@ -2,10 +2,15 @@
 
 import { useState } from "react";
 
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 
+import toast from "react-hot-toast";
+
 import CustomInp from "@/components/shared/form/CustomInp";
+import useServerAction from "@/hooks/useCallServerAction";
 import CustomBtn from "@/components/shared/CustomBtn";
+import { loginAdmin } from "@/actions/auth.action";
 import { images } from "@/constant";
 
 export default function LoginPage() {
@@ -14,10 +19,24 @@ export default function LoginPage() {
     password: "",
   });
 
-  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
-  const changeHandler = () => {};
-  const handleSubmit = (e) => {};
+  const changeHandler = (e) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+  };
+
+  const { loading, res } = useServerAction(loginAdmin, form, () =>
+    router.push("/dashboard")
+  );
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!form.password || !form.username) return toast.error(MESSAGES.fillInp);
+
+    res();
+  };
   return (
     <form
       onSubmit={handleSubmit}
