@@ -11,7 +11,10 @@ const useServerAction = (asyncAction, input, afterAction) => {
   const res = async () => {
     setLoading(() => true);
 
-    const resultImage = await uploadImage(input.image[0]);
+    let resultImage = { imageUrl: null };
+    if (input.image && input.image[0]) {
+      resultImage = await uploadImage(input.image[0]);
+    }
 
     const res = await asyncAction({
       ...input,
