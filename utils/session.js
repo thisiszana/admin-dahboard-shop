@@ -7,6 +7,7 @@ import { SECRET_KEY } from "./var";
 export const getServerSession = () => {
   try {
     const cookieStore = cookies();
+    console.log(cookieStore)
     const accessToken = cookieStore.get("accessToken").value;
 
     const session = verify(accessToken, SECRET_KEY);

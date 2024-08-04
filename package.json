@@ -13,6 +13,7 @@
     "@headlessui/tailwindcss": "^0.2.1",
     "@nextui-org/react": "^2.4.6",
     "@tailwindcss/forms": "^0.5.7",
+    "antd": "^5.17.3",
     "bcryptjs": "^2.4.3",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.5.1",

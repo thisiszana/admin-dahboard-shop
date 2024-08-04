@@ -12,6 +12,8 @@ import { createAdmin } from "@/actions/auth.action";
 import { useRouter } from "next/navigation";
 import { MESSAGES } from "@/utils/message";
 import toast from "react-hot-toast";
+import UploadedImage from "@/components/shared/form/UploadedImage";
+import RadioList from "@/components/shared/form/RadioList";
 
 export default function RegisterPage() {
   const [form, setForm] = useState({
@@ -19,6 +21,8 @@ export default function RegisterPage() {
     lastName: "",
     username: "",
     password: "",
+    image: "",
+    gender: "",
   });
 
   const router = useRouter();
@@ -94,6 +98,8 @@ export default function RegisterPage() {
               value={form.password}
               onChange={changeHandler}
             />
+            <RadioList form={form} setForm={setForm} />
+            <UploadedImage form={form} setForm={setForm} />
             <CustomBtn
               type="submit"
               title={"Register"}

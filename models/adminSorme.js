@@ -10,8 +10,13 @@ const adminSormeSchema = new Schema(
     phoneNumber: { type: String, default: "" },
     address: { type: String, default: "" },
     country: { type: String, default: "" },
-    avatar: { type: String, default: "" },
+    image: { type: String, default: "" },
     roll: { type: String, default: "USER" },
+    gender: {
+      type: String,
+      enum: ["man", "female", "etc"],
+      default: "",
+    },
   },
   { timestamps: true }
 );
