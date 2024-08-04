@@ -111,7 +111,7 @@ export default function MobileNavbar() {
                     <span className="text-p1">{item.title}</span>
                   </Link>
                 </li>
-                {item.title === "Crypto" && (
+                {item.title === "Dashboard" && (
                   <div className="ml-4 mb-2 mt-5">
                     <h1 className="text-p1 text-gray-400">Management</h1>
                   </div>
