@@ -1,5 +1,6 @@
 "use client";
 
+import { uploadImage } from "@/utils/fun";
 import { useState } from "react";
 
 import toast from "react-hot-toast";
@@ -10,7 +11,12 @@ const useServerAction = (asyncAction, input, afterAction) => {
   const res = async () => {
     setLoading(() => true);
 
-    const res = await asyncAction(input);
+    const resultImage = await uploadImage(input.image[0]);
+
+    const res = await asyncAction({
+      ...input,
+      image: resultImage.imageUrl,
+    });
 
     setLoading(() => false);
 

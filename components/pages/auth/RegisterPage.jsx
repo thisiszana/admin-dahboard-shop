@@ -15,7 +15,7 @@ import toast from "react-hot-toast";
 import UploadedImage from "@/components/shared/form/UploadedImage";
 import RadioList from "@/components/shared/form/RadioList";
 
-export default function RegisterPage() {
+export default function  RegisterPage() {
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
@@ -35,6 +35,7 @@ export default function RegisterPage() {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 

@@ -9,10 +9,11 @@ import { cookies } from "next/headers";
 import { sign } from "jsonwebtoken";
 
 export const createAdmin = async (data) => {
+  console.log(data);
   try {
     await connectDB();
 
-    const { firstName, lastName, username, password } = data;
+    const { firstName, lastName, username, password, image, gender } = data;
 
     if (!firstName || !username || !password)
       return {
@@ -36,6 +37,8 @@ export const createAdmin = async (data) => {
       lastName,
       username,
       password: hashPassword,
+      image,
+      gender,
     });
 
     return {
@@ -44,7 +47,6 @@ export const createAdmin = async (data) => {
       code: STATUS_CODES.created,
     };
   } catch (error) {
-    console.log(error);
     return {
       message: MESSAGES.server,
       status: MESSAGES.failed,
