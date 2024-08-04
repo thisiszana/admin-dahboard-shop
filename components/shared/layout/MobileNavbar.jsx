@@ -5,28 +5,14 @@ import CustomBtn from "../CustomBtn";
 import { useEffect, useState } from "react";
 import { Drawer } from "antd";
 import Link from "next/link";
+import useSession from "@/hooks/session";
 
 export default function MobileNavbar() {
   const [open, setOpen] = useState(false);
-  const [admin, setAdmin] = useState([]);
-  console.log(admin);
+  const { data, isError, isLoading } = useSession();
 
-  useEffect(() => {
-    const fetchSession = async () => {
-      try {
-        const res = await fetch("/api/session");
-        if (!res.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await res.json();
-        setAdmin(data.session);
-      } catch (error) {
-        console.error("Failed to fetch session:", error);
-      }
-    };
+  
 
-    fetchSession();
-  }, []);
 
   const onClose = () => setOpen(false);
 
