@@ -7,6 +7,7 @@ import AdminSorme from "@/models/adminSorme";
 import connectDB from "@/utils/connectDB";
 import { cookies } from "next/headers";
 import { sign } from "jsonwebtoken";
+import { redirect } from "next/navigation";
 
 export const createAdmin = async (data) => {
   console.log(data);
@@ -93,6 +94,7 @@ export const loginAdmin = async (data) => {
         firstName: admin.firstName,
         avatar: admin.avatar,
         roll: admin.roll,
+        image: admin.image,
       },
 
       SECRET_KEY,
@@ -121,4 +123,9 @@ export const loginAdmin = async (data) => {
       code: STATUS_CODES.server,
     };
   }
+};
+
+export const signOut = () => {
+  cookies().delete("accessToken");
+  redirect("/");
 };
