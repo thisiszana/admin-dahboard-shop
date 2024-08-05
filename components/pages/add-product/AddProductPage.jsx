@@ -20,11 +20,25 @@ export default function AddProductPage() {
     keywords: [],
     published: false,
   });
+
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    setForm({
+      ...form,
+      [name]: value,
+    });
+  };
+
   return (
     <>
       <PageHeading title="Create New Product" />
-      <CustomBreadcrumb items={addProductPageBread}/>
-      <ProductForm />
+      <CustomBreadcrumb items={addProductPageBread} />
+      <ProductForm
+        type="create"
+        form={form}
+        setForm={setForm}
+        onChange={onChange}
+      />
     </>
   );
 }

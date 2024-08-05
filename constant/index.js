@@ -218,3 +218,56 @@ export const profileLinks = [
     href: "/add-product",
   },
 ];
+
+export const categories = [
+  {
+    image: icons.camera,
+    title: "Camera",
+    query: "camera",
+  },
+  {
+    image: icons.gaming,
+    title: "Gaming",
+    query: "gaming",
+  },
+  {
+    image: icons.headphone,
+    title: "Headphone",
+    query: "headphone",
+  },
+  {
+    image: icons.lapotp,
+    title: "Laptop",
+    query: "laptop",
+  },
+  {
+    image: icons.mobile,
+    title: "Phone",
+    query: "phone",
+  },
+  {
+    image: icons.printer,
+    title: "Printer",
+    query: "printer",
+  },
+  {
+    image: icons.speaker,
+    title: "Speaker",
+    query: "speaker",
+  },
+  {
+    image: icons.tablet,
+    title: "Tablet",
+    query: "tablet",
+  },
+  {
+    image: icons.television,
+    title: "TV",
+    query: "tv",
+  },
+  {
+    image: icons.watch,
+    title: "Watch",
+    query: "watch",
+  },
+];

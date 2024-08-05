@@ -10,7 +10,7 @@ const useSession = () => {
     queryFn: featchSession,
     retry: 1,
     staleTime: 1 * 60 * 60,
-    cacheTime: 1 * 60 * 60,
+    gcTime: 1 * 60 * 60,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
