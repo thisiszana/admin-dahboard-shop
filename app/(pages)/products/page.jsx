@@ -1,7 +1,7 @@
+import ProductsPage from "@/components/pages/products/ProductsPage";
 
+export const dynamic = "force-dynamic";
 
 export default function Products() {
-  return (
-    <div>Products</div>
-  )
+  return <ProductsPage />;
 }
