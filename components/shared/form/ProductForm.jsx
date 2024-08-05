@@ -17,6 +17,8 @@ export default function ProductForm({ type, form, setForm, onChange }) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
+  
+
   const basicDetails = (
     <div className="flex flex-col gap-box w-full h-full">
       <CustomInp
