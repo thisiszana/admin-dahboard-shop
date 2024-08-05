@@ -42,7 +42,7 @@ export const createProduct = async (data) => {
       published,
     } = data;
 
-    console.log(image)
+    console.log(image);
 
     const newProduct = await ProductAdminSorme.create({
       title,
@@ -72,6 +72,38 @@ export const createProduct = async (data) => {
     console.log(error);
     return {
       message: MESSAGES.server,
+      status: MESSAGES.failed,
+      code: STATUS_CODES.server,
+    };
+  }
+};
+
+export const getProducts = async (searchParams) => {
+  try {
+    await connectDB();
+
+    const session = getServerSession();
+
+    if (!session)
+      return {
+        message: MESSAGES.unAuthorized,
+        status: MESSAGES.failed,
+        code: STATUS_CODES.unAuthorized,
+      };
+
+    if (session.roll === "USER")
+      return {
+        message: MESSAGES.forbidden,
+        status: MESSAGES.failed,
+        code: STATUS_CODES.forbidden,
+      };
+
+      const data = searchParams;
+
+      
+  } catch (error) {
+    return {
+      products: null,
       status: MESSAGES.failed,
       code: STATUS_CODES.server,
     };
