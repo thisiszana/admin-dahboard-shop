@@ -12,12 +12,17 @@ import DetailedBox from "../layout/DetailedBox";
 import UploadedImage from "./UploadedImage";
 import KeywordsSelection from "./KeywordsSelection";
 import { categories } from "@/constant";
+import toast from "react-hot-toast";
+import { MESSAGES } from "@/utils/message";
+import { uploadImage } from "@/utils/fun";
+import { createProduct } from "@/actions/product.action";
+
 
 export default function ProductForm({ type, form, setForm, onChange }) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  
+  console.log(form)
 
   const basicDetails = (
     <div className="flex flex-col gap-box w-full h-full">
@@ -86,6 +91,38 @@ export default function ProductForm({ type, form, setForm, onChange }) {
       />
     </div>
   );
+
+  const create = async () => {
+    if (
+      !form.title ||
+      !form.description ||
+      !form.image ||
+      !form.price ||
+      !form.stock ||
+      !form.category ||
+      !form.brand ||
+      form.keywords.length === 0
+    )
+      return toast.error(MESSAGES.fields);
+
+    setLoading(true);
+
+    const uploadResult = await uploadImage(form.image[0]);
+
+    const res = await createProduct({
+      ...form,
+      image: uploadResult.imageUrl,
+    });
+
+    setLoading(false);
+
+    if (res.code !== 200) {
+      toast.error(res.message);
+    } else {
+      toast.success(res.message);
+      router.push("/products");
+    }
+  };
 
   const keywordSelection = (
     <div className="w-full h-full">

@@ -5,6 +5,7 @@ export const MESSAGES = {
   login: "Logged in successfully!",
   update: "Updated!",
   delete: "Deleted!",
+  productCreated: "Product Created",
   // 400
   badRequest: "Bad Request!",
   unAuthorized: "You are not authorized!",
@@ -13,6 +14,7 @@ export const MESSAGES = {
   noMatchPassword: "Current Password is in-correct!",
   forbidden: "Access Denied!",
   fillInp: "Please enter valid Data!",
+  fields: "Fill all fields!",
   // 500
   failed: "failed!",
   server: "Server Error!",

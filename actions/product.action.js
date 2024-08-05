@@ -1,22 +1,79 @@
-import { Schema, models, model } from "mongoose";
+"use server";
 
-const productSchema = new Schema({
-  title: { type: String, required: true },
-  description: { type: String },
-  image: { type: String, required: true },
-  price: { type: Number, required: true },
-  stock: { type: Number, required: true },
-  discount: { type: Number, default: 0 },
-  category: { type: String, required: true },
-  keywords: { type: [String], default: [] },
-  brand: { type: String, required: true },
-  published: { type: Boolean, default: false },
-  createdAt: {
-    type: Date,
-    default: () => Date.now(),
-    immutabale: true,
-  },
-});
+import AdminSorme from "@/models/adminSorme";
+import { ProductAdminSorme } from "@/models/productAdminSorme";
+import connectDB from "@/utils/connectDB";
+import { MESSAGES, STATUS_CODES } from "@/utils/message";
+import { getServerSession } from "@/utils/session";
+import { revalidatePath } from "next/cache";
 
-export const ProductAdminSorme =
-  models?.ProductAdminSorme || model("ProductAdminSorme", productSchema);
+export const createProduct = async (data) => {
+  try {
+    await connectDB();
+
+    const session = getServerSession();
+
+    if (!session)
+      return {
+        message: MESSAGES.unAuthorized,
+        status: MESSAGES.failed,
+        code: STATUS_CODES.unAuthorized,
+      };
+
+    if (session.roll === "USER")
+      return {
+        message: MESSAGES.forbidden,
+        status: MESSAGES.failed,
+        code: STATUS_CODES.forbidden,
+      };
+
+    const admin = await AdminSorme.findById(session.userId);
+
+    const {
+      title,
+      description,
+      image,
+      price,
+      stock,
+      discount,
+      category,
+      keywords,
+      brand,
+      published,
+    } = data;
+
+    console.log(image)
+
+    const newProduct = await ProductAdminSorme.create({
+      title,
+      description,
+      image,
+      price,
+      stock,
+      discount,
+      category,
+      keywords,
+      brand,
+      published,
+      createdBy: session.userId,
+    });
+
+    admin.productsCreated.push(newProduct._id);
+    await admin.save();
+
+    revalidatePath("/products");
+
+    return {
+      message: MESSAGES.productCreated,
+      status: MESSAGES.success,
+      code: STATUS_CODES.success,
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      message: MESSAGES.server,
+      status: MESSAGES.failed,
+      code: STATUS_CODES.server,
+    };
+  }
+};

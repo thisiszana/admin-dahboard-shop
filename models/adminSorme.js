@@ -12,6 +12,9 @@ const adminSormeSchema = new Schema(
     country: { type: String, default: "" },
     image: { type: String, default: "" },
     roll: { type: String, default: "USER" },
+    productsCreated: [
+      { type: Schema.Types.ObjectId, ref: "ProductAdminSorme" },
+    ],
     gender: {
       type: String,
       enum: ["man", "female", "etc"],
