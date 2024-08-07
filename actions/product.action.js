@@ -8,7 +8,6 @@ import { getServerSession } from "@/utils/session";
 import { revalidatePath } from "next/cache";
 
 export const createProduct = async (data) => {
-  
   try {
     await connectDB();
 
@@ -170,6 +169,33 @@ export const getProducts = async (searchParams) => {
   } catch (error) {
     return {
       products: null,
+      status: MESSAGES.failed,
+      code: STATUS_CODES.server,
+    };
+  }
+};
+
+export const changeProductStatus = async (data) => {
+  try {
+    await connectDB();
+
+    const { id, published } = data;
+
+    const product = await ProductAdminSorme.findById(id);
+
+    product.published = !published;
+    await product.save();
+
+    revalidatePath("products");
+
+    return {
+      message: MESSAGES.update,
+      status: MESSAGES.success,
+      code: STATUS_CODES.success,
+    };
+  } catch (error) {
+    return {
+      message: MESSAGES.server,
       status: MESSAGES.failed,
       code: STATUS_CODES.server,
     };

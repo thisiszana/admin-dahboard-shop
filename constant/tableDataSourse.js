@@ -7,6 +7,7 @@ import { Image } from "@nextui-org/image";
 import moment from "moment";
 import { shorterText } from "@/utils/fun";
 import CustomBadge from "@/components/shared/CustomBadge";
+import ProductActions from "@/components/pages/products/ui/ProductActions";
 
 export const productsDataSourse = (products) => {
   return products.map((product) => ({
@@ -74,6 +75,9 @@ export const productsDataSourse = (products) => {
           {product.createdBy.firstName}
         </p>
       </Link>
+    ),
+    actions: (
+      <ProductActions productId={product._id} published={product.published} />
     ),
   }));
 };
