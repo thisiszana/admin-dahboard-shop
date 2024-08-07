@@ -175,6 +175,29 @@ export const getProducts = async (searchParams) => {
   }
 };
 
+export const getProduct = async (id) => {
+  try {
+    await connectDB();
+
+    const product = await ProductAdminSorme.findById(id)
+      .populate({
+        path: "createdBy",
+        model: AdminSorme,
+        select: "username firstName avatar",
+      })
+      .lean();
+
+    return {
+      product,
+      message: MESSAGES.success,
+      status: MESSAGES.success,
+      code: STATUS_CODES.success,
+    };
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
 export const changeProductStatus = async (data) => {
   try {
     await connectDB();
