@@ -5,10 +5,19 @@ import { productsPageBread } from "@/constant/breadcrumpItems";
 import PageHeading from "@/components/shared/PageHeading";
 import { LayerPlus } from "@/components/icons/Icon";
 import ProductsFilter from "./ui/ProductsFilter";
-import ProductsList from "./ui/ProductsList";
-import ProductsPagination from "./ui/ProductsPagination";
+import { Suspense } from "react";
+import ProductsOverview from "./ui/ProductsOverview";
+import LoaderBar from "@/components/shared/LoaderBar";
 
 export default async function ProductsPage({ searchParams }) {
+  const search = searchParams?.search || "";
+  const page = Number(searchParams?.page) || 1;
+  const category = searchParams?.category || "";
+  const stock = searchParams?.stock || "";
+  const discount = searchParams?.discount || "";
+  const sort = searchParams?.sort || "";
+  const published = searchParams?.published || "";
+
   return (
     <>
       <div className="flex justify-between gap-1">
@@ -24,8 +33,12 @@ export default async function ProductsPage({ searchParams }) {
       <CustomBreadcrumb items={productsPageBread} />
       <div className="cardShadow3 rounded-2xl border overflow-hidden">
         <ProductsFilter />
-        <ProductsList />
-        <ProductsPagination />
+        <Suspense
+          key={search + page + category + stock + discount + sort + published}
+          fallback={<LoaderBar />}
+        >
+          <ProductsOverview searchParams={searchParams} />
+        </Suspense>
       </div>
     </>
   );

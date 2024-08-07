@@ -26,7 +26,7 @@ export default function UploadedImage({ form, setForm }) {
         defaultFileList={[...form.image]}
         listType="picture"
         name="file"
-        accept="image/png, image/jpeg, image/webp"
+        accept="image/png, image/jpeg, image/jpg image/webp"
         onChange={onChange}
         beforeUpload={beforeUpload}
         maxCount={1}
@@ -37,7 +37,7 @@ export default function UploadedImage({ form, setForm }) {
           </div>
           <div>
             <p>Drop or Select files</p>
-            <p>JPG, PNG, maximum 1 MB</p>
+            <p>JPG, PNG, JPEG, WEBP maximum 1 MB</p>
           </div>
         </div>
       </Dragger>

@@ -10,7 +10,7 @@ import { sign } from "jsonwebtoken";
 import { redirect } from "next/navigation";
 
 export const createAdmin = async (data) => {
-  console.log(data);
+
   try {
     await connectDB();
 

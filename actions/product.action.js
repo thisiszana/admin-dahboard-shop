@@ -8,6 +8,7 @@ import { getServerSession } from "@/utils/session";
 import { revalidatePath } from "next/cache";
 
 export const createProduct = async (data) => {
+  
   try {
     await connectDB();
 
@@ -42,8 +43,6 @@ export const createProduct = async (data) => {
       published,
     } = data;
 
-    console.log(image);
-
     const newProduct = await ProductAdminSorme.create({
       title,
       description,
@@ -69,7 +68,7 @@ export const createProduct = async (data) => {
       code: STATUS_CODES.success,
     };
   } catch (error) {
-    console.log(error);
+    error;
     return {
       message: MESSAGES.server,
       status: MESSAGES.failed,
@@ -98,9 +97,76 @@ export const getProducts = async (searchParams) => {
         code: STATUS_CODES.forbidden,
       };
 
-      const data = searchParams;
+    const { page, search, stock, discount, sort, category, published } =
+      searchParams;
 
-      
+    let query = {};
+    let filters = {};
+
+    if (search) {
+      query = { $text: { $search: search } };
+    }
+
+    if (stock) {
+      stock == "in-stock" ? (filters.stock = { $gt: 0 }) : (filters.stock = 0);
+    }
+
+    if (discount) {
+      discount == "has-discount"
+        ? (filters.discount = { $gt: 0 })
+        : (filters.discount = 0);
+    }
+
+    if (category) {
+      filters.category = category;
+    }
+
+    if (published) {
+      published === "true"
+        ? (filters.published = true)
+        : (filters.published = false);
+    }
+
+    const pageNumber = page || 1;
+    const perPage = 5;
+    const totalProductsWithoutFilter = await ProductAdminSorme.countDocuments();
+    const totalProducts = await ProductAdminSorme.countDocuments({
+      ...query,
+      ...filters,
+    });
+    const totalPages = Math.ceil(totalProducts / perPage);
+
+    const products = await ProductAdminSorme.find({ ...filters, ...query })
+      .sort({
+        ...(sort == 1
+          ? { createdAt: -1 }
+          : sort == 2
+          ? { createdAt: 1 }
+          : sort == 3
+          ? { price: -1 }
+          : sort == 4
+          ? { price: 1 }
+          : sort == 5
+          ? { orders: -1 }
+          : {}),
+      })
+      .skip((pageNumber - 1) * perPage)
+      .limit(perPage)
+      .populate({
+        path: "createdBy",
+        model: AdminSorme,
+        select: "username firstName image",
+      })
+      .lean();
+
+    return {
+      products,
+      totalPages,
+      totalProducts,
+      totalProductsWithoutFilter,
+      status: "success",
+      code: 200,
+    };
   } catch (error) {
     return {
       products: null,
