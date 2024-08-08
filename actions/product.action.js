@@ -305,3 +305,60 @@ export const editProduct = async (data) => {
     };
   }
 };
+
+export const deleteProduct = async (data) => {
+  try {
+    await connectDB();
+
+    const session = getServerSession();
+
+    if (!session)
+      return {
+        message: MESSAGES.unAuthorized,
+        status: MESSAGES.failed,
+        code: STATUS_CODES.unAuthorized,
+      };
+
+    if (session.roll === "USER")
+      return {
+        message: MESSAGES.forbidden,
+        status: MESSAGES.failed,
+        code: STATUS_CODES.forbidden,
+      };
+
+    const product = await ProductAdminSorme.findById(data.id);
+
+    if (!product)
+      return {
+        message: MESSAGES.notFound,
+        status: MESSAGES.failed,
+        code: STATUS_CODES.not_found,
+      };
+
+    console.log(session.userId, product.createdBy.toString());
+
+    if (session.userId !== product.createdBy.toString())
+      return {
+        message: MESSAGES.forbidden,
+        status: MESSAGES.failed,
+        code: STATUS_CODES.not_found,
+      };
+
+    await ProductAdminSorme.findByIdAndDelete(data.id);
+
+    revalidatePath("/products");
+
+    return {
+      message: MESSAGES.delete,
+      status: MESSAGES.success,
+      code: STATUS_CODES.success,
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      message: MESSAGES.server,
+      status: MESSAGES.failed,
+      code: STATUS_CODES.server,
+    };
+  }
+};

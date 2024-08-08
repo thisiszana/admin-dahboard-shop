@@ -1,6 +1,6 @@
 "use client";
 
-import { changeProductStatus } from "@/actions/product.action";
+import { changeProductStatus, deleteProduct } from "@/actions/product.action";
 import {
   Draft,
   Edit,
@@ -23,7 +23,7 @@ export default function ProductActions({ productId, published }) {
     setOpen(newOpen);
   };
 
-  const { loading, res } = useServerAction(
+  const { loading: mainLoading, res } = useServerAction(
     changeProductStatus,
     {
       id: productId,
@@ -31,15 +31,22 @@ export default function ProductActions({ productId, published }) {
     },
     () => onOpenChange()
   );
+  const { loading: deleteLoading, res: deletingProduct } = useServerAction(
+    deleteProduct,
+    {
+      id: productId,
+    },
+    () => onOpenChange()
+  );
 
-  const content = loading ? (
+  const content = mainLoading ? (
     <div className="w-[150px] h-[160px] flex items-center justify-center">
       <Loader />
     </div>
   ) : (
     <div className="popContainer min-w-[150px]">
       <CustomBtn
-        disabled={published || loading}
+        disabled={published || mainLoading || deleteLoading}
         title="Publish"
         icon={<Publish />}
         classNames={`popButton ${
@@ -48,7 +55,7 @@ export default function ProductActions({ productId, published }) {
         onClick={res}
       />
       <CustomBtn
-        disabled={!published || loading}
+        disabled={!published || mainLoading || deleteLoading}
         title="Draft"
         icon={<Draft />}
         classNames={`popButton ${
@@ -69,14 +76,23 @@ export default function ProductActions({ productId, published }) {
         Edit
       </Link>
       <hr />
-      <Link href="/">
-        <div
-          className={`flex w-full items-center hoverable py-1 px-2 gap-4 rounded-btn hover:bg-lightRose text-darkRose`}
-        >
-          <Trash />
-          <p>Delete</p>
-        </div>
-      </Link>
+      <CustomBtn
+        onClick={() => deletingProduct()}
+        disabled={deleteLoading || mainLoading}
+        classNames="flex justify-center w-full"
+        title={
+          deleteLoading ? (
+            <Loader width={15} height={15} color={"red"} className="py-1" />
+          ) : (
+            <div
+              className={`flex w-full items-center hoverable py-1 px-2 gap-4 rounded-btn hover:bg-lightRose text-darkRose`}
+            >
+              <Trash />
+              <p>Delete</p>
+            </div>
+          )
+        }
+      />
     </div>
   );
   return (
