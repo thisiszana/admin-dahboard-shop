@@ -6,6 +6,7 @@ export const MESSAGES = {
   update: "Updated!",
   delete: "Deleted!",
   productCreated: "Product Created",
+  productEdited: "Product Edited",
   // 400
   badRequest: "Bad Request!",
   unAuthorized: "You are not authorized!",
@@ -15,6 +16,7 @@ export const MESSAGES = {
   forbidden: "Access Denied!",
   fillInp: "Please enter valid Data!",
   fields: "Fill all fields!",
+  image: "Please put image!",
   // 500
   failed: "failed!",
   server: "Server Error!",

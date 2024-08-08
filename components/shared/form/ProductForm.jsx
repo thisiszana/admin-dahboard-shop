@@ -15,10 +15,9 @@ import { categories } from "@/constant";
 import toast from "react-hot-toast";
 import { MESSAGES } from "@/utils/message";
 import { uploadImage } from "@/utils/fun";
-import { createProduct } from "@/actions/product.action";
+import { createProduct, editProduct } from "@/actions/product.action";
 
-
-export default function ProductForm({ type, form, setForm, onChange }) {
+export default function ProductForm({ type, form, setForm, onChange, id }) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -90,7 +89,7 @@ export default function ProductForm({ type, form, setForm, onChange }) {
     </div>
   );
 
-  const create = async () => {
+  const handleSubmit = async () => {
     if (
       !form.title ||
       !form.description ||
@@ -100,25 +99,34 @@ export default function ProductForm({ type, form, setForm, onChange }) {
       !form.category ||
       !form.brand ||
       form.keywords.length === 0
-    )
+    ) {
       return toast.error(MESSAGES.fields);
+    }
 
     setLoading(true);
 
     const uploadResult = await uploadImage(form.image[0]);
 
-    const res = await createProduct({
+    const payload = {
       ...form,
       image: uploadResult.imageUrl,
-    });
+    };
+
+    let res;
+
+    if (type === "CREATE") {
+      res = await createProduct(payload);
+    } else {
+      res = await editProduct({ ...payload, id });
+    }
 
     setLoading(false);
 
-    if (res.code !== 200) {
-      toast.error(res.message);
-    } else {
+    if (res.code === 200 || res.code === 201 || res.code === 202) {
       toast.success(res.message);
       router.push("/products");
+    } else {
+      toast.error(res.message);
     }
   };
 
@@ -163,8 +171,8 @@ export default function ProductForm({ type, form, setForm, onChange }) {
           type="button"
           disabled={loading}
           isLoading={loading}
-          onClick={() => create()}
-          title={type === "create" ? "Create Product" : "Edit Product"}
+          onClick={handleSubmit}
+          title={type === "CREATE" ? "Create Product" : "Edit Product"}
         />
       </div>
     </div>

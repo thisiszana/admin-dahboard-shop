@@ -1,7 +1,14 @@
 "use client";
 
 import { changeProductStatus } from "@/actions/product.action";
-import { Draft, Edit, EyeOpen, MenuDots, Publish } from "@/components/icons/Icon";
+import {
+  Draft,
+  Edit,
+  EyeOpen,
+  MenuDots,
+  Publish,
+  Trash,
+} from "@/components/icons/Icon";
 import CustomBtn from "@/components/shared/CustomBtn";
 import Loader from "@/components/shared/Loader";
 import useServerAction from "@/hooks/useCallServerAction";
@@ -60,6 +67,15 @@ export default function ProductActions({ productId, published }) {
       >
         <Edit />
         Edit
+      </Link>
+      <hr />
+      <Link href="/">
+        <div
+          className={`flex w-full items-center hoverable py-1 px-2 gap-4 rounded-btn hover:bg-lightRose text-darkRose`}
+        >
+          <Trash />
+          <p>Delete</p>
+        </div>
       </Link>
     </div>
   );

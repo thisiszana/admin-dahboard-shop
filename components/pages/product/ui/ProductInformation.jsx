@@ -11,7 +11,7 @@ import CustomBadge from "@/components/shared/CustomBadge";
 import { Clock } from "@/components/icons/Icon";
 
 export default function ProductInformation({ info }) {
-  console.log(info.image)
+
   return (
     <div className="flex flex-col xl:flex-row gap-box">
       <div className="w-full xl:w-[50%] h-fit flex justify-center box border">

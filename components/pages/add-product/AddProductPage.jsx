@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import CustomBreadcrumb from "@/components/shared/CustomBreadcrumb";
 import { addProductPageBread } from "@/constant/breadcrumpItems";
 import ProductForm from "@/components/shared/form/ProductForm";
 import PageHeading from "@/components/shared/PageHeading";
 
-export default function AddProductPage() {
+export default function AddProductPage({ data }) {
   const [form, setForm] = useState({
     title: "",
     description: "",
@@ -21,6 +21,10 @@ export default function AddProductPage() {
     published: false,
   });
 
+  useEffect(() => {
+    if (data) setForm(data );
+  }, []);
+
   const onChange = (e) => {
     const { name, value } = e.target;
     setForm({
@@ -31,13 +35,14 @@ export default function AddProductPage() {
 
   return (
     <>
-      <PageHeading title="Create New Product" />
+      <PageHeading title={`${data ? "Edit" : "Add New"} Product`} />
       <CustomBreadcrumb items={addProductPageBread} />
       <ProductForm
-        type="create"
+        type={`${data ? "EDIT" : "CREATE"}`}
         form={form}
         setForm={setForm}
         onChange={onChange}
+        id={data._id}
       />
     </>
   );

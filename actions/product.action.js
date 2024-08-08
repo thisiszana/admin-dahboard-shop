@@ -67,7 +67,6 @@ export const createProduct = async (data) => {
       code: STATUS_CODES.success,
     };
   } catch (error) {
-    error;
     return {
       message: MESSAGES.server,
       status: MESSAGES.failed,
@@ -215,6 +214,88 @@ export const changeProductStatus = async (data) => {
       message: MESSAGES.update,
       status: MESSAGES.success,
       code: STATUS_CODES.success,
+    };
+  } catch (error) {
+    return {
+      message: MESSAGES.server,
+      status: MESSAGES.failed,
+      code: STATUS_CODES.server,
+    };
+  }
+};
+
+export const editProduct = async (data) => {
+  try {
+    await connectDB();
+
+    const {
+      title,
+      description,
+      image,
+      price,
+      stock,
+      discount,
+      category,
+      keywords,
+      brand,
+      published,
+      id,
+    } = data;
+
+    if (
+      !title ||
+      !description ||
+      !price ||
+      !stock ||
+      !category ||
+      !brand ||
+      keywords.length === 0 ||
+      !id
+    )
+      return {
+        message: MESSAGES.fields,
+        status: MESSAGES.updated,
+        code: STATUS_CODES.updated,
+      };
+
+    const product = await ProductAdminSorme.findById(id);
+
+    let newImage;
+
+    if (!product.image && !image) {
+      return {
+        message: MESSAGES.image,
+        status: MESSAGES.failed,
+        code: STATUS_CODES.badRequest,
+      };
+    } else if (image) {
+      newImage = image;
+    } else {
+      newImage = product.image;
+    }
+
+    const newKeywords = [...product.keywords, ...keywords];
+    console.log(newKeywords);
+
+    product.title = title;
+    product.description = description;
+    product.image = newImage;
+    product.price = price;
+    product.stock = stock;
+    product.discount = discount;
+    product.category = category;
+    product.keywords = newKeywords;
+    product.brand = brand;
+    product.published = published;
+
+    await product.save();
+
+    revalidatePath("/products");
+
+    return {
+      message: MESSAGES.productEdited,
+      status: MESSAGES.success,
+      code: STATUS_CODES.updated,
     };
   } catch (error) {
     return {
