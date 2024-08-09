@@ -10,6 +10,27 @@ import { sign } from "jsonwebtoken";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
+export const getAdmins = async () => {
+  try {
+    await connectDB();
+
+    const admin = await AdminSorme.find().select("-password").lean();
+
+    return {
+      admin,
+      message: MESSAGES.success,
+      status: MESSAGES.success,
+      code: STATUS_CODES.success,
+    };
+  } catch (error) {
+    return {
+      message: MESSAGES.server,
+      status: MESSAGES.failed,
+      code: STATUS_CODES.server,
+    };
+  }
+};
+
 export const updateProfile = async (data) => {
   try {
     await connectDB();
