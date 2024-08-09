@@ -183,7 +183,7 @@ export const getProduct = async (id) => {
       .populate({
         path: "createdBy",
         model: AdminSorme,
-        select: "username firstName avatar",
+        select: "username firstName image",
       })
       .lean();
 

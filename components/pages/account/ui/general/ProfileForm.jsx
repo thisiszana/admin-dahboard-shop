@@ -37,7 +37,6 @@ export default function ProfileForm(props) {
     confirmNewPassword: "",
   });
 
-  
   useEffect(() => {
     setForm({
       username: username || "",
@@ -50,7 +49,7 @@ export default function ProfileForm(props) {
     });
   }, []);
   const queryClient = useQueryClient();
-  
+
   const onChange = (e) => {
     const { name, value } = e.target;
     setForm({
@@ -66,11 +65,14 @@ export default function ProfileForm(props) {
       return toast.error("Username cannot be empty!");
 
     if (
-      form.currentPassword.length !== 0 ||
-      form.newPassword.length !== 0 ||
-      form.confirmNewPassword.length !== 0
+      (form.currentPassword && form.currentPassword.length !== 0) ||
+      (form.newPassword && form.newPassword.length !== 0) ||
+      (form.confirmNewPassword && form.confirmNewPassword.length !== 0)
     ) {
       if (
+        !form.currentPassword ||
+        !form.newPassword ||
+        !form.confirmNewPassword ||
         form.currentPassword.length === 0 ||
         form.newPassword.length === 0 ||
         form.confirmNewPassword.length === 0
@@ -87,7 +89,7 @@ export default function ProfileForm(props) {
 
     let newForm = { ...form };
 
-    if (form.image.length !== 0) {
+    if (form.image && form.image?.length !== 0) {
       const uploadResult = await uploadImage(form.image[0]);
       newForm = {
         ...form,

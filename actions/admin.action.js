@@ -77,7 +77,7 @@ export const updateProfile = async (data) => {
       }
     }
 
-    if (image.length !== 0) admin.image = image;
+    if (image && image.length !== 0) admin.image = image;
 
     admin.firstName = firstName;
     admin.lastName = lastName;
@@ -92,7 +92,7 @@ export const updateProfile = async (data) => {
         username,
         userId: admin._id,
         firstName: firstName,
-        avatar: image.length !== 0 ? image : admin.image,
+        image: image && image.length !== 0 ? image : admin.image,
         roll: admin.roll,
       },
 

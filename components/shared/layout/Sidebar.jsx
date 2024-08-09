@@ -14,7 +14,7 @@ import Loader from "../Loader";
 export default function Sidebar() {
   const pathname = usePathname();
   const { data, isError, isLoading } = useSession();
-
+  
   return (
     <aside className="w-[250px] border-r border-gray-200 max-md:hidden fixed z-30 left-0 h-screen bg-white overflow-y-auto sidebarScroll">
       <div className="flex items-center justify-between fixed bg-white p-4 top-0 w-[250px] z-20 border-r border-gray-200">

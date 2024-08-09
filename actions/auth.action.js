@@ -92,7 +92,6 @@ export const loginAdmin = async (data) => {
         username,
         userId: admin._id,
         firstName: admin.firstName,
-        avatar: admin.avatar,
         roll: admin.roll,
         image: admin.image,
       },
