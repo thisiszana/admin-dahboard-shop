@@ -23,11 +23,19 @@ export default function ProductActions({ productId, published }) {
     setOpen(newOpen);
   };
 
-  const { loading: mainLoading, res } = useServerAction(
+  const { loading: publishLoading, res: publish } = useServerAction(
     changeProductStatus,
     {
       id: productId,
-      published,
+      action: "publish",
+    },
+    () => onOpenChange()
+  );
+  const { loading: draftLoading, res: draft } = useServerAction(
+    changeProductStatus,
+    {
+      id: productId,
+      action: "draft",
     },
     () => onOpenChange()
   );
@@ -39,29 +47,41 @@ export default function ProductActions({ productId, published }) {
     () => onOpenChange()
   );
 
-  const content = mainLoading ? (
-    <div className="w-[150px] h-[160px] flex items-center justify-center">
-      <Loader />
-    </div>
-  ) : (
+  const content = (
     <div className="popContainer min-w-[150px]">
       <CustomBtn
-        disabled={published || mainLoading || deleteLoading}
-        title="Publish"
-        icon={<Publish />}
-        classNames={`popButton ${
+        disabled={published || deleteLoading}
+        onClick={publish}
+        classNames={`popButton flex justify-center w-full ${
           published ? "text-darkGreen bg-lightGreen" : "hoverable"
         }`}
-        onClick={res}
+        title={
+          publishLoading ? (
+            <Loader width={15} height={15} className="py-1" />
+          ) : (
+            <div className={`flex w-full items-center  gap-4 rounded-btn `}>
+              <Publish />
+              <p>Publish</p>
+            </div>
+          )
+        }
       />
       <CustomBtn
-        disabled={!published || mainLoading || deleteLoading}
-        title="Draft"
-        icon={<Draft />}
-        classNames={`popButton ${
+        disabled={!published || deleteLoading}
+        onClick={draft}
+        classNames={`popButton flex justify-center w-full ${
           !published ? "text-darkOrange bg-lightOrange" : "hoverable"
         }`}
-        onClick={res}
+        title={
+          draftLoading ? (
+            <Loader width={15} height={15} className="py-1" />
+          ) : (
+            <div className={`flex w-full items-center gap-4`}>
+              <Draft />
+              <p>Draft</p>
+            </div>
+          )
+        }
       />
       <hr />
       <Link href={`/products/${productId}`} className="popButton hoverable">
@@ -78,7 +98,7 @@ export default function ProductActions({ productId, published }) {
       <hr />
       <CustomBtn
         onClick={() => deletingProduct()}
-        disabled={deleteLoading || mainLoading}
+        disabled={deleteLoading || draftLoading || publishLoading}
         classNames="flex justify-center w-full"
         title={
           deleteLoading ? (

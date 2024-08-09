@@ -201,12 +201,17 @@ export const changeProductStatus = async (data) => {
   try {
     await connectDB();
 
-    const { id, published } = data;
+    const { id, action } = data;
 
     const product = await ProductAdminSorme.findById(id);
 
-    product.published = !published;
-    await product.save();
+    if (action === "publish") {
+      product.published = true;
+      await product.save();
+    } else if (action === "draft") {
+      product.published = false;
+      await product.save();
+    }
 
     revalidatePath("products");
 
