@@ -17,6 +17,7 @@ export const MESSAGES = {
   fillInp: "Please enter valid Data!",
   fields: "Fill all fields!",
   image: "Please put image!",
+  updateProfile: "Profile Updated",
   // 500
   failed: "failed!",
   server: "Server Error!",

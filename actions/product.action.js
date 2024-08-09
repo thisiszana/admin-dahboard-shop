@@ -10,6 +10,7 @@ import { revalidatePath } from "next/cache";
 export const createProduct = async (data) => {
   try {
     await connectDB();
+    console.log(data)
 
     const session = getServerSession();
 
@@ -259,7 +260,7 @@ export const editProduct = async (data) => {
     )
       return {
         message: MESSAGES.fields,
-        status: MESSAGES.updated,
+        status: MESSAGES.update,
         code: STATUS_CODES.updated,
       };
 

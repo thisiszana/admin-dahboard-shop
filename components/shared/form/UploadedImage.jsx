@@ -5,7 +5,7 @@ import { Upload } from "antd";
 
 const Dragger = Upload;
 
-export default function UploadedImage({ form, setForm }) {
+export default function UploadedImage({ form, setForm, image }) {
   const beforeUpload = (e) => {
     const { size } = e;
 
@@ -23,7 +23,13 @@ export default function UploadedImage({ form, setForm }) {
     <div>
       <Dragger
         className="flex flex-col justify-center items-center border-dashed bg-gray-50 border-2 rounded-xl"
-        defaultFileList={[...form.image]}
+        defaultFileList={
+          Array.isArray(form.image) && form.image.length > 0
+            ? form.image
+            : Array.isArray(image)
+            ? image
+            : []
+        }
         listType="picture"
         name="file"
         accept="image/png, image/jpeg, image/jpg image/webp"
