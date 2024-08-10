@@ -10,7 +10,7 @@ import { revalidatePath } from "next/cache";
 export const createProduct = async (data) => {
   try {
     await connectDB();
-    console.log(data)
+    console.log(data);
 
     const session = getServerSession();
 
@@ -204,6 +204,8 @@ export const changeProductStatus = async (data) => {
 
     const { id, action } = data;
 
+    const session = getServerSession();
+
     const product = await ProductAdminSorme.findById(id);
 
     if (action === "publish") {
@@ -213,6 +215,13 @@ export const changeProductStatus = async (data) => {
       product.published = false;
       await product.save();
     }
+
+    if (session.userId !== product.createdBy.toString())
+      return {
+        message: MESSAGES.forbidden,
+        status: MESSAGES.failed,
+        code: STATUS_CODES.forbidden,
+      };
 
     revalidatePath("products");
 
@@ -264,7 +273,23 @@ export const editProduct = async (data) => {
         code: STATUS_CODES.updated,
       };
 
+    const session = getServerSession();
+
+    if (session.roll === "USER")
+      return {
+        message: MESSAGES.forbidden,
+        status: MESSAGES.failed,
+        code: STATUS_CODES.forbidden,
+      };
+
     const product = await ProductAdminSorme.findById(id);
+
+    if (session.userId !== product.createdBy.toString())
+      return {
+        message: MESSAGES.forbidden,
+        status: MESSAGES.failed,
+        code: STATUS_CODES.forbidden,
+      };
 
     let newImage;
 
@@ -339,6 +364,14 @@ export const deleteProduct = async (data) => {
         message: MESSAGES.notFound,
         status: MESSAGES.failed,
         code: STATUS_CODES.not_found,
+      };
+    console.log(session.userId, product.createdBy);
+
+    if (session.userId !== product.createdBy)
+      return {
+        message: MESSAGES.forbidden,
+        status: MESSAGES.failed,
+        code: STATUS_CODES.forbidden,
       };
 
     console.log(session.userId, product.createdBy.toString());
