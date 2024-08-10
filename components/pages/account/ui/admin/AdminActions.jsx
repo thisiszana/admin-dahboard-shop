@@ -1,13 +1,15 @@
 "use client";
 
-import { changeRole, deleteAdmin } from "@/actions/admin.action";
+import { useState } from "react";
+import Link from "next/link";
+
+import { Popover } from "antd";
+
 import { CircleCheck, EyeOpen, MenuDots, Trash } from "@/components/icons/Icon";
+import { changeRole, deleteAdmin } from "@/actions/admin.action";
+import useServerAction from "@/hooks/useCallServerAction";
 import CustomBtn from "@/components/shared/CustomBtn";
 import Loader from "@/components/shared/Loader";
-import useServerAction from "@/hooks/useCallServerAction";
-import { Popover } from "antd";
-import Link from "next/link";
-import { useState } from "react";
 
 export default function AdminActions({ roll, userId, showMore }) {
   const [open, setOpen] = useState(false);
