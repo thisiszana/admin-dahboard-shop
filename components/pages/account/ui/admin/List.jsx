@@ -1,5 +1,5 @@
-import { adminsColumns } from "@/constant/tableColumns";
 import { adminsDataSourse } from "@/constant/tableDataSourse";
+import { adminsColumns } from "@/constant/tableColumns";
 import { getServerSession } from "@/utils/session";
 import { Table } from "antd";
 

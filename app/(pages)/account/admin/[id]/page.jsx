@@ -1,4 +1,4 @@
-import AdminDetailsPage from "@/components/pages/account/admin/AdminDetailsPage";
+import AdminDetailsPage from "@/components/pages/account/admin-id/AdminDetailsPage";
 
 export default function page({ params }) {
   return <AdminDetailsPage id={params} />;

@@ -72,6 +72,7 @@ export const updateProfile = async (data) => {
       firstName,
       lastName,
       email,
+      gender,
       phoneNumber,
       address,
       country,
@@ -132,6 +133,7 @@ export const updateProfile = async (data) => {
 
     admin.firstName = firstName;
     admin.lastName = lastName;
+    admin.gender = gender;
     admin.email = email;
     admin.phoneNumber = phoneNumber;
     admin.address = address;

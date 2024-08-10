@@ -4,6 +4,7 @@ import { updateProfile } from "@/actions/admin.action";
 import { LockClosed } from "@/components/icons/Icon";
 import CustomBtn from "@/components/shared/CustomBtn";
 import CustomInp from "@/components/shared/form/CustomInp";
+import RadioList from "@/components/shared/form/RadioList";
 import UploadedImage from "@/components/shared/form/UploadedImage";
 import { uploadImage } from "@/utils/fun";
 import { useQueryClient } from "@tanstack/react-query";
@@ -14,6 +15,7 @@ export default function ProfileForm(props) {
   const {
     username,
     firstName,
+    gender,
     lastName,
     image,
     email,
@@ -27,6 +29,7 @@ export default function ProfileForm(props) {
     username: username || "",
     firstName: "",
     lastName: "",
+    gender: "",
     email: "",
     phoneNumber: "",
     address: "",
@@ -46,6 +49,7 @@ export default function ProfileForm(props) {
       phoneNumber: phoneNumber || "",
       address: address || "",
       country: country || "",
+      gender: gender || "",
     });
   }, []);
   const queryClient = useQueryClient();
@@ -168,6 +172,7 @@ export default function ProfileForm(props) {
           wrapperClassName="w-full flex flex-1 min-w-[280px] h-fit"
         />
       </div>
+      <RadioList form={form} setForm={setForm} />
       <UploadedImage form={form} setForm={setForm} image={image} />
       <div className="flex items-center gap-4">
         <LockClosed wrapperClassName="cardShadow rounded-lg p-3" />

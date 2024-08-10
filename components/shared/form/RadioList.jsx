@@ -10,7 +10,7 @@ export default function RadioList({ form, setForm }) {
     <div className="flex flex-col gap-1 border-dashed bg-gray-50 border-2 rounded-xl p-3">
       <p className="font-light text-[12px] mb-[5px]">Gender</p>
       <div className="flex items-center">
-        <div className="flex items-center justify-evenly bg-white shadow text-black ml-[30px] w-[80px] px-[5px] py-[3px] rounded-[5px] pointer-events-auto">
+        <div className="flex items-center justify-evenly bg-white shadow text-black ml-[30px] w-[80px] px-[5px] py-[3px] rounded-[5px] pointer-events-auto cardShadow">
           <label htmlFor="female">Female</label>
           <input
             type="radio"
@@ -21,7 +21,7 @@ export default function RadioList({ form, setForm }) {
             onChange={changeHandler}
           />
         </div>
-        <div className="flex items-center justify-evenly bg-white shadow text-black ml-[30px] w-[80px] px-[5px] py-[3px] rounded-[5px] pointer-events-auto">
+        <div className="flex items-center justify-evenly bg-white shadow text-black ml-[30px] w-[80px] px-[5px] py-[3px] rounded-[5px] pointer-events-auto cardShadow">
           <label htmlFor="man">Man</label>
           <input
             type="radio"
@@ -32,7 +32,7 @@ export default function RadioList({ form, setForm }) {
             onChange={changeHandler}
           />
         </div>
-        <div className="flex items-center justify-evenly bg-white shadow text-black ml-[30px] w-[80px] px-[5px] py-[3px] rounded-[5px] pointer-events-auto">
+        <div className="flex items-center justify-evenly bg-white shadow text-black ml-[30px] w-[80px] px-[5px] py-[3px] rounded-[5px] pointer-events-auto cardShadow">
           <label htmlFor="etc">etc</label>
           <input
             type="radio"
