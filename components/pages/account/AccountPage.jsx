@@ -6,9 +6,10 @@ import CustomBreadcrumb from "@/components/shared/CustomBreadcrumb";
 import { accountPageBread } from "@/constant/breadcrumpItems";
 import PageHeading from "@/components/shared/PageHeading";
 import LoaderBar from "@/components/shared/LoaderBar";
-import { Settings, Users } from "@/components/icons/Icon";
+import { AddUser, Settings, Users } from "@/components/icons/Icon";
 import GeneralTab from "./ui/general/GeneralTab";
 import AdminTab from "./ui/admin/AdminTab";
+import CreateUser from "./ui/create/CreateUser";
 
 export default function AccountPage() {
   const items = [
@@ -23,7 +24,7 @@ export default function AccountPage() {
       children: (
         <Suspense fallback={<LoaderBar />}>
           <GeneralTab />
-         </Suspense>
+        </Suspense>
       ),
     },
     {
@@ -37,8 +38,18 @@ export default function AccountPage() {
       children: (
         <Suspense fallback={<LoaderBar />}>
           <AdminTab />
-         </Suspense>
+        </Suspense>
       ),
+    },
+    {
+      key: "create",
+      label: (
+        <div className="flex items-center gap-2">
+          <AddUser size={15} />
+          <p className="text-h4">Create User</p>
+        </div>
+      ),
+      children: <CreateUser />,
     },
   ];
   return (

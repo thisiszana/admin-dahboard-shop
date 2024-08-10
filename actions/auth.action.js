@@ -8,9 +8,9 @@ import connectDB from "@/utils/connectDB";
 import { cookies } from "next/headers";
 import { sign } from "jsonwebtoken";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 export const createAdmin = async (data) => {
-
   try {
     await connectDB();
 
@@ -39,8 +39,10 @@ export const createAdmin = async (data) => {
       username,
       password: hashPassword,
       image,
-      gender,
+      gender: gender || "etc",
     });
+
+    revalidatePath("/account");
 
     return {
       message: MESSAGES.register,
@@ -48,6 +50,7 @@ export const createAdmin = async (data) => {
       code: STATUS_CODES.created,
     };
   } catch (error) {
+    console.log(error)
     return {
       message: MESSAGES.server,
       status: MESSAGES.failed,

@@ -1,14 +1,10 @@
-"use client";
-
-import NextImage from "next/image";
-
 import { images } from "@/constant";
 
-import { Image } from "@nextui-org/react";
 import { Home } from "@/components/icons/Icon";
 import Navbar from "@/components/shared/layout/Navbar";
 import Sidebar from "@/components/shared/layout/Sidebar";
 import BackLink from "@/components/shared/BackLink";
+import Image from "next/image";
 
 const NotFound = () => {
   return (
@@ -18,7 +14,6 @@ const NotFound = () => {
       <div className="pages_spaces">
         <div className="flex flex-col items-center">
           <Image
-            as={NextImage}
             src={images.notFound}
             width={300}
             height={300}

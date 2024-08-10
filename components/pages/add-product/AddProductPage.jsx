@@ -42,7 +42,7 @@ export default function AddProductPage({ data }) {
         form={form}
         setForm={setForm}
         onChange={onChange}
-        id={data._id}
+        id={data?._id}
       />
     </>
   );
