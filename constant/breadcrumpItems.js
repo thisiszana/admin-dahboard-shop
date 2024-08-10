@@ -1,4 +1,3 @@
-// next
 import Link from "next/link";
 
 export const ordersPageBread = [

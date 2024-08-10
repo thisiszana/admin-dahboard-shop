@@ -11,6 +11,7 @@ import { MESSAGES, STATUS_CODES } from "@/utils/message";
 import { getServerSession } from "@/utils/session";
 import AdminSorme from "@/models/adminSorme";
 import connectDB from "@/utils/connectDB";
+import { ProductAdminSorme } from "@/models/productAdminSorme";
 
 export const getAdmins = async () => {
   try {
@@ -20,6 +21,33 @@ export const getAdmins = async () => {
 
     return {
       admins,
+      message: MESSAGES.success,
+      status: MESSAGES.success,
+      code: STATUS_CODES.success,
+    };
+  } catch (error) {
+    return {
+      message: MESSAGES.server,
+      status: MESSAGES.failed,
+      code: STATUS_CODES.server,
+    };
+  }
+};
+
+export const getAdmin = async (id) => {
+  try {
+    await connectDB();
+
+    const admin = await AdminSorme.findById(id)
+      .populate({
+        path: "productsCreated",
+        model: ProductAdminSorme,
+      })
+      .select("-password")
+      .lean();
+
+    return {
+      admin,
       message: MESSAGES.success,
       status: MESSAGES.success,
       code: STATUS_CODES.success,

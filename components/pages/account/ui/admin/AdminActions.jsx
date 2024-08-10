@@ -116,7 +116,7 @@ export default function AdminActions({ roll, userId, showMore }) {
   );
   return (
     <div className="flex items-center gap-1">
-      <Link href={`/account/admins/${userId}`} className="iconButton">
+      <Link href={`/account/admin/${userId}`} className="iconButton">
         <EyeOpen />
       </Link>
       {showMore && (
