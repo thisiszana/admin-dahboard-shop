@@ -1,23 +1,25 @@
 "use server";
 
-import AdminSorme from "@/models/adminSorme";
-import connectDB from "@/utils/connectDB";
+import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
+
+import { sign } from "jsonwebtoken";
+
+import { SECRET_KEY, SESSION_EXPIRATION } from "@/utils/var";
 import { hashedPassword, verifyPassword } from "@/utils/fun";
 import { MESSAGES, STATUS_CODES } from "@/utils/message";
 import { getServerSession } from "@/utils/session";
-import { SECRET_KEY, SESSION_EXPIRATION } from "@/utils/var";
-import { sign } from "jsonwebtoken";
-import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
+import AdminSorme from "@/models/adminSorme";
+import connectDB from "@/utils/connectDB";
 
 export const getAdmins = async () => {
   try {
     await connectDB();
 
-    const admin = await AdminSorme.find().select("-password").lean();
+    const admins = await AdminSorme.find().select("-password").lean();
 
     return {
-      admin,
+      admins,
       message: MESSAGES.success,
       status: MESSAGES.success,
       code: STATUS_CODES.success,
@@ -179,6 +181,75 @@ export const getCurrentAdmin = async () => {
       code: STATUS_CODES.success,
     };
   } catch (error) {
+    return {
+      message: MESSAGES.server,
+      status: MESSAGES.failed,
+      code: STATUS_CODES.server,
+    };
+  }
+};
+
+export const changeRole = async (data) => {
+  try {
+    await connectDB();
+
+    const { role, userId } = data;
+
+    const admin = await AdminSorme.findById(userId);
+
+    if (!admin)
+      return {
+        message: MESSAGES.unAuthorized,
+        status: MESSAGES.failed,
+        code: STATUS_CODES.unAuthorized,
+      };
+
+    admin.roll = role;
+    admin.save();
+
+    revalidatePath("/account");
+
+    return {
+      message: MESSAGES.updateRole,
+      status: MESSAGES.success,
+      code: STATUS_CODES.success,
+    };
+  } catch (error) {
+    return {
+      message: MESSAGES.server,
+      status: MESSAGES.failed,
+      code: STATUS_CODES.server,
+    };
+  }
+};
+
+export const deleteAdmin = async (id) => {
+  try {
+    await connectDB();
+
+    const { userId } = id;
+
+    const session = getServerSession();
+
+    if (!session || session.roll !== "OWNER") {
+      return {
+        message: MESSAGES.unAuthorized,
+        status: MESSAGES.failed,
+        code: STATUS_CODES.unAuthorized,
+      };
+    }
+
+    await AdminSorme.findByIdAndDelete(userId);
+
+    revalidatePath("/account");
+
+    return {
+      message: MESSAGES.deleteAdmin,
+      status: MESSAGES.success,
+      code: STATUS_CODES.success,
+    };
+  } catch (error) {
+    console.log(error);
     return {
       message: MESSAGES.server,
       status: MESSAGES.failed,

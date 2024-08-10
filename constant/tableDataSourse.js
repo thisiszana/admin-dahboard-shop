@@ -8,6 +8,7 @@ import moment from "moment";
 import { shorterText } from "@/utils/fun";
 import CustomBadge from "@/components/shared/CustomBadge";
 import ProductActions from "@/components/pages/products/ui/ProductActions";
+import AdminActions from "@/components/pages/account/ui/admin/AdminActions";
 
 export const productsDataSourse = (products) => {
   return products.map((product) => ({
@@ -81,3 +82,57 @@ export const productsDataSourse = (products) => {
     ),
   }));
 };
+
+export const adminsDataSourse = (admins, currentUserID, currentUserRoll) =>
+  admins.map((admin) => ({
+    key: admin._id,
+    avatar: (
+      <div className="w-12 h-12">
+        <Image
+          as={NextImage}
+          src={admin.image || images.admin}
+          width={100}
+          height={100}
+          style={{ width: "500px", height: "auto" }}
+          alt="admin"
+          radius="full"
+        />
+      </div>
+    ),
+    name: (
+      <div>
+        <p className="text-p1 font-medium">
+          {admin.username}{" "}
+          {currentUserID === admin._id && (
+            <span className="bg-lightBlue text-darkBlue rounded-btn py-.5 px-2 text-p2 font-medium border border-darkBlue">
+              YOU
+            </span>
+          )}
+        </p>
+        {admin.firstName && <p className="text-p2 text-darkGray">{admin.firstName}</p>}
+      </div>
+    ),
+    phone: admin.phoneNumber || "_",
+    roll: (
+      <CustomBadge
+        condition={admin.roll === "OWNER" || admin.roll === "ADMIN"}
+        title={admin.roll}
+      />
+    ),
+    date: (
+      <div>
+        <p>{moment(admin.createdAt).format("L")}</p>
+        <p className="text-p2 text-darkGray">
+          {moment(admin.createdAt).format("LT")}
+        </p>
+      </div>
+    ),
+    action: (
+      <AdminActions
+        roll={admin.roll}
+        userId={admin._id}
+        showMore={currentUserRoll === "OWNER" && admin.roll !== "OWNER"}
+      />
+    ),
+  }));
+

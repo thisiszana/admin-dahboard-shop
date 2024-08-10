@@ -18,6 +18,8 @@ export const MESSAGES = {
   fields: "Fill all fields!",
   image: "Please put image!",
   updateProfile: "Profile Updated",
+  updateRole: "User Role Updated!",
+  deleteAdmin: "User Deleted!",
   // 500
   failed: "failed!",
   server: "Server Error!",
