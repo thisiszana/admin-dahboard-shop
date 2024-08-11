@@ -1,6 +1,8 @@
 "use client";
 
-import { createTask } from "@/actions/task.action";
+import { useEffect, useState } from "react";
+
+import { createTask, editTask } from "@/actions/task.action";
 import { CircleClose } from "@/components/icons/Icon";
 import CustomBtn from "@/components/shared/CustomBtn";
 import CustomInp from "@/components/shared/form/CustomInp";
@@ -9,10 +11,11 @@ import CustomTextarea from "@/components/shared/form/CustomTextarea";
 import Loader from "@/components/shared/Loader";
 import { images } from "@/constant";
 import useServerAction from "@/hooks/useCallServerAction";
+import { featchTask } from "@/services/queries";
 import { MESSAGES } from "@/utils/message";
+import { useQuery } from "@tanstack/react-query";
 import { Avatar, DatePicker, Modal } from "antd";
 import moment from "moment";
-import { useState } from "react";
 import toast from "react-hot-toast";
 
 export default function TaskForm({
@@ -29,8 +32,38 @@ export default function TaskForm({
     dueDate: "",
   });
 
+  const { data, isFetching, isError, refetch } = useQuery({
+    queryKey: ["task", taskID],
+    queryFn: featchTask,
+    staleTime: 0,
+    cacheTime: 0,
+    enabled: !!taskID,
+  });
+  useEffect(() => {
+    if (data?.task) {
+      setForm({
+        title: data.task.title,
+        description: data.task.description,
+        status: data.task.status,
+        dueDate: data.task.dueDate,
+      });
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (!!taskID && isModalOpen) {
+      refetch();
+    }
+  }, [taskID, isModalOpen, refetch]);
+
   const onCancel = () => {
     closeModal();
+    setForm({
+      title: taskID ? data?.task?.title : "",
+      description: taskID ? data?.task?.description : "",
+      status: taskID ? data?.task?.status : "Todo",
+      dueDate: taskID ? data?.task?.dueDate : "",
+    });
   };
 
   const onChange = (e) => {
@@ -78,6 +111,12 @@ export default function TaskForm({
     () => onCancel()
   );
 
+  const { loading: editLoading, res: editRes } = useServerAction(
+    editTask,
+    { ...form, id: taskID },
+    () => onCancel()
+  );
+
   const onSubmit = (e) => {
     e.preventDefault();
 
@@ -88,7 +127,7 @@ export default function TaskForm({
     )
       toast.error(MESSAGES.fields);
 
-    createRes();
+    type === "create" ? createRes() : editRes();
   };
 
   return (
@@ -100,63 +139,93 @@ export default function TaskForm({
       open={isModalOpen}
       footer={false}
     >
-      <form className="space-y-5" onSubmit={onSubmit}>
-        <CustomInp
-          type="text"
-          label="Title"
-          name="title"
-          onChange={onChange}
-          value={form.title}
-        />
-        <CustomTextarea
-          label="Description"
-          name="description"
-          onChange={onChange}
-          value={form.description}
-        />
-        <CustomSelect
-          label="Status"
-          name="status"
-          onChange={onChange}
-          value={form.status}
-          options={["Todo", "Progress", "Done"]}
-        />
-        <div className="space-y-2">
-          <p className="font-medium text-p1">Created by</p>
-          <div className="flex items-center gap-3">
-            <Avatar src={session?.image || images.admin} />
-            <p className="font-medium text-p1">{session?.username}</p>
-          </div>
+      {isFetching ? (
+        <div className="flex items-center justify-center min-h-[300px]">
+          <Loader />
         </div>
-        <hr />
-        <div className="space-y-2">
-          <p className="font-medium text-p1">Due Date</p>
-          <div className="flex items-center gap-4">
-            <DatePicker onChange={dateChange} />
-            {form.dueDate && (
-              <p className="capitalize">{moment(form.dueDate).fromNow()}</p>
-            )}
-          </div>
+      ) : isError ? (
+        <div className="flex items-center justify-center min-h-[300px]">
+          <p className="text-p1 font-medium text-red-500">
+            Something went wrong ...
+          </p>
         </div>
-        <hr />
-        <div className="flex justify-end gap-3">
-          <CustomBtn
-            type="button"
-            title="Cancel"
-            classNames="border p-btn rounded-btn hoverable"
-            disabled={createLoading}
-            onClick={onCancel}
+      ) : (
+        <form className="space-y-5" onSubmit={onSubmit}>
+          <CustomInp
+            type="text"
+            label="Title"
+            name="title"
+            onChange={onChange}
+            value={form.title}
           />
-          <CustomBtn
-            type="submit"
-            title={createLoading ? <Loader height={15} width={15} /> : "Submit"}
-            disabled={createLoading}
-            classNames={`font-medium p-btn rounded-btn ${
-              createLoading ? "bg-lightGray" : "bg-dark1 text-white"
-            }`}
+          <CustomTextarea
+            label="Description"
+            name="description"
+            onChange={onChange}
+            value={form.description}
           />
-        </div>
-      </form>
+          <CustomSelect
+            label="Status"
+            name="status"
+            onChange={onChange}
+            value={form.status}
+            options={["Todo", "Progress", "Done"]}
+          />
+          <div className="space-y-2">
+            <p className="font-medium text-p1">Created by</p>
+            <div className="flex items-center gap-3">
+              <Avatar
+                src={
+                  data
+                    ? data?.task?.createdBy?.image || images.admin
+                    : session?.image || images.admin
+                }
+              />
+              <p className="font-medium text-p1">
+                {data ? data?.task?.createdBy?.username : session?.username}
+              </p>
+            </div>
+          </div>
+          <hr />
+          <div className="space-y-2">
+            <p className="font-medium text-p1">Due Date</p>
+            <div className="flex items-center gap-4">
+              <DatePicker onChange={dateChange} />
+              {form.dueDate && (
+                <p className="capitalize">{moment(form.dueDate).fromNow()}</p>
+              )}
+            </div>
+          </div>
+          <hr />
+          <div className="flex justify-end gap-3">
+            <CustomBtn
+              type="button"
+              title="Cancel"
+              classNames="border p-btn rounded-btn hoverable"
+              disabled={createLoading || editLoading}
+              onClick={onCancel}
+            />
+            <CustomBtn
+              type="submit"
+              title={
+                createLoading || editLoading ? (
+                  <Loader height={15} width={15} />
+                ) : type === "create" ? (
+                  "Submit"
+                ) : (
+                  "Edit"
+                )
+              }
+              disabled={createLoading || editLoading}
+              classNames={`font-medium p-btn rounded-btn ${
+                createLoading || editLoading
+                  ? "bg-lightGray"
+                  : "bg-dark1 text-white"
+              }`}
+            />
+          </div>
+        </form>
+      )}
     </Modal>
   );
 }

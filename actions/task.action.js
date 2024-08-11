@@ -182,3 +182,56 @@ export const deleteTask = async (data) => {
     };
   }
 };
+
+export const editTask = async (data) => {
+  try {
+    await connectDB();
+
+    const { title, description, status, dueDate, id } = data;
+
+    const session = getServerSession();
+
+    if (!session)
+      return {
+        message: MESSAGES.unAuthorized,
+        status: MESSAGES.failed,
+        code: STATUS_CODES.unAuthorized,
+      };
+
+    if (session.roll === "USER")
+      return {
+        message: MESSAGES.forbidden,
+        status: MESSAGES.failed,
+        code: STATUS_CODES.forbidden,
+      };
+
+    const task = await TaskSorme.findById(id);
+
+    if (session.userId !== task.createdBy.toString())
+      return {
+        message: MESSAGES.forbidden,
+        status: MESSAGES.failed,
+        code: STATUS_CODES.forbidden,
+      };
+
+    task.title = title;
+    task.description = description;
+    task.status = status;
+    task.dueDate = dueDate;
+    await task.save();
+
+    revalidatePath("/tasks");
+
+    return {
+      message: MESSAGES.taskEdited,
+      status: MESSAGES.success,
+      code: STATUS_CODES.success,
+    };
+  } catch (error) {
+    return {
+      message: MESSAGES.server,
+      status: MESSAGES.failed,
+      code: STATUS_CODES.server,
+    };
+  }
+};

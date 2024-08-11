@@ -1,6 +1,7 @@
 import AdminSorme from "@/models/adminSorme";
-import TaskSorme from "@/models/task";
+import { NextResponse } from "next/server";
 import connectDB from "@/utils/connectDB";
+import TaskSorme from "@/models/task";
 
 export async function GET(req, { params: { id } }) {
   try {

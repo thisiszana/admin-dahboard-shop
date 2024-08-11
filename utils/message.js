@@ -8,6 +8,7 @@ export const MESSAGES = {
   taskCreated: "Task Created",
   taskUpdated: "Task Updated",
   taskDeleted: "Task Deleted",
+  taskEdited: "Task Edited",
   invalidId: "Invalid Id",
   productEdited: "Product Edited",
   badRequest: "Bad Request!",

@@ -9,6 +9,7 @@ import { images } from "@/constant";
 
 import { Clock } from "@/components/icons/Icon";
 import TaskActions from "./TaskActions";
+import EditTask from "./EditTask";
 
 const StatusBox = ({ status, taskCount, tasks }) => {
   const session = getServerSession();
@@ -36,10 +37,10 @@ const StatusBox = ({ status, taskCount, tasks }) => {
                   </p>
                 </div>
                 <div className="flex items-center gap-1">
-                  {/* <EditTask
+                  <EditTask
                     id={JSON.parse(JSON.stringify(task._id))}
                     session={JSON.parse(JSON.stringify(session))}
-                  /> */}
+                  />
                   <TaskActions
                     id={JSON.parse(JSON.stringify(task._id))}
                     currentStatus={JSON.parse(JSON.stringify(task.status))}
