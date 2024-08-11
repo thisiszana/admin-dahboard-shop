@@ -1,7 +1,5 @@
-
+import TasksPage from "@/components/pages/tasks/TasksPage";
 
 export default function Tasks() {
-  return (
-    <div>Tasks</div>
-  )
+  return <TasksPage />;
 }

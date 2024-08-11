@@ -365,7 +365,6 @@ export const deleteProduct = async (data) => {
         status: MESSAGES.failed,
         code: STATUS_CODES.not_found,
       };
-    console.log(session.userId, product.createdBy);
 
     if (session.userId !== product.createdBy)
       return {
@@ -373,8 +372,6 @@ export const deleteProduct = async (data) => {
         status: MESSAGES.failed,
         code: STATUS_CODES.forbidden,
       };
-
-    console.log(session.userId, product.createdBy.toString());
 
     if (session.userId !== product.createdBy.toString())
       return {
