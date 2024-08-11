@@ -5,7 +5,6 @@ import TaskSorme from "@/models/task";
 import connectDB from "@/utils/connectDB";
 import { MESSAGES, STATUS_CODES } from "@/utils/message";
 import { getServerSession } from "@/utils/session";
-import mongoose from "mongoose";
 import { revalidatePath } from "next/cache";
 
 export const createTask = async (data) => {
