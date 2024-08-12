@@ -187,3 +187,21 @@ export const deleteBlog = async (data) => {
     };
   }
 };
+
+export const getBlog = async (id) => {
+  try {
+    await connectDB();
+
+    const blog = await BlogSorme.findById(id)
+    .lean();
+
+    return {
+      blog,
+      message: MESSAGES.success,
+      status: MESSAGES.success,
+      code: STATUS_CODES.success,
+    };
+  } catch (error) {
+    throw new Error(error);
+  }
+};
