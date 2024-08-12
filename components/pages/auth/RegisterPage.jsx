@@ -14,8 +14,9 @@ import { MESSAGES } from "@/utils/message";
 import toast from "react-hot-toast";
 import UploadedImage from "@/components/shared/form/UploadedImage";
 import RadioList from "@/components/shared/form/RadioList";
+import Link from "next/link";
 
-export default function  RegisterPage() {
+export default function RegisterPage() {
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
@@ -47,7 +48,7 @@ export default function  RegisterPage() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex items-center gap-[150px] bg-white"
+      className="flex items-center gap-[150px] bg-white max-xl:p-[30px]"
     >
       <div className="max-xl:hidden bg-gray-100 h-screen w-1/2 flex items-center justify-center">
         <Image
@@ -110,6 +111,15 @@ export default function  RegisterPage() {
                 loading ? "bg-gray-100 text-black" : "bg-black text-white"
               } w-full h-[50px] font-bold flex items-center justify-center rounded-btn`}
             />
+            <div className="flex items-center justify-center gap-4 text-sm font-bold">
+              <p>Already have account?</p>
+              <Link
+                href="/login"
+                className="bg-gray-100 border text-center py-1 px-4 rounded-lg"
+              >
+                Login
+              </Link>
+            </div>
           </div>
         </div>
       </div>

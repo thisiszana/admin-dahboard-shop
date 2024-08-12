@@ -1,5 +1,6 @@
 "use client";
 
+import { useQueryClient } from "@tanstack/react-query";
 import { uploadImage } from "@/utils/fun";
 import { useState } from "react";
 
@@ -7,6 +8,8 @@ import toast from "react-hot-toast";
 
 const useServerAction = (asyncAction, input, afterAction) => {
   const [loading, setLoading] = useState(false);
+
+  const queryClient = useQueryClient();
 
   const res = async () => {
     setLoading(() => true);
@@ -24,6 +27,9 @@ const useServerAction = (asyncAction, input, afterAction) => {
     setLoading(() => false);
 
     if (res.code === 200 || res.code === 201 || res.code === 202) {
+      if (asyncAction === changeRole) {
+        queryClient.invalidateQueries("session");
+      }
       toast.success(res.message);
       afterAction && afterAction();
     } else {

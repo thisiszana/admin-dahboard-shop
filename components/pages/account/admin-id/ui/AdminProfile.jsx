@@ -1,13 +1,14 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
-
-import { getAdmin } from "@/actions/admin.action";
-import CustomBadge from "@/components/shared/CustomBadge";
-import DetailedBox from "@/components/shared/layout/DetailedBox";
-import { images } from "@/constant";
-import { Date, Flag, Location, Mail, Mobile } from "@/components/icons/Icon";
-import moment from "moment";
 import Link from "next/link";
+
+import moment from "moment";
+
+import { Date, Flag, Location, Mail, Mobile } from "@/components/icons/Icon";
+import DetailedBox from "@/components/shared/layout/DetailedBox";
+import CustomBadge from "@/components/shared/CustomBadge";
+import { getAdmin } from "@/actions/admin.action";
+import { images } from "@/constant";
 
 export default async function AdminProfile({ id: { id } }) {
   const { admin } = await getAdmin(id);
@@ -25,6 +26,7 @@ export default async function AdminProfile({ id: { id } }) {
     roll,
     createdAt,
     productsCreated,
+    blogsCreated,
   } = admin;
 
   const overviewContent = (
@@ -78,7 +80,7 @@ export default async function AdminProfile({ id: { id } }) {
       <p>No Products Created!</p>
     ) : (
       <div className="flex flex-wrap gap-6 box border w-full">
-        {productsCreated.map((product) => (
+        {productsCreated?.map((product) => (
           <Link
             key={product._id}
             href={`/products/${product._id}`}
@@ -92,7 +94,23 @@ export default async function AdminProfile({ id: { id } }) {
       </div>
     );
 
-  const blogsContent = <p>No Blogs Created!</p>;
+  const blogsContent =
+    blogsCreated && blogsCreated.length === 0 ? (
+      <p>No Blogs Created!</p>
+    ) : (
+      <div className="flex flex-wrap gap-6 box border w-full">
+        {blogsCreated?.map((blog) => (
+          <Link
+            key={blog._id}
+            href={`/blogs/${blog._id}`}
+            className="flex flex-col gap-2 items-center flex-1 min-w-[200px] box border hoverable"
+          >
+            <Image width={100} height={100} src={blog.image} alt="blog" />
+            <p className="text-p2">{moment(blog.createdAt).format("L")}</p>
+          </Link>
+        ))}
+      </div>
+    );
 
   return (
     <div className="space-y-5">

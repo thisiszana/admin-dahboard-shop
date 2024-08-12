@@ -55,7 +55,7 @@ const StatusBox = ({ status, taskCount, tasks }) => {
               <div className="flex justify-between items-center gap-2 w-full">
                 <div className="flex items-center gap-3">
                   <Image
-                    src={task.createdBy.image || images.admin}
+                    src={task?.createdBy?.image || images.admin}
                     width={200}
                     height={200}
                     style={{ width: "50px", height: "50px" }}
@@ -65,11 +65,11 @@ const StatusBox = ({ status, taskCount, tasks }) => {
                   />
                   <div>
                     <p className="text-p1 font-medium">
-                      {task.createdBy.username}
+                      {task?.createdBy?.username}
                     </p>
-                    {task.createdBy.firstName && (
+                    {task?.createdBy?.firstName && (
                       <p className="text-p2 text-darkGray -mt-1">
-                        {task.createdBy.firstName}
+                        {task?.createdBy?.firstName}
                       </p>
                     )}
                   </div>

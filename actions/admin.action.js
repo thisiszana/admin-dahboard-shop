@@ -12,6 +12,8 @@ import { getServerSession } from "@/utils/session";
 import AdminSorme from "@/models/adminSorme";
 import connectDB from "@/utils/connectDB";
 import { ProductAdminSorme } from "@/models/productAdminSorme";
+import { BlogSorme } from "@/models/blog";
+import TaskSorme from "@/models/task";
 
 export const getAdmins = async () => {
   try {
@@ -268,6 +270,12 @@ export const deleteAdmin = async (id) => {
         code: STATUS_CODES.unAuthorized,
       };
     }
+
+    await BlogSorme.deleteMany({ createdBy: userId });
+
+    await ProductAdminSorme.deleteMany({ createdBy: userId });
+    
+    await TaskSorme.deleteMany({ createdBy: userId });
 
     await AdminSorme.findByIdAndDelete(userId);
 

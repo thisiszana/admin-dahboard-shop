@@ -12,6 +12,7 @@ import useServerAction from "@/hooks/useCallServerAction";
 import CustomBtn from "@/components/shared/CustomBtn";
 import { loginAdmin } from "@/actions/auth.action";
 import { images } from "@/constant";
+import Link from "next/link";
 
 export default function LoginPage() {
   const [form, setForm] = useState({
@@ -40,9 +41,9 @@ export default function LoginPage() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex items-center gap-[150px] bg-white"
+      className="flex items-center gap-[150px] bg-white max-xl:p-[30px]"
     >
-      <div className="max-xl:hidden bg-gray-100 h-screen w-1/2 flex items-center justify-center">
+      <div className="max-xl:hidden bg-gray-100 rounded-3xl h-screen w-1/2 flex items-center justify-center">
         <Image
           src={images.authLogin}
           width={450}
@@ -85,6 +86,17 @@ export default function LoginPage() {
                 loading ? "bg-gray-100 text-black" : "bg-black text-white"
               } w-full h-[50px] font-bold flex items-center justify-center rounded-btn`}
             />
+            <div className="flex flex-col items-center gap-4 text-sm font-bold">
+              <div className="flex items-center justify-center gap-4">
+                <p>Dont have account?</p>
+                <Link
+                  href="/register"
+                  className="bg-gray-100 border text-center py-1 px-4 rounded-lg"
+                >
+                  Register
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </div>

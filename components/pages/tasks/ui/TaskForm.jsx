@@ -174,13 +174,13 @@ export default function TaskForm({
           <div className="space-y-2">
             <p className="font-medium text-p1">Created by</p>
             <div className="flex items-center gap-3">
-              <Avatar
+              {/* <Avatar
                 src={
                   data
                     ? data?.task?.createdBy?.image || images.admin
                     : session?.image || images.admin
                 }
-              />
+              /> */}
               <p className="font-medium text-p1">
                 {data ? data?.task?.createdBy?.username : session?.username}
               </p>

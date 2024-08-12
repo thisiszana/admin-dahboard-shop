@@ -13,13 +13,13 @@ export default function Error({ error, reset }) {
   }, [error]);
 
   return (
-    <section className="h-[40vh] w-full flex flex-col justify-center items-center">
+    <section className="h-[60vh] w-full flex flex-col justify-center items-center">
       <Image
         src={images.error}
-        width={150}
-        height={150}
+        width={200}
+        height={200}
         alt="error!"
-        className="w-[50px] mb-5"
+        className="w-[150px] mb-5"
       />
 
       <h1 className="font-black text-5xl mb-4">Oops!</h1>
@@ -27,7 +27,7 @@ export default function Error({ error, reset }) {
         Cannot fetch data at this time! The above error has occured:
       </p>
       <p className="bg-lightRose text-darkRose rounded-lg px-2 py-1 font-bold mb-6">
-        {error.message}
+        {error?.message}
       </p>
       <CustomBtn
         onClick={() => reset()}
