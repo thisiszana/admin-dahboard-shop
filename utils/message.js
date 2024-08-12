@@ -12,6 +12,7 @@ export const MESSAGES = {
   blogCreated: "Blog Created",
   blogUpdated: "Blog Updated",
   blogDeleted: "Blog Deleted",
+  blogEdited: "Blog Edited",
   invalidId: "Invalid Id",
   productEdited: "Product Edited",
   badRequest: "Bad Request!",

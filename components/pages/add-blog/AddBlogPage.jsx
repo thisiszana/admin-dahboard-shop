@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import CustomBreadcrumb from "@/components/shared/CustomBreadcrumb";
 import { addBlogPageBread } from "@/constant/breadcrumpItems";
 import PageHeading from "@/components/shared/PageHeading";
 import BlogForm from "@/components/shared/form/BlogForm";
 
-export default function AddBlogPage() {
+export default function AddBlogPage({data}) {
   const [form, setForm] = useState({
     title: "",
     description: "",
@@ -15,6 +15,10 @@ export default function AddBlogPage() {
     keywords: [],
     published: false,
   });
+
+  useEffect(() => {
+    if (data) setForm(data );
+  }, []);
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -25,13 +29,14 @@ export default function AddBlogPage() {
   };
   return (
     <>
-      <PageHeading title="Create New Blog" />
+      <PageHeading title={`${data ? "Edit" : "Add New"} Blog`} />
       <CustomBreadcrumb items={addBlogPageBread} />
       <BlogForm
-        type="create"
+        type={`${data ? "edit" : "create"}`}
         form={form}
         setForm={setForm}
         onChange={onChange}
+        id={data?._id}
       />
     </>
   );

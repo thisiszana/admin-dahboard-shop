@@ -3,7 +3,7 @@ import AddProductPage from "@/components/pages/add-product/AddProductPage";
 import { ProductAdminSorme } from "@/models/productAdminSorme";
 import connectDB from "@/utils/connectDB";
 
-export default async function Edit({ params: { id } }) {
+export default async function EditProduct({ params: { id } }) {
   await connectDB();
   const product = await ProductAdminSorme.findById(id);
 

@@ -17,7 +17,7 @@ export default function ProductActions({ id }) {
       <div className="flex items-center gap-3">
         <Tooltip placement="bottom" title="Go Live">
           <Link
-            href={`${process.env.NEXT_PUBLIC_LIVE_URL}/products/${id}`}
+            href="/"
             target="_blank"
           >
             <CustomBtn

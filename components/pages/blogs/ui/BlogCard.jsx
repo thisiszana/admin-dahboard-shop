@@ -1,13 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { BorderHeart, Comment, EyeOpen } from "@/components/icons/Icon";
-import CustomBadge from "@/components/shared/CustomBadge";
-import { shorterText } from "@/utils/fun";
-import { images } from "@/constant";
 import { Avatar } from "antd";
 import moment from "moment";
+
+import { BorderHeart, Comment, EyeOpen } from "@/components/icons/Icon";
+import CustomBadge from "@/components/shared/CustomBadge";
 import BlogCardAction from "./BlogCardAction";
+import { shorterText } from "@/utils/fun";
+import { images } from "@/constant";
 
 
 export default function BlogCard({
@@ -25,7 +26,7 @@ export default function BlogCard({
     <div className="flex items-center justify-between gap-2 flex-wrap mb-2">
       <div className="flex items-center gap-3">
         <Link href={`/account/admins/${createdBy._id}`}>
-          <Avatar src={createdBy.image || images.admin} isBordered />
+          <Avatar src={createdBy.image || images.admin} />
         </Link>
         <CustomBadge
           title={published ? "Published" : "Draft"}

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useRouter } from "next/navigation";
 
@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import { Switch } from "antd";
 
 import KeywordsSelection from "./KeywordsSelection";
-import { createBlog } from "@/actions/blog.action";
+import { createBlog, editBlog } from "@/actions/blog.action";
 import DetailedBox from "../layout/DetailedBox";
 import CustomTextarea from "./CustomTextarea";
 import UploadedImage from "./UploadedImage";
@@ -18,7 +18,7 @@ import CustomBtn from "../CustomBtn";
 import CustomInp from "./CustomInp";
 import Loader from "../Loader";
 
-export default function BlogForm({ type, form, setForm, onChange }) {
+export default function BlogForm({ type, form, setForm, onChange, id }) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -48,7 +48,6 @@ export default function BlogForm({ type, form, setForm, onChange }) {
   );
 
   const create = async () => {
-
     if (
       !form.title ||
       !form.description ||
@@ -61,10 +60,18 @@ export default function BlogForm({ type, form, setForm, onChange }) {
 
     const uploadResult = await uploadImage(form.image[0]);
 
-    const res = await createBlog({
+    const payload = {
       ...form,
       image: uploadResult.imageUrl,
-    });
+    };
+
+    let res;
+
+    if (type === "create") {
+      res = await createBlog(payload);
+    } else {
+      res = await editBlog({ ...payload, id });
+    }
 
     setLoading(false);
 
