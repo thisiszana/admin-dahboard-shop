@@ -55,3 +55,29 @@ export const createBlog = async (data) => {
     };
   }
 };
+
+export const getBlogs = async () => {
+  try {
+    await connectDB();
+
+    const blogs = await BlogSorme.find()
+      .populate({
+        path: "createdBy",
+        model: AdminSorme,
+      })
+      .lean();
+
+    return {
+      blogs,
+      message: MESSAGES.success,
+      status: MESSAGES.success,
+      code: STATUS_CODES.success,
+    };
+  } catch (error) {
+    return {
+      message: MESSAGES.server,
+      status: MESSAGES.failed,
+      code: STATUS_CODES.server,
+    };
+  }
+};
