@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import  { Suspense } from "react";
+import { Suspense } from "react";
 
 import CustomBreadcrumb from "@/components/shared/CustomBreadcrumb";
 import { blogsPageBread } from "@/constant/breadcrumpItems";
@@ -22,10 +22,10 @@ export default function BlogsPage() {
           <LayerPlus />
           <span>New Blog</span>
         </Link>
-        <Suspense fallback={<LoaderBar />}>
-          <BlogsList />
-        </Suspense>
       </div>
+      <Suspense fallback={<LoaderBar />}>
+        <BlogsList />
+      </Suspense>
     </>
   );
 }
