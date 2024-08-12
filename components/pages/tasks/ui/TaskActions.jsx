@@ -47,7 +47,7 @@ export default function TaskActions({ id, currentStatus }) {
 
   const { loading: deleteLoading, res: deleteRes } = useServerAction(
     deleteTask,
-    {id},
+    { id },
     () => closePopover()
   );
 
@@ -116,10 +116,12 @@ export default function TaskActions({ id, currentStatus }) {
           deleteLoading ? (
             <Loader height={20} width={20} color={"red"} />
           ) : (
-            "Delete"
+            <>
+              <Trash size={17} />
+              <p>Delete</p>
+            </>
           )
         }
-        icon={<Trash size={17} />}
         onClick={() => deleteRes()}
         disabled={
           todoLoading || progressLoading || doneLoading || deleteLoading

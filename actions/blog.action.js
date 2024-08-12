@@ -5,6 +5,7 @@ import { BlogSorme } from "@/models/blog";
 import connectDB from "@/utils/connectDB";
 import { MESSAGES, STATUS_CODES } from "@/utils/message";
 import { getServerSession } from "@/utils/session";
+import { revalidatePath } from "next/cache";
 
 export const createBlog = async (data) => {
   try {
@@ -70,6 +71,111 @@ export const getBlogs = async () => {
     return {
       blogs,
       message: MESSAGES.success,
+      status: MESSAGES.success,
+      code: STATUS_CODES.success,
+    };
+  } catch (error) {
+    return {
+      message: MESSAGES.server,
+      status: MESSAGES.failed,
+      code: STATUS_CODES.server,
+    };
+  }
+};
+
+export const updateBlogStatus = async (data) => {
+  try {
+    await connectDB();
+
+    const { id, action } = data;
+
+    const session = getServerSession();
+
+    if (!session)
+      return {
+        message: MESSAGES.unAuthorized,
+        status: MESSAGES.failed,
+        code: STATUS_CODES.unAuthorized,
+      };
+
+    if (session.roll === "USER")
+      return {
+        message: MESSAGES.forbidden,
+        status: MESSAGES.failed,
+        code: STATUS_CODES.forbidden,
+      };
+
+    const blog = await BlogSorme.findById(id);
+
+    if (session.userId !== blog.createdBy.toString())
+      return {
+        message: MESSAGES.forbidden,
+        status: MESSAGES.failed,
+        code: STATUS_CODES.forbidden,
+      };
+
+    if (action === "publish") {
+      blog.published = true;
+    } else if (action === "draft") {
+      blog.published = false;
+    }
+
+    await blog.save();
+
+    revalidatePath("/blogs");
+
+    return {
+      message: MESSAGES.blogUpdated,
+      status: MESSAGES.success,
+      code: STATUS_CODES.success,
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      message: MESSAGES.server,
+      status: MESSAGES.failed,
+      code: STATUS_CODES.server,
+    };
+  }
+};
+
+export const deleteBlog = async (data) => {
+  try {
+    await connectDB();
+
+    const { id } = data;
+
+    const session = getServerSession();
+
+    if (!session)
+      return {
+        message: MESSAGES.unAuthorized,
+        status: MESSAGES.failed,
+        code: STATUS_CODES.unAuthorized,
+      };
+
+    if (session.roll === "USER")
+      return {
+        message: MESSAGES.forbidden,
+        status: MESSAGES.failed,
+        code: STATUS_CODES.forbidden,
+      };
+
+    const blog = await BlogSorme.findById(id);
+
+    if (session.userId !== blog.createdBy.toString())
+      return {
+        message: MESSAGES.forbidden,
+        status: MESSAGES.failed,
+        code: STATUS_CODES.forbidden,
+      };
+
+    await BlogSorme.findByIdAndDelete(id);
+
+    revalidatePath("/blogs");
+
+    return {
+      message: MESSAGES.blogDeleted,
       status: MESSAGES.success,
       code: STATUS_CODES.success,
     };
