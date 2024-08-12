@@ -25,7 +25,7 @@ export default function BlogCard({
   <div className="flex flex-col gap-3 w-full">
     <div className="flex items-center justify-between gap-2 flex-wrap mb-2">
       <div className="flex items-center gap-3">
-        <Link href={`/account/admins/${createdBy._id}`}>
+        <Link href={`/account/admin/${createdBy._id}`}>
           <Avatar src={createdBy.image || images.admin} />
         </Link>
         <CustomBadge

@@ -137,6 +137,7 @@ export const images = {
   admin2: "/images/admin-2.jpg",
   admin3: "/images/admin-3.jpg",
   notFound: "/images/404.svg",
+  error: "/images/sad.png",
 };
 
 export const menuLinks = [
