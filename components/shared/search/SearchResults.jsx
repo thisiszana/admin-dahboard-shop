@@ -21,7 +21,7 @@ const SearchResults = ({ error, result, closeModal }) => {
           <div className="text-center">
             <h1 className="font-medium text-h4">Not found</h1>
             <p className="text-p1">
-              No results found for{" "}
+              No results found for
               <span className="font-medium">"{result?.searchQuery}".</span>
             </p>
             <p className="text-p1">
@@ -31,7 +31,7 @@ const SearchResults = ({ error, result, closeModal }) => {
         ) : (
           <>
             <p>
-              Results for{" "}
+              Results for
               <span className="font-medium">"{result?.searchQuery}"</span>
             </p>
             <hr className="mt-2 mb-5" />
