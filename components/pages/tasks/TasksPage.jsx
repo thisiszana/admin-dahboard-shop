@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 
+import TasksListSkeletons from "@/components/shared/skeletons/TasksListSkeletons";
 import CustomBreadcrumb from "@/components/shared/CustomBreadcrumb";
 import { tasksPageBread } from "@/constant/breadcrumpItems";
 import PageHeading from "@/components/shared/PageHeading";
@@ -14,7 +15,7 @@ export default function TasksPage() {
       <PageHeading title="Tasks" />
       <CustomBreadcrumb items={tasksPageBread} />
       <CreateNewTask session={session} />
-      <Suspense>
+      <Suspense fallback={<TasksListSkeletons />}>
         <TasksList />
       </Suspense>
     </>
