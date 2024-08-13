@@ -10,9 +10,10 @@ import TaskSorme from "@/models/task";
 export const searchDashboard = async (searchQuery) => {
   try {
     await connectDB();
+
     let query = { $text: { $search: searchQuery } };
 
-    const products = await ProductAdminSorme.find(query).lean();
+    const products = await ProductAdminSorme.find({...query}).lean();
     const blogs = await BlogSorme.find(query).lean();
     const tasks = await TaskSorme.find(query)
       .populate({
@@ -23,12 +24,12 @@ export const searchDashboard = async (searchQuery) => {
       .lean();
 
     const admins = await AdminSorme.find(query).lean();
+    
     return {
       result: {
         products,
         blogs,
         tasks,
-        users,
         admins,
         searchQuery,
       },
@@ -36,6 +37,7 @@ export const searchDashboard = async (searchQuery) => {
       code: STATUS_CODES.success,
     };
   } catch (error) {
+    console.log(error);
     return {
       message: MESSAGES.server,
       status: MESSAGES.failed,

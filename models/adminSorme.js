@@ -25,5 +25,7 @@ const adminSormeSchema = new Schema(
   { timestamps: true }
 );
 
+adminSormeSchema.index({ username: "text", firstName: "text" });
+
 const AdminSorme = models?.AdminSorme || model("AdminSorme", adminSormeSchema);
 export default AdminSorme;

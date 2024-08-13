@@ -14,4 +14,6 @@ const blogSchema = new Schema({
   },
 });
 
+blogSchema.index({ title: "text", content: "text" });
+
 export const BlogSorme = models?.BlogSorme || model("BlogSorme", blogSchema);

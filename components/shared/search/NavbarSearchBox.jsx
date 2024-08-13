@@ -5,9 +5,12 @@ import { useState } from "react";
 import { Modal } from "antd";
 
 import { Close, Light, Search } from "@/components/icons/Icon";
-
-import CustomBtn from "../CustomBtn";
+import { searchDashboard } from "@/actions/search.action";
+import SearchResults from "./SearchResults";
 import CustomInp from "../form/CustomInp";
+import CustomBtn from "../CustomBtn";
+import toast from "react-hot-toast";
+import Loader from "../Loader";
 
 export default function NavbarSearchBox() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -44,7 +47,23 @@ export default function NavbarSearchBox() {
     },
   };
 
-  const submitHandler = (e) => {};
+  const submitHandler = async (e) => {
+    e.preventDefault();
+
+    if (!searchTerm) toast.error("Search something!");
+
+    setLoading(() => true);
+    setError(() => "");
+    const result = await searchDashboard(searchTerm);
+    setLoading(() => false);
+
+    if (result.code !== 200) {
+      setError(result.error?.message);
+    } else {
+      setSearchResult(result.result);
+      console.log(result)
+    }
+  };
 
   const modalContent = (
     <div className="space-y-4">
@@ -65,7 +84,17 @@ export default function NavbarSearchBox() {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </form>
-      {/* search result */}
+      {loading ? (
+        <div className="w-full flex justify-center my-5">
+          <Loader width={20} height={20} />
+        </div>
+      ) : (
+        <SearchResults
+          error={error}
+          result={searchResult}
+          closeModal={closeModal}
+        />
+      )}
     </div>
   );
 

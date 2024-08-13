@@ -13,6 +13,8 @@ const taskSchema = new Schema({
   },
 });
 
+taskSchema.index({ title: "text", description: "text" });
+
 const TaskSorme = models?.TaskSorme || model("TaskSorme", taskSchema);
 
 export default TaskSorme;
