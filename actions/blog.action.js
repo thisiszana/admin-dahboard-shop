@@ -280,7 +280,6 @@ export const editBlog = async (data) => {
       code: STATUS_CODES.updated,
     };
   } catch (error) {
-    console.log(error);
     return {
       message: MESSAGES.server,
       status: MESSAGES.failed,
