@@ -10,7 +10,6 @@ import { revalidatePath } from "next/cache";
 export const createProduct = async (data) => {
   try {
     await connectDB();
-    console.log(data);
 
     const session = getServerSession();
 
@@ -102,7 +101,7 @@ export const getProducts = async (searchParams) => {
     let query = {};
     let filters = {};
 
-    if (search) {
+    if (search && search.trim() !== "") {
       query = { $text: { $search: search } };
     }
 
@@ -157,7 +156,7 @@ export const getProducts = async (searchParams) => {
         select: "username firstName image",
       })
       .lean();
-
+    
     return {
       products,
       totalPages,
@@ -306,7 +305,6 @@ export const editProduct = async (data) => {
     }
 
     const newKeywords = [...product.keywords, ...keywords];
-    console.log(newKeywords);
 
     product.title = title;
     product.description = description;
@@ -390,7 +388,6 @@ export const deleteProduct = async (data) => {
       code: STATUS_CODES.success,
     };
   } catch (error) {
-    console.log(error);
     return {
       message: MESSAGES.server,
       status: MESSAGES.failed,

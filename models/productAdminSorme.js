@@ -19,5 +19,7 @@ const productSchema = new Schema({
   },
 });
 
+productSchema.index({ title: "text", description: "text", brand: "text" });
+
 export const ProductAdminSorme =
   models?.ProductAdminSorme || model("ProductAdminSorme", productSchema);
