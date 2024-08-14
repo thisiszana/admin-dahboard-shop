@@ -1,5 +1,3 @@
-"use client"
-
 import { productsColumn } from "@/constant/tableColumns"
 import { productsDataSourse } from "@/constant/tableDataSourse"
 import { Table } from "antd"

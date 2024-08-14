@@ -255,10 +255,9 @@ export const changeRole = async (data) => {
   }
 };
 
-export const deleteAdmin = async (id) => {
+export const checkAdminContent = async (id) => {
   try {
     await connectDB();
-
     const { userId } = id;
 
     const session = getServerSession();
@@ -271,10 +270,70 @@ export const deleteAdmin = async (id) => {
       };
     }
 
+    const admin = await AdminSorme.findById(userId).select(
+      "blogsCreated productsCreated"
+    );
+
+    if (admin.blogsCreated.length > 0 || admin.productsCreated.length > 0) {
+      return {
+        message: MESSAGES.adminHasContent,
+        status: MESSAGES.failed,
+        code: STATUS_CODES.exist,
+        hasContent: true,
+        contentInfo: {
+          blogsCreated: admin.blogsCreated,
+          productsCreated: admin.productsCreated,
+        },
+      };
+    }
+
+    return {
+      hasContent: false,
+      message: MESSAGES.noContent,
+      status: MESSAGES.success,
+      code: STATUS_CODES.success,
+    };
+  } catch (error) {
+    return {
+      message: MESSAGES.server,
+      status: MESSAGES.failed,
+      code: STATUS_CODES.server,
+    };
+  }
+};
+
+export const deleteAdmin = async (id, forceDelete = false) => {
+  try {
+    await connectDB();
+
+    const { userId, forceDelete } = id;
+
+    const session = getServerSession();
+
+    if (!session || session.roll !== "OWNER") {
+      return {
+        message: MESSAGES.unAuthorized,
+        status: MESSAGES.failed,
+        code: STATUS_CODES.unAuthorized,
+      };
+    }
+
+    const adminContentCheck = await checkAdminContent(id);
+
+    if (adminContentCheck.hasContent && !forceDelete) {
+      return {
+        message: "محصل و بلاگ وجود دارد!",
+        status: MESSAGES.failed,
+        code: STATUS_CODES.badRequest,
+        hasContent: true,
+        contentInfo: adminContentCheck.contentInfo,
+      };
+    }
+
     await BlogSorme.deleteMany({ createdBy: userId });
 
     await ProductAdminSorme.deleteMany({ createdBy: userId });
-    
+
     await TaskSorme.deleteMany({ createdBy: userId });
 
     await AdminSorme.findByIdAndDelete(userId);
@@ -287,7 +346,7 @@ export const deleteAdmin = async (id) => {
       code: STATUS_CODES.success,
     };
   } catch (error) {
-    console.log(error);
+    console.log("Error in deleteAdmin:", error);
     return {
       message: MESSAGES.server,
       status: MESSAGES.failed,

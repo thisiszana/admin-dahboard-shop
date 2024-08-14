@@ -18,7 +18,7 @@ export default function AddBlogPage({data}) {
 
   useEffect(() => {
     if (data) setForm(data );
-  }, [data]);
+  }, []);
 
   const onChange = (e) => {
     const { name, value } = e.target;

@@ -38,7 +38,7 @@ const ProductsFilter = () => {
         ? []
         : paramsArray.filter((param) => param[0] !== "page")
     );
-  }, [searchParams, params]);
+  }, [searchParams]);
 
   const clearFilters = () => {
     router.replace("/products");

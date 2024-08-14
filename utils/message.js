@@ -14,6 +14,7 @@ export const MESSAGES = {
   blogDeleted: "Blog Deleted",
   blogEdited: "Blog Edited",
   invalidId: "Invalid Id",
+  noContent: "There is no data!",
   productEdited: "Product Edited",
   badRequest: "Bad Request!",
   unAuthorized: "You are not authorized!",
@@ -27,6 +28,7 @@ export const MESSAGES = {
   updateProfile: "Profile Updated",
   updateRole: "User Role Updated!",
   deleteAdmin: "User Deleted!",
+  adminHasContent: "Admin has content!",
   failed: "failed!",
   server: "Server Error!",
 };

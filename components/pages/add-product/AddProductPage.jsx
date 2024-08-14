@@ -23,7 +23,7 @@ export default function AddProductPage({ data }) {
 
   useEffect(() => {
     if (data) setForm(data );
-  }, [data]);
+  }, []);
 
   const onChange = (e) => {
     const { name, value } = e.target;

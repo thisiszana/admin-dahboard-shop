@@ -51,16 +51,7 @@ export default function ProfileForm(props) {
       country: country || "",
       gender: gender || "",
     });
-  }, [
-    username,
-    firstName,
-    lastName,
-    email,
-    phoneNumber,
-    address,
-    country,
-    gender,
-  ]);
+  }, []);
   const queryClient = useQueryClient();
 
   const onChange = (e) => {
