@@ -1,6 +1,5 @@
 "use client";
 
-import { useQueryClient } from "@tanstack/react-query";
 import { uploadImage } from "@/utils/fun";
 import { useState } from "react";
 

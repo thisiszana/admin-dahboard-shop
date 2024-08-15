@@ -78,7 +78,7 @@ export const createProduct = async (data) => {
 export const getProducts = async (searchParams) => {
   try {
     await connectDB();
-
+    
     const session = getServerSession();
 
     if (!session)
@@ -156,7 +156,7 @@ export const getProducts = async (searchParams) => {
         select: "username firstName image",
       })
       .lean();
-    
+
     return {
       products,
       totalPages,

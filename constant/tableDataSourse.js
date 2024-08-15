@@ -10,8 +10,8 @@ import CustomBadge from "@/components/shared/CustomBadge";
 import ProductActions from "@/components/pages/products/ui/ProductActions";
 import AdminActions from "@/components/pages/account/ui/admin/AdminActions";
 
-export const productsDataSourse = (products) => {
-  return products.map((product) => ({
+export const productsDataSourse = (products) =>
+  products.map((product) => ({
     key: product._id,
     name: (
       <Link
@@ -81,7 +81,6 @@ export const productsDataSourse = (products) => {
       <ProductActions productId={product._id} published={product.published} />
     ),
   }));
-};
 
 export const adminsDataSourse = (admins, currentUserID, currentUserRoll) =>
   admins.map((admin) => ({
@@ -109,7 +108,9 @@ export const adminsDataSourse = (admins, currentUserID, currentUserRoll) =>
             </span>
           )}
         </p>
-        {admin.firstName && <p className="text-p2 text-darkGray">{admin.firstName}</p>}
+        {admin.firstName && (
+          <p className="text-p2 text-darkGray">{admin.firstName}</p>
+        )}
       </div>
     ),
     phone: admin.phoneNumber || "_",
@@ -135,4 +136,3 @@ export const adminsDataSourse = (admins, currentUserID, currentUserRoll) =>
       />
     ),
   }));
-
