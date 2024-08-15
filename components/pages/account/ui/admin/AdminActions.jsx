@@ -187,8 +187,8 @@ export default function AdminActions({ roll, userId, showMore }) {
         footer={null}
       >
         <p className="text-p1 text-center">
-          This admin has {adminContentInfo?.blogsCreated?.length || 0} blogs and
-           {adminContentInfo?.productsCreated?.length || 0} products created. Are
+          This admin has {adminContentInfo?.blogsCreated?.length || 0} 
+          blogs and {adminContentInfo?.productsCreated?.length || 0}  products created. Are
           you sure you want to delete?
         </p>
         <div className="flex justify-between mt-5">

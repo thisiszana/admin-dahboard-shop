@@ -22,7 +22,9 @@ const SearchResults = ({ error, result, closeModal }) => {
             <h1 className="font-medium text-h4">Not found</h1>
             <p className="text-p1">
               No results found for
-              <span className="font-medium">{result?.searchQuery}.</span>
+              <span className="font-medium">
+                &quot;{result?.searchQuery}&quot;
+              </span>
             </p>
             <p className="text-p1">
               Try checking for typos or using complete words.
@@ -32,7 +34,9 @@ const SearchResults = ({ error, result, closeModal }) => {
           <>
             <p>
               Results for
-              <span className="font-medium">{result?.searchQuery}</span>
+              <span className="font-medium">
+                &quot;{result?.searchQuery}&quot;
+              </span>
             </p>
             <hr className="mt-2 mb-5" />
             <div className="space-y-5">
