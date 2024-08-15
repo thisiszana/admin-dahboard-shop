@@ -10,7 +10,7 @@ const AdminsResult = ({ admins, closeModal }) => {
       <h1 className="text-h3 font-medium mb-2">Admins</h1>
       {admins.map((admin) => (
         <Link
-          href={`/account/admins/${admin._id}`}
+          href={`/account/admin/${admin._id}`}
           key={admin._id}
           className="flex items-center gap-3 justify-between hoverable rounded-btn py-2 px-3"
           onClick={closeModal}
