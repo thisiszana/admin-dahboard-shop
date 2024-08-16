@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { ProductAdminSorme } from "@/models/productAdminSorme";
 import connectDB from "@/utils/connectDB";
 
-export default async function GET(req) {
+export async function GET(req) {
   try {
     await connectDB();
   } catch (error) {
