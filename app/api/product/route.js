@@ -10,7 +10,7 @@ export default async function GET(req) {
   }
 
   try {
-    const products = await ProductAdminSorme.find().lean();
+    const products = await ProductAdminSorme.find({ published: true }).lean();
 
     return NextResponse.json(
       { msg: "Success", success: true, products },
