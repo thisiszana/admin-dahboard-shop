@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import connectDB from "@/utils/connectDB";
 import { ProductAdminSorme } from "@/models/productAdminSorme";
 
-export default async function GET(req, { params: { id } }) {
+export async function GET(req, { params: { id } }) {
   try {
     await connectDB();
   } catch (error) {
@@ -16,11 +16,13 @@ export default async function GET(req, { params: { id } }) {
 
   try {
     const product = await ProductAdminSorme.findById(id).lean();
-    
-    return NextResponse.json(
+
+    const response = NextResponse.json(
       { msg: "Success", success: true, product },
       { status: 200 }
     );
+    response.headers.set("Cache-Control", "no-store");
+    return response;
   } catch (error) {
     return NextResponse.json(
       { msg: "Server Error!", success: false },

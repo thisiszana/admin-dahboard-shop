@@ -22,6 +22,7 @@ export  async function GET(req) {
     );
     response.headers.set("Cache-Control", "no-store");
     return response;
+    
   } catch (error) {
     return NextResponse.json(
       { msg: "Server Error!", success: false },
