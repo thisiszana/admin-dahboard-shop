@@ -24,7 +24,7 @@ export async function GET(req) {
     const stock = searchParams.get("stock");
     const discount = searchParams.get("discount");
     const sort = searchParams.get("sort");
-    const perPage = 5;
+    const perPage = 12;
 
     let filters = { published: true };
     let query = {};
