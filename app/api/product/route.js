@@ -20,6 +20,8 @@ export async function GET(req) {
     const category = searchParams.get("category");
     const minPrice = searchParams.get("minPrice");
     const maxPrice = searchParams.get("maxPrice");
+    const minDate = searchParams.get("minDate");
+    const maxDate = searchParams.get("maxDate");
     const page = searchParams.get("page") || 1;
     const stock = searchParams.get("stock");
     const discount = searchParams.get("discount");
@@ -53,12 +55,20 @@ export async function GET(req) {
       if (maxPrice) filters.price.$lte = maxPrice;
     }
 
-    const totalProductsWithoutFilter = await ProductAdminSorme.countDocuments({ published: true });
+    const totalProductsWithoutFilter = await ProductAdminSorme.countDocuments({
+      published: true,
+    });
     const totalProducts = await ProductAdminSorme.countDocuments({
       ...filters,
       ...query,
     });
     const totalPages = Math.ceil(totalProducts / perPage);
+
+    if (minDate || maxDate) {
+      filters.createdAt = {};
+      if (minDate) filters.createdAt.$gte = new Date(minDate);
+      if (maxDate) filters.createdAt.$lte = new Date(maxDate);
+    }
 
     let sortOptions = {};
     if (sort) {
@@ -91,7 +101,6 @@ export async function GET(req) {
 
     response.headers.set("Cache-Control", "no-store");
     return response;
-    
   } catch (error) {
     return NextResponse.json(
       { msg: "Server Error!", success: false },
@@ -99,4 +108,3 @@ export async function GET(req) {
     );
   }
 }
-
