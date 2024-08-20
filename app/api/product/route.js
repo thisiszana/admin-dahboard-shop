@@ -23,7 +23,7 @@ export async function GET(req) {
     const minDate = searchParams.get("minDate");
     const maxDate = searchParams.get("maxDate");
     const page = searchParams.get("page") || 1;
-    const stock = searchParams.get("stock");
+    const stock = searchParams.get("stock") === "true";
     const discount = searchParams.get("discount");
     const sort = searchParams.get("sort");
     const perPage = 12;
@@ -36,7 +36,11 @@ export async function GET(req) {
     }
 
     if (stock) {
-      stock === "in-stock" ? (filters.stock = { $gt: 0 }) : (filters.stock = 0);
+      if (stock === "true") {
+        filters.stock = { $gt: 0 };
+      } else {
+        filters.stock = 0;
+      }
     }
 
     if (discount) {
