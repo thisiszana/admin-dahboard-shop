@@ -1,5 +1,7 @@
+"use client";
+
 import { useEffect, useState } from "react";
-import { EyeOpen, EyeClosed } from "@/components/icons/Icon"; // فرض می‌کنیم که این آیکون‌ها در پروژه شما موجود هستند
+import { EyeOpen, EyeClosed } from "@/components/icons/Icon";
 
 export default function CustomInp({
   type,
@@ -29,9 +31,7 @@ export default function CustomInp({
   }, [value]);
 
   const togglePasswordVisibility = () => {
-    setInputType((prevType) =>
-      prevType === "password" ? "text" : "password"
-    );
+    setInputType((prevType) => (prevType === "password" ? "text" : "password"));
   };
 
   return (
