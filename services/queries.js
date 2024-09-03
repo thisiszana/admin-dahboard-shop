@@ -28,3 +28,26 @@ export const getUsers = async () => {
     };
   }
 };
+
+export const getUser = async (id) => {
+  try {
+    const response = await fetch(`http://localhost:3001/api/user/${id}`);
+    if (!response.ok) {
+      throw new Error("Failed to fetch users data");
+    }
+
+    const user = await response.json();
+
+    return {
+      user,
+      status: "success",
+      code: 200,
+    };
+  } catch (error) {
+    return {
+      user: null,
+      status: "failed",
+      code: 500,
+    };
+  }
+};
