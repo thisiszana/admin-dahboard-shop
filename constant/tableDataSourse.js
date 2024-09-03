@@ -46,9 +46,9 @@ export const productsDataSourse = (products) =>
     ),
     price: `$${product.price.toLocaleString()}`,
     discount: product.discount || "_",
-    // orders: product.orders.length || "_",
-    // comments: product.comments.length || "_",
-    // likes: product.likes.length || "_",
+    // orders: (product.orders && product.orders.length) || "_",
+    // comments: (product.comments && product.comments.length) || "_",
+    // likes: (product.likes && product.likes.length) || "_",
     date: moment(product.createdAt).calendar(),
     status: (
       <CustomBadge
@@ -135,4 +135,40 @@ export const adminsDataSourse = (admins, currentUserID, currentUserRoll) =>
         showMore={currentUserRoll === "OWNER" && admin.roll !== "OWNER"}
       />
     ),
+  }));
+
+export const usersDataSourse = (users) =>
+  users.map((user) => ({
+    key: user._id,
+    name: (
+      <Link href={`/users/${user._id}`} className="flex items-center gap-3">
+        <Image
+          as={NextImage}
+          src={user.image || images.person}
+          width={40}
+          height={40}
+          alt="user"
+        />
+        <div>
+          <p className="text-p1 font-medium">{user.username}</p>
+          {user.displayName && (
+            <p className="text-p2 text-darkGray">{user.displayName}</p>
+          )}
+        </div>
+      </Link>
+    ),
+    phoneNumber: user.phoneNumber || "_",
+    address: user.address || "_",
+    orders:
+      user.orders.length === 0 ? "_" : user.orders.length.toLocaleString(),
+    // comments:
+    //   user.comments.length === 0 ? "_" : user.comments.length.toLocaleString(),
+    // likes: user.likes.length === 0 ? "_" : user.likes.length.toLocaleString(),
+    cartStatus: (
+      <CustomBadge
+        condition={user.cart.totalProductsCount !== 0}
+        title={user.cart.totalProductsCount === 0 ? "Empty" : "Fill"}
+      />
+    ),
+    date: moment(user.createdAt).format("L"),
   }));

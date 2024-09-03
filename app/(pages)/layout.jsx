@@ -19,7 +19,7 @@ export default async function PagesLayout({ children }) {
       <Navbar />
       <Sidebar />
       <div className="pages_spaces">
-        {data.currentAdmin.roll === "USER" ? (
+        {data?.currentAdmin?.roll === "USER" ? (
           <NotAllowed />
         ) : (
           <div className="space-y-[20px]">
