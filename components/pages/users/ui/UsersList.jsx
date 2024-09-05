@@ -14,7 +14,7 @@ export default async function UsersList() {
         scroll={{ x: true }}
         columns={usersColumns}
         dataSource={usersDataSourse(
-          JSON.parse(JSON.stringify(data?.users?.users))
+          data?.users?.users
         )}
       />
     </div>
