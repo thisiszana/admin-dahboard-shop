@@ -12,6 +12,7 @@ const productSchema = new Schema({
   brand: { type: String, required: true },
   published: { type: Boolean, default: false },
   createdBy: { type: Schema.Types.ObjectId, ref: "AdminSorme" },
+  comments: [{ type: Schema.Types.ObjectId,  default: [] }],
   orders: [
     {
       orderId: {
