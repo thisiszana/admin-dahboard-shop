@@ -138,7 +138,7 @@ export const adminsDataSourse = (admins, currentUserID, currentUserRoll) =>
   }));
 
 export const usersDataSourse = (users) =>
-  users.map((user) => ({
+  users?.map((user) => ({
     key: user._id,
     name: (
       <Link href={`/users/${user._id}`} className="flex items-center gap-3">
