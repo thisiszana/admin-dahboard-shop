@@ -46,8 +46,8 @@ export const productsDataSourse = (products) =>
     ),
     price: `$${product.price.toLocaleString()}`,
     discount: product.discount || "_",
-    // orders: (product.orders && product.orders.length) || "_",
-    // comments: (product.comments && product.comments.length) || "_",
+    orders: (product.orders && product.orders.length) || "_",
+    comments: (product.comments && product.comments.length) || "_",
     // likes: (product.likes && product.likes.length) || "_",
     date: moment(product.createdAt).calendar(),
     status: (
@@ -161,8 +161,8 @@ export const usersDataSourse = (users) =>
     address: user.address || "_",
     orders:
       user.orders.length === 0 ? "_" : user.orders.length.toLocaleString(),
-    // comments:
-    //   user.comments.length === 0 ? "_" : user.comments.length.toLocaleString(),
+    comments:
+      user.comments.length === 0 ? "_" : user.comments.length.toLocaleString(),
     // likes: user.likes.length === 0 ? "_" : user.likes.length.toLocaleString(),
     cartStatus: (
       <CustomBadge
