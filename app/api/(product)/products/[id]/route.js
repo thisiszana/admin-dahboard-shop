@@ -70,7 +70,7 @@ export async function POST(req, { params: { id } }) {
   }
 }
 
-export async function PATCH(req) {
+export async function PATCH(req, {params}) {
   try {
     await connectDB();
   } catch (error) {
@@ -84,16 +84,17 @@ export async function PATCH(req) {
   }
 
   try {
-    const { productId } = req.query;
-    if (!productId)
+    const { id } = params;
+    console.log(id)
+    if (!id)
       return NextResponse.json(
         { msg: "Product ID is required", success: false },
         { status: 400 }
       );
 
     const { stock, orders } = await req.json();
-
-    const product = await ProductAdminSorme.findById(productId);
+    console.log(stock, orders)
+    const product = await ProductAdminSorme.findById(id);
     if (!product)
       return NextResponse.json(
         { msg: "Product not found", success: false },
