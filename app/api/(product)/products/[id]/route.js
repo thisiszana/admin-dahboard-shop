@@ -70,13 +70,15 @@ export async function POST(req, { params: { id } }) {
   }
 }
 
-export async function PATCH(req, {params}) {
+export async function PATCH(req, { params }) {
   try {
     await connectDB();
+    console.log("Connected to DB");
   } catch (error) {
+    console.error("Error connecting to DB:", error);
     return NextResponse.json(
       {
-        msg: "server Error!",
+        msg: "Server Error!",
         success: false,
       },
       { status: 500 }
@@ -85,35 +87,51 @@ export async function PATCH(req, {params}) {
 
   try {
     const { id } = params;
-    console.log(id)
-    if (!id)
+    console.log("Product ID received:", id);
+    
+    if (!id) {
+      console.log("Product ID is missing");
       return NextResponse.json(
         { msg: "Product ID is required", success: false },
         { status: 400 }
       );
+    }
 
     const { stock, orders } = await req.json();
-    console.log(stock, orders)
+    console.log("Request body received:", { stock, orders });
+
     const product = await ProductAdminSorme.findById(id);
-    if (!product)
+    console.log("Product found:", product);
+
+    if (!product) {
+      console.log("Product not found for ID:", id);
       return NextResponse.json(
         { msg: "Product not found", success: false },
         { status: 404 }
       );
+    }
 
-    if (stock !== undefined) product.stock = stock;
-    if (orders) product.orders = orders;
+    if (stock !== undefined) {
+      product.stock = stock;
+    }
+    
+    if (orders) {
+      product.orders = orders;
+    }
 
     await product.save();
+    console.log("Product updated successfully");
 
     return NextResponse.json(
       { msg: "Product updated successfully", success: true, product },
       { status: 200 }
     );
   } catch (error) {
+    console.error("Error updating product:", error);
     return NextResponse.json(
       { msg: "Server Error!", success: false },
       { status: 500 }
     );
   }
 }
+
