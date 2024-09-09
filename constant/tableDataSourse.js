@@ -172,3 +172,29 @@ export const usersDataSourse = (users) =>
     ),
     date: moment(user.createdAt).format("L"),
   }));
+
+export const upcommingEventsDataSourse = (events) =>
+  events.map((event) => ({
+    key: event._id,
+    date: moment(event.createdAt).format("MMM Do"),
+    title: (
+      <div className="space-y-1">
+        <p>{event.title}</p>
+        <p className="text-p2 bg-lightGray rounded-lg py-.5 px-2 border w-fit">
+          {moment(event.dueDate).fromNow()}
+        </p>
+      </div>
+    ),
+    status: (
+      <CustomBadge
+        title={event.status}
+        colors={
+          event.status === "Todo"
+            ? "text-darkBlue bg-lightBlue"
+            : event.status === "Progress"
+            ? "text-darkOrange bg-lightOrange"
+            : "text-darkGreen bg-lightGreen"
+        }
+      />
+    ),
+  }));

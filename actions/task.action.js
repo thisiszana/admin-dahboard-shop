@@ -235,3 +235,31 @@ export const editTask = async (data) => {
     };
   }
 };
+
+export const upcommingEvents = async () => {
+  try {
+    await connectDB();
+
+    const tasks = await TaskSorme.find()
+      .populate({
+        path: "createdBy",
+        model: AdminSorme,
+        select: "username name avatar roll",
+      })
+      .sort({ createdAt: -1 })
+      .lean();
+
+    return {
+      tasks: tasks.splice(0, 4),
+      message: MESSAGES.success,
+      status: MESSAGES.success,
+      code: STATUS_CODES.success,
+    };
+  } catch (error) {
+    return {
+      message: MESSAGES.server,
+      status: MESSAGES.failed,
+      code: STATUS_CODES.server,
+    };
+  }
+};

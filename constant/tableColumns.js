@@ -131,3 +131,21 @@ export const usersColumns = [
     title: "Joined At",
   },
 ];
+
+export const upcommingEventsCollumns = [
+  {
+    title: "Date",
+    dataIndex: "date",
+    key: "date",
+  },
+  {
+    title: "Title",
+    dataIndex: "title",
+    key: "title",
+  },
+  {
+    title: "Status",
+    dataIndex: "status",
+    key: "status",
+  },
+];
