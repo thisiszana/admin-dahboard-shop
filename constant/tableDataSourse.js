@@ -198,3 +198,73 @@ export const upcommingEventsDataSourse = (events) =>
       />
     ),
   }));
+
+export const ordersListDataSourse = (orders) =>
+  orders.map((order) => ({
+    key: order.orders._id,
+    _id: (
+      <Link href={`/orders/${order.orders._id}`}>#{shorterText(order.orders._id, 10)}</Link>
+    ),
+    userId: (
+      <Link href={`/users/${order.orders.userId._id}`}>
+        <div className="flex items-center gap-3">
+          <Image
+            as={NextImage}
+            src={order.orders.userId.image || images.person}
+            width={35}
+            height={35}
+            alt={shorterText(order.orders.userId.username, 8)}
+          />
+          <div>
+            <p className="text-p1 font-medium line-clamp-3">
+              {order.orders.userId.username}
+            </p>
+            {order.orders.userId.displayName && (
+              <p className="text-p2 text-darkGray">
+                {order.orders.userId.displayName}
+              </p>
+            )}
+          </div>
+        </div>
+      </Link>
+    ),
+    createdAt: moment(order.orders.createdAt).format("L"),
+    totalProducts: order.orders.summary.totalProducts.toLocaleString(),
+    totalPayable: `$${order.orders.summary.totalPayable.toLocaleString()}`,
+    status: (
+      <CustomBadge
+        condition={order.orders.status === "Completed"}
+        title={order.orders.status}
+      />
+    ),
+    // actions: (
+    //   <OrdersActions
+    //     orderId={order._id}
+    //     orderStatus={JSON.parse(JSON.stringify(order.status))}
+    //   />
+    // ),
+    expandedContent: order.orders.items.map((item) => (
+      <div
+        key={item._id}
+        className="bg-lightGray p-2 border flex items-center justify-between"
+      >
+        <div className="flex items-center gap-4">
+          <div className="w-[50px] h-[50px]">
+            <Image
+              as={NextImage}
+              src={order.product.image}
+              width={50}
+              height={50}
+              alt="product image"
+              className="rounded-lg object-cover w-full h-full"
+            />
+          </div>
+          <p className="line-clamp-2">{order.product.title}</p>
+        </div>
+        <div className="flex items-center justify-between gap-10">
+          <p className="text-p1 font-medium">×{item.quantity}</p>
+          <p>${item.quantity * item.cost}</p>
+        </div>
+      </div>
+    )),
+  }));

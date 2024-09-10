@@ -1,3 +1,5 @@
+import { Table } from "antd";
+
 export const productsColumn = [
   {
     title: "Name",
@@ -147,5 +149,44 @@ export const upcommingEventsCollumns = [
     title: "Status",
     dataIndex: "status",
     key: "status",
+  },
+];
+
+export const ordersColumns = [
+  {
+    title: "Id",
+    dataIndex: "_id",
+    key: "_id",
+  },
+  {
+    title: "User",
+    dataIndex: "userId",
+    key: "userId",
+    responsive: ["lg"],
+  },
+  {
+    title: "Date",
+    dataIndex: "createdAt",
+    key: "createdAt",
+  },
+  {
+    title: "Items",
+    dataIndex: "totalProducts",
+    key: "totalProducts",
+  },
+  {
+    title: "Price",
+    dataIndex: "totalPayable",
+    key: "totalPayable",
+  },
+  {
+    title: "Status",
+    dataIndex: "status",
+    key: "status",
+  },
+  Table.EXPAND_COLUMN,
+  {
+    dataIndex: "actions",
+    key: "actions",
   },
 ];

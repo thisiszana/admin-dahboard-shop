@@ -6,6 +6,8 @@ export const featchSession = () =>
 export const featchTask = ({ queryKey }) =>
   api.get(`api/tasks/${queryKey[1]}`).then((res) => res.data);
 
+export const getOrders = () => api.get("api/orders").then((res) => res.data);
+
 export const getUsers = async () => {
   try {
     const response = await fetch("https://sorme-shop.vercel.app/api/user");
@@ -31,7 +33,9 @@ export const getUsers = async () => {
 
 export const getUser = async (id) => {
   try {
-    const response = await fetch(`https://sorme-shop.vercel.app/api/user/${id}`);
+    const response = await fetch(
+      `https://sorme-shop.vercel.app/api/user/${id}`
+    );
     if (!response.ok) {
       throw new Error("Failed to fetch users data");
     }
