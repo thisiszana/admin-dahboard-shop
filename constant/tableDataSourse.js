@@ -9,6 +9,7 @@ import { shorterText } from "@/utils/fun";
 import CustomBadge from "@/components/shared/CustomBadge";
 import ProductActions from "@/components/pages/products/ui/ProductActions";
 import AdminActions from "@/components/pages/account/ui/admin/AdminActions";
+import OrdersActions from "@/components/pages/orders/ui/OrdersActions";
 
 export const productsDataSourse = (products) =>
   products.map((product) => ({
@@ -237,12 +238,12 @@ export const ordersListDataSourse = (orders) =>
         title={order.orders.status}
       />
     ),
-    // actions: (
-    //   <OrdersActions
-    //     orderId={order._id}
-    //     orderStatus={JSON.parse(JSON.stringify(order.status))}
-    //   />
-    // ),
+    actions: (
+      <OrdersActions
+        orderId={order.orders._id}
+        orderStatus={JSON.parse(JSON.stringify(order.orders.status))}
+      />
+    ),
     expandedContent: order.orders.items.map((item) => (
       <div
         key={item._id}

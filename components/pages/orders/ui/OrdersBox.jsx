@@ -10,9 +10,9 @@ export default function OrdersBox() {
   const { data, isLoading } = useQuery({
     queryKey: [QUERY_KEY.user_orders],
     queryFn: getOrders,
-    gcTime: 0,
+    gcTime: 50 * 1000,
     staleTime: 0,
-    refetchInterval: 10 * 1000,
+    // refetchInterval: 10 * 1000,
   });
   console.log("usequery data:", data, isLoading);
   return (

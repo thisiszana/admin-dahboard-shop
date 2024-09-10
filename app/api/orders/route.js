@@ -11,21 +11,15 @@ export async function GET() {
     const { data } = await axios.get("https://sorme-shop.vercel.app/api/order");
 
     const combinedDetails = [];
-
-    // Loop through orders and items to fetch product details
     for (let order of data.orders) {
       for (let item of order.items) {
         try {
           const product = await ProductAdminSorme.findById(item.productId);
           if (product) {
-            // Push the combined details of order and product in one array
             combinedDetails.push({
-              // orderId: order._id,
-              // orderStatus: order.status,
-              // orderSummary: order.summary,
               orders: order,
-              ...item, // item details
-              product, // product details
+              ...item,
+              product,
             });
           }
         } catch (error) {
@@ -37,13 +31,12 @@ export async function GET() {
       }
     }
 
-    // Return the combined array of orders and products
     return NextResponse.json(
       {
         message: "Order details retrieved successfully",
         status: MESSAGES.success,
         code: 200,
-        combinedDetails, // orders and product details in a single array
+        combinedDetails,
       },
       { status: 200 }
     );
