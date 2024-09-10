@@ -23,10 +23,13 @@ export async function GET(req, { params: { id } }) {
       })
       .lean();
 
-    return NextResponse.json(
+    const response = NextResponse.json(
       { msg: "Success", success: true, task },
       { status: 200 }
     );
+
+    response.headers.set("Cache-Control", "no-store");
+    return response;
   } catch (error) {
     return NextResponse.json(
       { msg: "Server Error!", success: false },

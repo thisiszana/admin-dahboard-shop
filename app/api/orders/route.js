@@ -31,7 +31,7 @@ export async function GET() {
       }
     }
 
-    return NextResponse.json(
+    const response = NextResponse.json(
       {
         message: "Order details retrieved successfully",
         status: MESSAGES.success,
@@ -40,6 +40,9 @@ export async function GET() {
       },
       { status: 200 }
     );
+
+    response.headers.set("Cache-Control", "no-store");
+    return response;
   } catch (error) {
     console.error("orders server error:", error.message);
     return NextResponse.json(

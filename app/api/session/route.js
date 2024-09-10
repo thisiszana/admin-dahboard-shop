@@ -22,11 +22,13 @@ export async function GET() {
         { status: 401 }
       );
 
-    return NextResponse.json(
+    const response = NextResponse.json(
       { msg: "Success", success: true, session },
       { status: 200 }
     );
-    
+
+    response.headers.set("Cache-Control", "no-store");
+    return response;
   } catch (error) {
     return NextResponse.json(
       { msg: "Server Error!", success: false },

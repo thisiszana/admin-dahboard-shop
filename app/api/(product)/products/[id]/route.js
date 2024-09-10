@@ -88,7 +88,7 @@ export async function PATCH(req, { params }) {
   try {
     const { id } = params;
     console.log("Product ID received:", id);
-    
+
     if (!id) {
       console.log("Product ID is missing");
       return NextResponse.json(
@@ -114,7 +114,7 @@ export async function PATCH(req, { params }) {
     if (stock !== undefined) {
       product.stock = stock;
     }
-    
+
     if (orders) {
       product.orders = orders;
     }
@@ -122,10 +122,13 @@ export async function PATCH(req, { params }) {
     await product.save();
     console.log("Product updated successfully");
 
-    return NextResponse.json(
+    const response = NextResponse.json(
       { msg: "Product updated successfully", success: true, product },
       { status: 200 }
     );
+
+    response.headers.set("Cache-Control", "no-store");
+    return response;
   } catch (error) {
     console.error("Error updating product:", error);
     return NextResponse.json(
@@ -134,4 +137,3 @@ export async function PATCH(req, { params }) {
     );
   }
 }
-
