@@ -3,12 +3,13 @@
 import connectDB from "@/utils/connectDB";
 import { MESSAGES, STATUS_CODES } from "@/utils/message";
 import { getServerSession } from "@/utils/session";
+import axios from "axios";
 
-export const updateOrderStatus = async (data) => {
+export const updateOrderStatus = async (order) => {
   try {
     await connectDB();
 
-    const { id, action } = data;
+    const { id, action } = order;
 
     const session = getServerSession();
 
@@ -30,8 +31,28 @@ export const updateOrderStatus = async (data) => {
       `https://sorme-shop.vercel.app/api/order/${id}`
     );
 
-    console.log(data)
+    let newStatus;
+
+    if (action === "Completed") {
+      newStatus = "Completed";
+    } else {
+      newStatus = "Pending";
+    }
+
+    await axios.patch(`https://sorme-shop.vercel.app/api/order/${id}`, {
+      status: newStatus,
+    });
+
+    return {
+      message: MESSAGES.success,
+      status: MESSAGES.success,
+      code: STATUS_CODES.success,
+    };
+
+    console.log(data);
+    console.log(newStatus);
   } catch (error) {
+    console.log(error.message);
     return {
       message: MESSAGES.server,
       status: MESSAGES.failed,
