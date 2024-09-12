@@ -1,6 +1,8 @@
 "use client"
 
-import { Empty } from "antd";
+import { userOrdersColumns } from "@/constant/tableColumns";
+import { userOrdersDataSourse } from "@/constant/tableDataSourse";
+import { Empty, Table } from "antd";
 
 export default function UserOrders({orders}) {
   if (orders.length === 0) {
@@ -10,7 +12,16 @@ export default function UserOrders({orders}) {
       </div>
     );
   }
+
+  console.log(orders)
   return (
-    <div>UserOrders</div>
+    <div className="w-full tableContainer border-none">
+      <Table
+        columns={userOrdersColumns}
+        pagination={false}
+        scroll={{ x: true }}
+        dataSource={userOrdersDataSourse(orders)}
+      />
+    </div>
   )
 }

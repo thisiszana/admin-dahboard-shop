@@ -213,3 +213,64 @@ export const orderPageCheckoutTableColumns = [
     dataIndex: "amount",
   },
 ];
+
+export const userCommentsColumns = [
+  {
+    title: "Product",
+    dataIndex: "product",
+    key: "product",
+  },
+  {
+    title: "Date",
+    dataIndex: "date",
+    key: "date",
+  },
+  {
+    title: "Title",
+    dataIndex: "title",
+    key: "title",
+  },
+  {
+    title: "IsAnswered",
+    dataIndex: "isAnswered",
+    key: "isAnswered",
+  },
+  {
+    title: "Status",
+    dataIndex: "status",
+    key: "status",
+  },
+  {
+    title: "Actions",
+    dataIndex: "actions",
+    key: "actions",
+  },
+];
+
+export const userOrdersColumns = [
+  {
+    title: "Id",
+    dataIndex: "_id",
+    key: "_id",
+  },
+  {
+    title: "Date",
+    dataIndex: "date",
+    key: "date",
+  },
+  {
+    title: "Items",
+    dataIndex: "totalProducts",
+    key: "totalProducts",
+  },
+  {
+    title: "Price",
+    dataIndex: "totalPayable",
+    key: "totalPayable",
+  },
+  {
+    title: "Status",
+    dataIndex: "status",
+    key: "status",
+  },
+];

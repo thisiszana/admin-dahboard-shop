@@ -288,3 +288,66 @@ export const orderCheckoutSummaryDataSourse = (items) =>
     unitPrice: `$${item.cost.toLocaleString()}`,
     amount: `$${(item.quantity * item.cost).toLocaleString()}`,
   }));
+
+export const userCommentsDataSourse = (comments) =>
+  comments.map((comment) => ({
+    key: comment._id,
+    product: (
+      <Link href={`/products/${comment.productId}`}>
+        #{shorterText(comment.productId, 8)}
+      </Link>
+    ),
+    date: (
+      <div>
+        <p>{moment(comment.createdAt).format("L")}</p>
+        <p className="text-p2 text-darkGray">
+          {moment(comment.createdAt).format("LT")}
+        </p>
+      </div>
+    ),
+    title: <p className="text-p2">{shorterText(comment.title, 20)}</p>,
+    isAnswered: (
+      <CustomBadge
+        condition={comment.status === "Answered"}
+        title={comment.status}
+      />
+    ),
+    status: (
+      <CustomBadge
+        condition={comment.published}
+        title={comment.published ? "Published" : "Draft"}
+      />
+    ),
+    // actions: (
+    //   <CommentAction
+    //     _id={JSON.parse(JSON.stringify(comment._id))}
+    //     answer={JSON.parse(JSON.stringify(comment.answer))}
+    //     status={JSON.parse(JSON.stringify(comment.status))}
+    //     published={JSON.parse(JSON.stringify(comment.published))}
+    //   />
+    // ),
+  }));
+
+export const userOrdersDataSourse = (orders) =>
+  orders.map((order) => ({
+    key: order._id,
+    _id: (
+      <Link href={`/orders/${order._id}`}>#{shorterText(order._id, 8)}</Link>
+    ),
+    date: (
+      <div>
+        <p>{moment(order.createdAt).format("L")}</p>
+        <p className="text-p2 text-darkGray">
+          {moment(order.createdAt).format("LT")}
+        </p>
+      </div>
+    ),
+    totalProducts: order.summary.totalProducts,
+    totalPayable: `$${order.summary.totalPayable.toLocaleString()}`,
+    status: (
+      <CustomBadge
+        condition={order.status === "Completed"}
+        title={order.status}
+      />
+    ),
+  }));
