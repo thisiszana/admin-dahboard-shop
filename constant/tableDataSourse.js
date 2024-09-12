@@ -204,7 +204,9 @@ export const ordersListDataSourse = (orders) =>
   orders.map((order) => ({
     key: order.orders._id,
     _id: (
-      <Link href={`/orders/${order.orders._id}`}>#{shorterText(order.orders._id, 10)}</Link>
+      <Link href={`/orders/${order.orders._id}`}>
+        #{shorterText(order.orders._id, 10)}
+      </Link>
     ),
     userId: (
       <Link href={`/users/${order.orders.userId._id}`}>
@@ -268,4 +270,21 @@ export const ordersListDataSourse = (orders) =>
         </div>
       </div>
     )),
+  }));
+
+export const orderCheckoutSummaryDataSourse = (items) =>
+  items.map((item) => ({
+    key: item.productId._id,
+    product: (
+      <Image
+        as={NextImage}
+        src={item.productId.image}
+        width={50}
+        height={50}
+        alt={shorterText(item.productId.title, 20)}
+      />
+    ),
+    qty: item.quantity,
+    unitPrice: `$${item.cost.toLocaleString()}`,
+    amount: `$${(item.quantity * item.cost).toLocaleString()}`,
   }));

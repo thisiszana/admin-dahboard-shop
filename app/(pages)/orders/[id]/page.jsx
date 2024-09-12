@@ -1,7 +1,5 @@
+import OrderDetailsPage from "@/components/pages/order/OrderDetailsPage";
 
-
-export default function Order() {
-  return (
-    <div>page</div>
-  )
+export default function OrderِDetails({ params }) {
+  return <OrderDetailsPage id={params.id} />;
 }

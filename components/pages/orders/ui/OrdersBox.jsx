@@ -12,16 +12,18 @@ export default function OrdersBox() {
     queryFn: getOrders,
     gcTime: 0,
     staleTime: 0,
-    refetchInterval: 50 * 1000,
+    refetchInterval: 50 * 10000,
   });
-  console.log("usequery data:", data, isLoading);
+
+  console.log("useQuery data:", data);
+
+  if (isLoading) {
+    return <LoaderBar />;
+  }
+
   return (
     <>
-      {isLoading ? (
-        <LoaderBar />
-      ) : (
-        <OrdersTable orders={data?.combinedDetails} />
-      )}
+      <OrdersTable orders={data?.combinedDetails} />
     </>
   );
 }

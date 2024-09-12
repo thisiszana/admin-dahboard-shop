@@ -190,3 +190,26 @@ export const ordersColumns = [
     key: "actions",
   },
 ];
+
+export const orderPageCheckoutTableColumns = [
+  {
+    key: "product",
+    title: "Product",
+    dataIndex: "product",
+  },
+  {
+    key: "qty",
+    title: "Qty",
+    dataIndex: "qty",
+  },
+  {
+    key: "unitPrice",
+    title: "Unit Price",
+    dataIndex: "unitPrice",
+  },
+  {
+    key: "amount",
+    title: "Amount",
+    dataIndex: "amount",
+  },
+];

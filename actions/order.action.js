@@ -5,6 +5,35 @@ import { MESSAGES, STATUS_CODES } from "@/utils/message";
 import { getServerSession } from "@/utils/session";
 import axios from "axios";
 
+export const getOrder = async (id) => {
+  try {
+    const response = await axios.get(
+      `https://sorme-shop.vercel.app/api/order/${id}`
+    );
+
+    if (response.status !== 200) {
+      throw new Error("Failed to fetch order");
+    }
+
+    const data = response.data;
+    console.log("data order by id", data);
+
+    return {
+      order: data.order,
+      message: MESSAGES.success,
+      status: MESSAGES.success,
+      code: STATUS_CODES.success,
+    };
+  } catch (error) {
+    console.log("error order by id", error.message);
+    return {
+      message: MESSAGES.server,
+      status: MESSAGES.failed,
+      code: STATUS_CODES.server,
+    };
+  }
+};
+
 export const updateOrderStatus = async (order) => {
   try {
     await connectDB();
@@ -27,10 +56,6 @@ export const updateOrderStatus = async (order) => {
         code: STATUS_CODES.forbidden,
       };
 
-    const { data } = await axios.get(
-      `https://sorme-shop.vercel.app/api/order/${id}`
-    );
-
     let newStatus;
 
     if (action === "Completed") {
@@ -48,9 +73,6 @@ export const updateOrderStatus = async (order) => {
       status: MESSAGES.success,
       code: STATUS_CODES.success,
     };
-
-    console.log(data);
-    console.log(newStatus);
   } catch (error) {
     console.log(error.message);
     return {

@@ -12,6 +12,9 @@ export default function OrdersTable({ orders }) {
         dataSource={ordersListDataSourse(orders)}
         scroll={{ x: true }}
         pagination={false}
+        expandable={{
+          expandedRowRender: (record) => <p>{record.expandedContent}</p>,
+        }}
       />
     </div>
   )
