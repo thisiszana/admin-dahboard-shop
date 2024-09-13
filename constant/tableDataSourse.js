@@ -351,3 +351,52 @@ export const userOrdersDataSourse = (orders) =>
       />
     ),
   }));
+
+export const commentsDataSourse = (comments) =>
+  comments.map((comment) => ({
+    key: comment.comment._id,
+    id: `#${shorterText(comment.comment._id, 10)}`,
+    user: (
+      <Link
+        href={`/users/${comment.comment.senderId?._id}`}
+        className="flex items-center gap-3"
+      >
+        <Image
+          as={NextImage}
+          src={comment.comment.senderId.image || images.person}
+          width={40}
+          height={40}
+          alt="user"
+        />
+        <div>
+          <p className="text-p1 font-medium">{comment.comment.senderId.username}</p>
+          {comment.comment.senderId.displayName && (
+            <p className="text-p2 text-darkGray">
+              {comment.comment.senderId.displayName}
+            </p>
+          )}
+        </div>
+      </Link>
+    ),
+    status: (
+      <CustomBadge
+        condition={comment.comment.published}
+        title={comment.comment.published ? "Published" : "Draft"}
+      />
+    ),
+    isAnswered: (
+      <CustomBadge
+        condition={comment.comment.status === "Answered"}
+        title={comment.comment.status}
+      />
+    ),
+    date: moment(comment.createdAt).fromNow(),
+    // action: (
+    //   <CommentAction
+    //     _id={JSON.parse(JSON.stringify(comment.comment._id))}
+    //     answer={JSON.parse(JSON.stringify(comment.comment.answer))}
+    //     status={JSON.parse(JSON.stringify(comment.comment.status))}
+    //     published={JSON.parse(JSON.stringify(comment.comment.published))}
+    //   />
+    // ),
+  }));

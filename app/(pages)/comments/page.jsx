@@ -1,7 +1,5 @@
-
+import CommentsPage from "@/components/pages/comments/CommentsPage";
 
 export default function Comments() {
-  return (
-    <div>Comments</div>
-  )
+  return <CommentsPage />;
 }
