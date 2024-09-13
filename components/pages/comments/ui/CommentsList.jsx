@@ -12,9 +12,9 @@ export default function CommentsList() {
   const { data, isLoading } = useQuery({
     queryKey: [QUERY_KEY.comments],
     queryFn: getComments,
-    gcTime: 50 * 1000,
+    gcTime: 0,
     staleTime: 0,
-    // refetchInterval: 50 * 1000,
+    refetchInterval: 50 * 1000,
   });
   console.log("client comments", data);
 

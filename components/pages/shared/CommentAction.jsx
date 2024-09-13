@@ -1,31 +1,20 @@
 "use client";
 
-import { useState } from "react";
-
 import { commentActions } from "@/actions/comment.action";
-import useServerAction from "@/hooks/useCallServerAction";
-import CustomBtn from "@/components/shared/CustomBtn";
-import {
-  CircleClose,
-  Document,
-  Edit,
-  EyeOpen,
-  MenuDots,
-  Trash,
-} from "@/components/icons/Icon";
+import { CircleClose, Document, Edit, EyeOpen, MenuDots, Trash } from "@/components/icons/Icon";
 import CustomBadge from "@/components/shared/CustomBadge";
+import CustomBtn from "@/components/shared/CustomBtn";
 import CustomTextarea from "@/components/shared/form/CustomTextarea";
 import Loader from "@/components/shared/Loader";
-import { Modal, Popover } from "antd";
+import useServerAction from "@/hooks/useCallServerAction";
+import { QUERY_KEY } from "@/services/queryKey";
 import { shorterText } from "@/utils/fun";
+import { useQueryClient } from "@tanstack/react-query";
+import { Modal, Popover } from "antd";
+import { useState } from "react";
 
-export default function CommentAction({
-  _id,
-  answer,
-  status,
-  published,
-  productId,
-}) {
+const CommentAction = ({ _id, answer, status, published, productId }) => {
+  const queryClient = useQueryClient();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [value, setValue] = useState(answer);
@@ -33,25 +22,37 @@ export default function CommentAction({
   const { loading: publishLoading, res: publish } = useServerAction(
     commentActions,
     { id: _id, productId, action: "publish" },
-    () => closePopover()
+    () => {
+      queryClient.refetchQueries(["comments"]);
+      closePopover();
+    }
   );
 
   const { loading: draftLoading, res: draft } = useServerAction(
     commentActions,
     { id: _id, productId, action: "draft" },
-    () => closePopover()
+    () => () => {
+      queryClient.refetchQueries(["comments"]);
+      closePopover();
+    }
   );
 
   const { loading: deleteLoading, res: deletingComment } = useServerAction(
     commentActions,
     { id: _id, productId, action: "delete" },
-    () => closePopover()
+    () => {
+      queryClient.refetchQueries(["comments"]);
+      closePopover();
+    }
   );
 
   const { loading: answerLoading, res: changeAnswer } = useServerAction(
     commentActions,
     { id: _id, productId, action: "answer", value },
-    () => closeModal()
+    () => {
+      queryClient.refetchQueries(["comments"]);
+      closeModal();
+    }
   );
 
   const openModal = () => {
@@ -214,4 +215,6 @@ export default function CommentAction({
       </Popover>
     </div>
   );
-}
+};
+
+export default CommentAction;

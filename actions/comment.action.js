@@ -1,4 +1,4 @@
-"use server"
+"use server";
 
 import axios from "axios";
 
@@ -14,13 +14,20 @@ export const commentActions = async ({ id, productId, action, value = "" }) => {
       {
         action,
         value,
+      },
+      {
+        headers: {
+          "Cache-Control": "no-cache, no-store, must-revalidate",
+          Pragma: "no-cache",
+          Expires: "0",
+        },
       }
     );
 
     if (response.status === 200 && action === "delete") {
       await connectDB();
 
-      const product = await ProductAdminSorme.findById(productId); // پیدا کردن محصول با آیدی
+      const product = await ProductAdminSorme.findById(productId);
       if (!product) {
         return { success: false, error: "Product not found!" };
       }
@@ -42,7 +49,6 @@ export const commentActions = async ({ id, productId, action, value = "" }) => {
       };
     }
 
-    revalidatePath("/products");
     revalidatePath("/comments");
 
     return {
