@@ -10,6 +10,7 @@ import CustomBadge from "@/components/shared/CustomBadge";
 import ProductActions from "@/components/pages/products/ui/ProductActions";
 import AdminActions from "@/components/pages/account/ui/admin/AdminActions";
 import OrdersActions from "@/components/pages/orders/ui/OrdersActions";
+import CommentAction from "@/components/pages/shared/CommentAction";
 
 export const productsDataSourse = (products) =>
   products.map((product) => ({
@@ -318,14 +319,15 @@ export const userCommentsDataSourse = (comments) =>
         title={comment.published ? "Published" : "Draft"}
       />
     ),
-    // actions: (
-    //   <CommentAction
-    //     _id={JSON.parse(JSON.stringify(comment._id))}
-    //     answer={JSON.parse(JSON.stringify(comment.answer))}
-    //     status={JSON.parse(JSON.stringify(comment.status))}
-    //     published={JSON.parse(JSON.stringify(comment.published))}
-    //   />
-    // ),
+    actions: (
+      <CommentAction
+        _id={JSON.parse(JSON.stringify(comment._id))}
+        answer={JSON.parse(JSON.stringify(comment.answer))}
+        status={JSON.parse(JSON.stringify(comment.status))}
+        published={JSON.parse(JSON.stringify(comment.published))}
+        productId={JSON.parse(JSON.stringify(comment.productId))}
+      />
+    ),
   }));
 
 export const userOrdersDataSourse = (orders) =>
@@ -369,7 +371,9 @@ export const commentsDataSourse = (comments) =>
           alt="user"
         />
         <div>
-          <p className="text-p1 font-medium">{comment.comment.senderId.username}</p>
+          <p className="text-p1 font-medium">
+            {comment.comment.senderId.username}
+          </p>
           {comment.comment.senderId.displayName && (
             <p className="text-p2 text-darkGray">
               {comment.comment.senderId.displayName}
@@ -391,12 +395,13 @@ export const commentsDataSourse = (comments) =>
       />
     ),
     date: moment(comment.createdAt).fromNow(),
-    // action: (
-    //   <CommentAction
-    //     _id={JSON.parse(JSON.stringify(comment.comment._id))}
-    //     answer={JSON.parse(JSON.stringify(comment.comment.answer))}
-    //     status={JSON.parse(JSON.stringify(comment.comment.status))}
-    //     published={JSON.parse(JSON.stringify(comment.comment.published))}
-    //   />
-    // ),
+    action: (
+      <CommentAction
+        _id={JSON.parse(JSON.stringify(comment.comment._id))}
+        answer={JSON.parse(JSON.stringify(comment.comment.answer))}
+        status={JSON.parse(JSON.stringify(comment.comment.status))}
+        published={JSON.parse(JSON.stringify(comment.comment.published))}
+        productId={JSON.parse(JSON.stringify(comment.comment.productId))}
+      />
+    ),
   }));

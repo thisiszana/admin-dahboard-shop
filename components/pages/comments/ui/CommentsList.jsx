@@ -5,7 +5,7 @@ import { getComments } from "@/services/queries";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEY } from "@/services/queryKey";
 import { Empty, Table } from "antd";
-import { commentsColumns, userCommentsColumns } from "@/constant/tableColumns";
+import { commentsColumns } from "@/constant/tableColumns";
 import { commentsDataSourse } from "@/constant/tableDataSourse";
 
 export default function CommentsList() {
