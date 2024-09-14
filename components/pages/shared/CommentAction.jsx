@@ -1,12 +1,20 @@
 "use client";
 
 import { commentActions } from "@/actions/comment.action";
-import { CircleClose, Document, Edit, EyeOpen, MenuDots, Trash } from "@/components/icons/Icon";
+import {
+  CircleClose,
+  Document,
+  Edit,
+  EyeOpen,
+  MenuDots,
+  Trash,
+} from "@/components/icons/Icon";
 import CustomBadge from "@/components/shared/CustomBadge";
 import CustomBtn from "@/components/shared/CustomBtn";
 import CustomTextarea from "@/components/shared/form/CustomTextarea";
 import Loader from "@/components/shared/Loader";
 import useServerAction from "@/hooks/useCallServerAction";
+import { useCommentAction } from "@/hooks/useCommentAction";
 import { QUERY_KEY } from "@/services/queryKey";
 import { shorterText } from "@/utils/fun";
 import { useQueryClient } from "@tanstack/react-query";
@@ -19,38 +27,36 @@ const CommentAction = ({ _id, answer, status, published, productId }) => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [value, setValue] = useState(answer);
 
-  const { loading: publishLoading, res: publish } = useServerAction(
-    commentActions,
+  const { loading: publishLoading, res: publish } = useCommentAction(
+    
     { id: _id, productId, action: "publish" },
     () => {
-      queryClient.refetchQueries(["comments"]);
+      queryClient.invalidateQueries([QUERY_KEY.user_comments]);
       closePopover();
     }
   );
 
-  const { loading: draftLoading, res: draft } = useServerAction(
-    commentActions,
+  const { loading: draftLoading, res: draft } = useCommentAction(
+    
     { id: _id, productId, action: "draft" },
-    () => () => {
-      queryClient.refetchQueries(["comments"]);
+    () => {
+      queryClient.invalidateQueries([QUERY_KEY.user_comments]);
       closePopover();
     }
   );
 
   const { loading: deleteLoading, res: deletingComment } = useServerAction(
-    commentActions,
+    
     { id: _id, productId, action: "delete" },
     () => {
-      queryClient.refetchQueries(["comments"]);
       closePopover();
     }
   );
 
   const { loading: answerLoading, res: changeAnswer } = useServerAction(
-    commentActions,
+    
     { id: _id, productId, action: "answer", value },
     () => {
-      queryClient.refetchQueries(["comments"]);
       closeModal();
     }
   );

@@ -11,7 +11,7 @@ export async function GET() {
 
     if (response.status !== 200) {
       return NextResponse.json(
-        { message: "Failed to fetch comment" },
+        { msg: "Failed to fetch comment", success: false },
         { status: response.status }
       );
     }
@@ -41,24 +41,19 @@ export async function GET() {
     console.log("server data comments", combinedData);
     const res = NextResponse.json(
       {
-        message: "Success",
-        status: "success",
-        code: 200,
+        msg: "Comments retrieved successfully",
+        success: true,
         combinedData,
       },
       { status: 200 }
     );
 
-    res.headers.set("Cache-Control", "no-store");
+    res.headers.set("Cache-Control", "no-store, no-cache, must-revalidate");
     return res;
   } catch (error) {
     console.log("comments error", error);
     return NextResponse.json(
-      {
-        message: "Server error!",
-        status: "failed",
-        code: 500,
-      },
+      { msg: "Server Error!", success: false },
       { status: 500 }
     );
   }

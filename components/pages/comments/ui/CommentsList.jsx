@@ -10,11 +10,11 @@ import { commentsDataSourse } from "@/constant/tableDataSourse";
 
 export default function CommentsList() {
   const { data, isLoading } = useQuery({
-    queryKey: [QUERY_KEY.comments],
+    queryKey: [QUERY_KEY.user_comments],
     queryFn: getComments,
     gcTime: 0,
-    staleTime: 0,
-    refetchInterval: 50 * 1000,
+    staleTime: 5 * 1000,
+    refetchInterval: 5 * 1000,
   });
   console.log("client comments", data);
 

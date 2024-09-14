@@ -1,8 +1,9 @@
+import { NextResponse } from "next/server";
+
+import axios from "axios";
+
 import { ProductAdminSorme } from "@/models/productAdminSorme";
 import connectDB from "@/utils/connectDB";
-import { MESSAGES, STATUS_CODES } from "@/utils/message";
-import axios from "axios";
-import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
@@ -33,24 +34,22 @@ export async function GET() {
 
     const response = NextResponse.json(
       {
-        message: "Order details retrieved successfully",
-        status: MESSAGES.success,
-        code: 200,
+        msg: "Order details retrieved successfully",
+        success: true,
         combinedDetails,
       },
       { status: 200 }
     );
 
-    response.headers.set("Cache-Control", "no-store");
+    response.headers.set(
+      "Cache-Control",
+      "no-store, no-cache, must-revalidate"
+    );
     return response;
   } catch (error) {
     console.error("orders server error:", error.message);
     return NextResponse.json(
-      {
-        message: MESSAGES.server,
-        status: MESSAGES.failed,
-        code: STATUS_CODES.server,
-      },
+      { msg: "Server Error!", success: false },
       { status: 500 }
     );
   }

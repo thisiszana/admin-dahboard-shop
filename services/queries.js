@@ -35,6 +35,7 @@ export const getUser = async (id) => {
       return null;
     });
 };
+
 export const getComments = async () => {
   return api
     .get("/api/comments")
@@ -43,4 +44,19 @@ export const getComments = async () => {
       console.error("Error fetching comments data:", error);
       return null;
     });
+};
+
+export const commentAction = async ({ id, productId, action, value = "" }) => {
+  try {
+    const response = await api.post(`/api/comments/${id}`, {
+      productId,
+      action,
+      value,
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Error in comment action:", error);
+    throw new Error("Error in comment action");
+  }
 };
