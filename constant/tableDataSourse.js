@@ -394,7 +394,7 @@ export const commentsDataSourse = (comments) =>
         title={comment.comment.status}
       />
     ),
-    date: moment(comment.createdAt).fromNow(),
+    date: moment(comment.comment.createdAt).fromNow(),
     action: (
       <CommentAction
         _id={JSON.parse(JSON.stringify(comment.comment._id))}

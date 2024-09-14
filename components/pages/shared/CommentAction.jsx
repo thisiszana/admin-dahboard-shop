@@ -28,7 +28,6 @@ const CommentAction = ({ _id, answer, status, published, productId }) => {
   const [value, setValue] = useState(answer);
 
   const { loading: publishLoading, res: publish } = useCommentAction(
-    
     { id: _id, productId, action: "publish" },
     () => {
       queryClient.invalidateQueries([QUERY_KEY.user_comments]);
@@ -37,7 +36,6 @@ const CommentAction = ({ _id, answer, status, published, productId }) => {
   );
 
   const { loading: draftLoading, res: draft } = useCommentAction(
-    
     { id: _id, productId, action: "draft" },
     () => {
       queryClient.invalidateQueries([QUERY_KEY.user_comments]);
@@ -45,18 +43,18 @@ const CommentAction = ({ _id, answer, status, published, productId }) => {
     }
   );
 
-  const { loading: deleteLoading, res: deletingComment } = useServerAction(
-    
+  const { loading: deleteLoading, res: deletingComment } = useCommentAction(
     { id: _id, productId, action: "delete" },
     () => {
+      queryClient.invalidateQueries([QUERY_KEY.user_comments]);
       closePopover();
     }
   );
 
-  const { loading: answerLoading, res: changeAnswer } = useServerAction(
-    
+  const { loading: answerLoading, res: changeAnswer } = useCommentAction(
     { id: _id, productId, action: "answer", value },
     () => {
+      queryClient.invalidateQueries([QUERY_KEY.user_comments]);
       closeModal();
     }
   );

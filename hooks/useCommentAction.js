@@ -11,9 +11,9 @@ export const useCommentAction = (
   callback
 ) => {
   const [loading, setLoading] = useState(false);
-console.log(id)
+
   const res = async () => {
-    setLoading(true);
+    setLoading(() => true);
     try {
       const res = await api.post(`/api/comments/${id}`, {
         productId,
@@ -24,18 +24,18 @@ console.log(id)
       console.log("useComment", res);
 
       if (
-        res.data.code === 200 ||
-        res.data.code === 201 ||
-        res.data.code === 202
+        res.data.data.status === 200 ||
+        res.data.data.status === 201 ||
+        res.data.data.status === 202
       ) {
-        toast.success(res.data.data.message);
+        toast.success(res.data.data.msg);
         callback && callback();
       }
     } catch (error) {
-      toast.error(res.data.data.message);
+      toast.error(res.data.data.msg);
       console.error("Action failed:", error);
     } finally {
-      setLoading(false);
+      setLoading(() => false);
     }
   };
 
