@@ -11,7 +11,7 @@ export default function OrdersBox() {
     queryKey: [QUERY_KEY.user_orders],
     queryFn: getOrders,
     gcTime: 0,
-    staleTime: 0,
+    staleTime: 5 * 1000,
     refetchInterval: 50 * 10000,
   });
 

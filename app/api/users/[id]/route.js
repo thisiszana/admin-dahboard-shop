@@ -1,6 +1,8 @@
-import { MESSAGES, STATUS_CODES } from "@/utils/message";
-import axios from "axios";
 import { NextResponse } from "next/server";
+
+import axios from "axios";
+
+import { MESSAGES, STATUS_CODES } from "@/utils/message";
 
 export async function GET(req, { params: { id } }) {
   try {
@@ -25,10 +27,10 @@ export async function GET(req, { params: { id } }) {
       { status: 200 }
     );
 
-    res.headers.set("Cache-Control", "no-store");
+    res.headers.set("Cache-Control", "no-store, no-cache, must-revalidate");
     return res;
   } catch (error) {
-    console.log("eror in server user id", error.message)
+    console.log("error in server user id", error.message);
     return NextResponse.json(
       {
         message: MESSAGES.server,

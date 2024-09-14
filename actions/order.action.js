@@ -4,6 +4,7 @@ import connectDB from "@/utils/connectDB";
 import { MESSAGES, STATUS_CODES } from "@/utils/message";
 import { getServerSession } from "@/utils/session";
 import axios from "axios";
+import { revalidatePath } from "next/cache";
 
 export const getOrder = async (id) => {
   try {
@@ -67,6 +68,8 @@ export const updateOrderStatus = async (order) => {
     await axios.patch(`https://sorme-shop.vercel.app/api/order/${id}`, {
       status: newStatus,
     });
+
+    revalidatePath("/orders")
 
     return {
       message: MESSAGES.success,

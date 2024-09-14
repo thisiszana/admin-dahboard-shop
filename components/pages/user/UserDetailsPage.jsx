@@ -12,7 +12,7 @@ import CustomLink from "@/components/shared/CustomLink";
 import { LeftAngle } from "@/components/icons/Icon";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEY } from "@/services/queryKey";
-import Loader from "@/components/shared/Loader";
+import LoaderBar from "@/components/shared/LoaderBar";
 
 export default function UserDetailsPage({ id }) {
   const { data, isLoading } = useQuery({
@@ -24,10 +24,10 @@ export default function UserDetailsPage({ id }) {
   });
 
   if (isLoading) {
-    return <Loader />;
+    return <LoaderBar />;
   }
 
-  console.log(data);
+  console.log("user details page data",data);
 
   return (
     <>

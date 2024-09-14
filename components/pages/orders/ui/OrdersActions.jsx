@@ -10,11 +10,14 @@ import {
 import CustomBtn from "@/components/shared/CustomBtn";
 import Loader from "@/components/shared/Loader";
 import useServerAction from "@/hooks/useCallServerAction";
+import { QUERY_KEY } from "@/services/queryKey";
+import { useQueryClient } from "@tanstack/react-query";
 import { Popover } from "antd";
 import Link from "next/link";
 import { useState } from "react";
 
 export default function OrdersActions({ orderId, orderStatus }) {
+  const queryClient = useQueryClient();
   const [openPopover, setOpenPopover] = useState(false);
 
   const { loading, res } = useServerAction(
@@ -23,7 +26,10 @@ export default function OrdersActions({ orderId, orderStatus }) {
       id: orderId,
       action: orderStatus === "Pending" ? "Completed" : "Pending",
     },
-    () => setOpenPopover(false)
+    () => {
+      queryClient.invalidateQueries([QUERY_KEY.user_orders, orderId]);
+      setOpenPopover(false);
+    }
   );
 
   const onOpenChange = (newOpen) => {

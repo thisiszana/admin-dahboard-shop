@@ -23,10 +23,10 @@ export async function GET(req) {
       { status: 200 }
     );
 
-    res.headers.set("Cache-Control", "no-store");
+    res.headers.set("Cache-Control", "no-store, no-cache, must-revalidate");
     return res;
   } catch (error) {
-    console.error("orders server error:", error.message);
+    console.error("user server error:", error.message);
     return NextResponse.json(
       {
         message: MESSAGES.server,
