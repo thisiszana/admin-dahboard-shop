@@ -158,9 +158,19 @@ export const menuLinks = [
     link: "/products",
   },
   {
+    title: "Categories",
+    image: icons.basket,
+    link: "/categories",
+  },
+  {
     title: "Add Product",
     image: icons.layerPlus,
     link: "/add-product",
+  },
+  {
+    title: "Add Category",
+    image: icons.layerPlus,
+    link: "/add-category",
   },
   {
     title: "Comments",
