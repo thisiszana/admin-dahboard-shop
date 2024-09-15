@@ -17,6 +17,7 @@ export const MESSAGES = {
   invalidId: "Invalid Id",
   noContent: "There is no data!",
   productEdited: "Product Edited",
+  categoryEdited: "Category Edited",
   badRequest: "Bad Request!",
   unAuthorized: "You are not authorized!",
   user_exist: "Username already Exists!",
