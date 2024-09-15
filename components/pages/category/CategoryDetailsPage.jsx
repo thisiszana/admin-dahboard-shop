@@ -3,5 +3,5 @@ import Category from "./ui/Category";
 
 export default async function CategoryDetailsPage({ id }) {
   const data = await getCategory(id);
-  return <Category category={data.category} />;
+  return <Category category={JSON.parse(JSON.stringify(data.category))} />;
 }

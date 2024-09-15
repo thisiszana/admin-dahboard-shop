@@ -138,7 +138,7 @@ export const categoryDataSourse = (category) =>
       </Link>
     ),
     actions: (
-      <CategoryActions productId={c._id} published={c.published} />
+      <CategoryActions categoryId={c._id} published={c.published} />
     ),
   }));
 

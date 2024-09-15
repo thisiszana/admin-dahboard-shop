@@ -143,6 +143,7 @@ export const changeCategoryStatus = async (data) => {
       code: STATUS_CODES.success,
     };
   } catch (error) {
+    console.log("ssssssssssss", error.message);
     return {
       message: MESSAGES.server,
       status: MESSAGES.failed,
@@ -151,7 +152,7 @@ export const changeCategoryStatus = async (data) => {
   }
 };
 
-export const editProduct = async (data) => {
+export const editCategory = async (data) => {
   try {
     await connectDB();
 
@@ -219,7 +220,7 @@ export const editProduct = async (data) => {
   }
 };
 
-export const deleteProduct = async (data) => {
+export const deleteCategory = async (data) => {
   try {
     await connectDB();
 
