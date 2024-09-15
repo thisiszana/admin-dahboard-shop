@@ -112,6 +112,18 @@ export const productsPageBread = [
     inActive: true,
   },
 ];
+export const categoriesPageBread = [
+  {
+    title: <Link href="/dashboard">Dashboard</Link>,
+  },
+  {
+    title: "Category",
+  },
+  {
+    title: "List",
+    inActive: true,
+  },
+];
 
 export const usersPageBread = [
   {

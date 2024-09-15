@@ -11,6 +11,7 @@ import ProductActions from "@/components/pages/products/ui/ProductActions";
 import AdminActions from "@/components/pages/account/ui/admin/AdminActions";
 import OrdersActions from "@/components/pages/orders/ui/OrdersActions";
 import CommentAction from "@/components/pages/shared/CommentAction";
+import CategoryActions from "@/components/pages/categories/ui/CategoryActions";
 
 export const productsDataSourse = (products) =>
   products.map((product) => ({
@@ -81,6 +82,63 @@ export const productsDataSourse = (products) =>
     ),
     actions: (
       <ProductActions productId={product._id} published={product.published} />
+    ),
+  }));
+
+export const categoryDataSourse = (category) =>
+  category.map((c) => ({
+    key: c._id,
+    name: (
+      <Link
+        href={`/categories/${c._id}`}
+        className="flex items-center gap-2 w-fit"
+      >
+        <div className="w-[100px] h-[100px] flex items-center justify-center">
+          <Image
+            as={NextImage}
+            src={c.image}
+            width={100}
+            height={100}
+            alt="Category"
+            priority
+          />
+        </div>
+
+          <p>{shorterText(c.name, 15)}...</p>
+
+
+      </Link>
+    ),
+    date: moment(c.createdAt).calendar(),
+    status: (
+      <CustomBadge
+        condition={c.published}
+        title={c.published ? "Published" : "Draft"}
+      />
+    ),
+    creator: (
+      <Link
+        href={`/account/admins/${c.createdBy._id}`}
+        className="flex items-center xl:flex-row gap-3"
+      >
+        <div className="w-10 h-10">
+          <Image
+            as={NextImage}
+            src={c.createdBy.image || images.admin}
+            width={200}
+            height={200}
+            style={{ width: "500px", height: "auto" }}
+            alt="admin"
+            className="rounded-full"
+          />
+        </div>
+        <p className="text-p2 font-medium capitalize">
+          {c.createdBy.firstName}
+        </p>
+      </Link>
+    ),
+    actions: (
+      <CategoryActions productId={c._id} published={c.published} />
     ),
   }));
 

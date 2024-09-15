@@ -24,6 +24,7 @@ const categorySchema = new Schema(
       type: Boolean,
       default: false,
     },
+    createdBy: { type: Schema.Types.ObjectId, ref: "AdminSorme" },
     createdAt: {
       type: Date,
       default: () => Date.now(),

@@ -58,6 +58,34 @@ export const productsColumn = [
   },
 ];
 
+export const categoryColumn = [
+  {
+    title: "Name",
+    dataIndex: "name",
+    key: "name",
+  },
+  {
+    title: "Date",
+    dataIndex: "date",
+    key: "date",
+  },
+  {
+    title: "Creator",
+    dataIndex: "creator",
+    key: "creator",
+  },
+  {
+    title: "Status",
+    dataIndex: "status",
+    key: "status",
+  },
+  {
+    title: "Actions",
+    dataIndex: "actions",
+    key: "actions",
+  },
+];
+
 export const adminsColumns = [
   {
     title: "Avatar",
