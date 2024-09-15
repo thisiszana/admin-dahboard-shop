@@ -86,3 +86,26 @@ export const getCategories = async () => {
     };
   }
 };
+
+export const getCategory = async (id) => {
+  try {
+    await connectDB();
+
+    const category = await CategorySorme.findById(id)
+      .populate({
+        path: "createdBy",
+        model: AdminSorme,
+        select: "username firstName image",
+      })
+      .lean();
+
+    return {
+      category,
+      message: MESSAGES.success,
+      status: MESSAGES.success,
+      code: STATUS_CODES.success,
+    };
+  } catch (error) {
+    throw new Error(error);
+  }
+};
