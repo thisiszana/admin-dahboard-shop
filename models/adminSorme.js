@@ -15,6 +15,9 @@ const adminSormeSchema = new Schema(
     productsCreated: [
       { type: Schema.Types.ObjectId, ref: "ProductAdminSorme" },
     ],
+    categoryCreated: [
+      { type: Schema.Types.ObjectId, ref: "CategorySorme" },
+    ],
     blogsCreated: [{ type: Schema.Types.ObjectId, ref: "BlogSorme" }],
     gender: {
       type: String,

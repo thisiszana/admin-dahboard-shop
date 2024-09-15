@@ -58,6 +58,22 @@ export const addProductPageBread = [
   },
 ];
 
+export const addCategoryPageBread = [
+  {
+    title: <Link href="/dashboard">Dashboard</Link>,
+  },
+  {
+    title: <Link href="/categories">Category</Link>,
+  },
+  {
+    title: "Create Category",
+  },
+  {
+    title: "Create",
+    inActive: true,
+  },
+];
+
 export const blogsPageBread = [
   {
     title: <Link href="/dashboard">Dashboard</Link>,

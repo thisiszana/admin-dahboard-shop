@@ -22,7 +22,7 @@ export default function AddProductPage({ data }) {
   });
 
   useEffect(() => {
-    if (data) setForm(data );
+    if (data) setForm(data);
   }, []);
 
   const onChange = (e) => {

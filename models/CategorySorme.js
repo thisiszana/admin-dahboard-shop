@@ -4,7 +4,7 @@ const categorySchema = new Schema(
   {
     name: {
       type: String,
-      required: [true, "Category name is required"],
+      required: true,
       trim: true,
       unique: true,
     },
@@ -20,9 +20,14 @@ const categorySchema = new Schema(
       type: String,
       trim: true,
     },
+    published: {
+      type: Boolean,
+      default: false,
+    },
     createdAt: {
       type: Date,
-      default: Date.now,
+      default: () => Date.now(),
+      immutabale: true,
     },
   },
   { timestamps: true }

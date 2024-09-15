@@ -5,6 +5,7 @@ export const MESSAGES = {
   update: "Updated!",
   delete: "Deleted!",
   productCreated: "Product Created",
+  categoryCreated: "Category Created",
   taskCreated: "Task Created",
   taskUpdated: "Task Updated",
   taskDeleted: "Task Deleted",
