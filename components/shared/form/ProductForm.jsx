@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { Switch } from "antd";
@@ -11,15 +11,33 @@ import CustomTextarea from "./CustomTextarea";
 import DetailedBox from "../layout/DetailedBox";
 import UploadedImage from "./UploadedImage";
 import KeywordsSelection from "./KeywordsSelection";
-import { categories } from "@/constant";
+// import { categories } from "@/constant";
 import toast from "react-hot-toast";
 import { MESSAGES } from "@/utils/message";
 import { uploadImage } from "@/utils/fun";
 import { createProduct, editProduct } from "@/actions/product.action";
+import { getCategories } from "@/actions/category.action";
 
 export default function ProductForm({ type, form, setForm, onChange, id }) {
+  const [categories, setCtategories] = useState([]);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      setLoading(true);
+      let details = [];
+
+      const categoridataData = await getCategories();
+
+      details.push(categoridataData.category);
+
+      setCtategories(details);
+      setLoading(false);
+    };
+
+    fetchComments();
+  }, []);
 
   const basicDetails = (
     <div className="flex flex-col gap-box w-full h-full">
@@ -75,7 +93,7 @@ export default function ProductForm({ type, form, setForm, onChange, id }) {
         label="Category"
         onChange={onChange}
         wrapperClassName="flex flex-1 xl:min-w-[400px] min-w-[200px]"
-        options={categories.map((c) => c.query)}
+        options={categories.map((c) => c)}
       />
       <CustomInp
         type="text"

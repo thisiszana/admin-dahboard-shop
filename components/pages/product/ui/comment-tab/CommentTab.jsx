@@ -15,7 +15,6 @@ const CommentsTab = ({ comments }) => {
   const [commentDetails, setCommentDetails] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // useEffect برای فراخوانی داده‌ها از API
   useEffect(() => {
     const fetchComments = async () => {
       setLoading(true);

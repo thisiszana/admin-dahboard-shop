@@ -11,15 +11,17 @@ export default function AddProductPage({ data }) {
   const [form, setForm] = useState({
     title: "",
     description: "",
-    image: "",
+    image: data?.image || "",
     stock: 0,
     category: "",
     brand: "",
     price: 0,
     discount: 0,
-    keywords: [],
+    keywords: data?.keywords || [],
     published: false,
   });
+
+  console.log(data);
 
   useEffect(() => {
     if (data) setForm(data);

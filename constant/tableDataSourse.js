@@ -108,7 +108,7 @@ export const categoryDataSourse = (category) =>
       >
         <div className="w-[100px] h-[100px] flex items-center justify-center">
           <Image
-            as={NextImage}
+            // as={NextImage}
             src={c.image}
             width={100}
             height={100}

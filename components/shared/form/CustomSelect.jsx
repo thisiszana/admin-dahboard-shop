@@ -17,21 +17,21 @@ export default function CustomSelect({
   };
 
   const onBlur = () => {
-    if (value?.length === 0) {
+    if (!value) {
       setActive(() => false);
     }
   };
 
   useEffect(() => {
-    if (value?.length !== 0) {
+    if (value) {
       setActive(() => true);
     }
-  }, []);
+  }, [value]);
+
   return (
-    <div className={`input-group ${wrapperClassName && wrapperClassName}`}>
+    <div className={`input-group ${wrapperClassName || ""}`}>
       <select
         name={name}
-        // defaultValue=""
         className="input w-full"
         value={value}
         onChange={onChange}
@@ -39,14 +39,18 @@ export default function CustomSelect({
         onBlur={onBlur}
       >
         <option value=""></option>
-        {options.map((option) => (
-          <option key={option} value={option}>
-            {option}
-          </option>
-        ))}
+        {options.map((optionGroup, groupIndex) =>
+          optionGroup.map((op, optionIndex) => (
+            <option key={`${groupIndex}-${optionIndex}`} value={op.name}>
+              {op.name}
+            </option>
+          ))
+        )}
       </select>
       {label && (
-        <label className={`user-label ${active && "active"}`}>{label}</label>
+        <label className={`user-label ${active ? "active" : ""}`}>
+          {label}
+        </label>
       )}
     </div>
   );
