@@ -17,6 +17,11 @@ export default function AddProductPage({ data }) {
     brand: "",
     price: 0,
     discount: 0,
+    returnPolicy: "",
+    warranty: "",
+    colors: [],
+    reviews: [{ rating: 0, review: "" }],
+    specifications: [{ label: "", value: "" }],
     keywords: data?.keywords || [],
     published: false,
   });

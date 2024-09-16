@@ -12,7 +12,7 @@ const productSchema = new Schema({
   brand: { type: String, required: true },
   published: { type: Boolean, default: false },
   createdBy: { type: Schema.Types.ObjectId, ref: "AdminSorme" },
-  comments: [{ type: Schema.Types.ObjectId,  default: [] }],
+  comments: [{ type: Schema.Types.ObjectId, ref: "Comment", default: [] }],
   orders: [
     {
       orderId: {
@@ -22,10 +22,24 @@ const productSchema = new Schema({
       quantity: { type: Number },
     },
   ],
+  specifications: [
+    {
+      label: { type: String },
+      value: { type: String },
+    },
+  ],
+  reviews: [
+    {
+      rating: { type: Number, min: 0, max: 5 },
+      review: { type: String },
+    },
+  ],
+  colors: { type: [String], default: ["#ffffff"] },
+  returnPolicy: { type: String },
   createdAt: {
     type: Date,
     default: () => Date.now(),
-    immutabale: true,
+    immutable: true,
   },
 });
 
