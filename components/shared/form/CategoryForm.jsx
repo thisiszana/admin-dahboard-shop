@@ -13,7 +13,7 @@ import UploadedImage from "./UploadedImage";
 import { MESSAGES } from "@/utils/message";
 import CustomBtn from "../CustomBtn";
 import CustomInp from "./CustomInp";
-import { createCategory } from "@/actions/category.action";
+import { createCategory, editCategory } from "@/actions/category.action";
 import { uploadImage } from "@/utils/fun";
 
 export default function CategoryForm({ type, form, setForm, onChange, id }) {
@@ -62,11 +62,11 @@ export default function CategoryForm({ type, form, setForm, onChange, id }) {
     setLoading(() => false);
 
     if (res.code === 200 || res.code === 201 || res.code === 202) {
-        toast.success(res.message);
-        router.push("/categories");
-      } else {
-        toast.error(res.message);
-      }
+      toast.success(res.message);
+      router.push("/categories");
+    } else {
+      toast.error(res.message);
+    }
   };
 
   return (

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import CustomBreadcrumb from "@/components/shared/CustomBreadcrumb";
 import { addCategoryPageBread } from "@/constant/breadcrumpItems";
@@ -14,6 +14,10 @@ export default function AddCategoryPage({ data }) {
     image: "",
     published: false,
   });
+
+  useEffect(() => {
+    if (data) setForm(data);
+  }, []);
 
   const onChange = (e) => {
     const { name, value } = e.target;
