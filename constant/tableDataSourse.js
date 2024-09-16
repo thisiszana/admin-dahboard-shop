@@ -161,7 +161,7 @@ export const adminsDataSourse = (admins, currentUserID, currentUserRoll) =>
           src={admin.image || images.admin}
           width={100}
           height={100}
-          style={{ width: "500px", height: "auto" }}
+          style={{ width: "500px" , height:"48px" }}
           alt="admin"
           radius="full"
         />
@@ -342,14 +342,14 @@ export const ordersListDataSourse = (orders) =>
 
 export const orderCheckoutSummaryDataSourse = (items) =>
   items.map((item) => ({
-    key: item.productId._id,
+    key: item.productId,
     product: (
       <Image
         as={NextImage}
-        src={item.productId.image}
+        src={item.image}
         width={50}
         height={50}
-        alt={shorterText(item.productId.title, 20)}
+        alt={shorterText(item.title, 20)}
       />
     ),
     qty: item.quantity,

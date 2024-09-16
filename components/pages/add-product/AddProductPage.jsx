@@ -21,8 +21,6 @@ export default function AddProductPage({ data }) {
     published: false,
   });
 
-  console.log(data);
-
   useEffect(() => {
     if (data) setForm(data);
   }, []);

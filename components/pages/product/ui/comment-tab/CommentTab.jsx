@@ -38,8 +38,6 @@ const CommentsTab = ({ comments }) => {
     </main>; 
   }
 
-  console.log(commentDetails)
-
   if (commentDetails.length === 0) {
     return <Empty description="No Comments" />;
   }

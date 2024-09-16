@@ -4,19 +4,19 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { Switch } from "antd";
+
 import CustomBtn from "../CustomBtn";
 import CustomInp from "./CustomInp";
-import CustomSelect from "./CustomSelect";
 import CustomTextarea from "./CustomTextarea";
 import DetailedBox from "../layout/DetailedBox";
 import UploadedImage from "./UploadedImage";
 import KeywordsSelection from "./KeywordsSelection";
-// import { categories } from "@/constant";
 import toast from "react-hot-toast";
 import { MESSAGES } from "@/utils/message";
 import { uploadImage } from "@/utils/fun";
 import { createProduct, editProduct } from "@/actions/product.action";
 import { getCategories } from "@/actions/category.action";
+import CustomSelectCategory from "./CustomSelectCategory";
 
 export default function ProductForm({ type, form, setForm, onChange, id }) {
   const [categories, setCtategories] = useState([]);
@@ -87,7 +87,7 @@ export default function ProductForm({ type, form, setForm, onChange, id }) {
         min={0}
         wrapperClassName="flex flex-1 xl:min-w-[400px] min-w-[200px]"
       />
-      <CustomSelect
+      <CustomSelectCategory
         name="category"
         value={form.category}
         label="Category"

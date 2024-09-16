@@ -4,6 +4,7 @@ import { orderCheckoutSummaryDataSourse } from "@/constant/tableDataSourse";
 import { Table } from "antd";
 
 export default function CheckoutTable({ items, summary }) {
+  console.log("sumary checkout", items)
   return (
     <div className="w-full space-y-5">
       <div className="w-full tableContainer">

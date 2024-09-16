@@ -1,5 +1,6 @@
 "use server";
 
+import { ProductAdminSorme } from "@/models/productAdminSorme";
 import connectDB from "@/utils/connectDB";
 import { MESSAGES, STATUS_CODES } from "@/utils/message";
 import { getServerSession } from "@/utils/session";
@@ -17,9 +18,20 @@ export const getOrder = async (id) => {
     }
 
     const data = response.data;
+    let order = data.order;
+
+    for (const item of order.items) {
+      const product = await ProductAdminSorme.findById(item.productId).select(
+        "title image"
+      );
+      if (product) {
+        item.title = product.title;
+        item.image = product.image;
+      }
+    }
 
     return {
-      order: data.order,
+      order: order,
       message: MESSAGES.success,
       status: MESSAGES.success,
       code: STATUS_CODES.success,
@@ -68,7 +80,7 @@ export const updateOrderStatus = async (order) => {
       status: newStatus,
     });
 
-    revalidatePath("/orders")
+    revalidatePath("/orders");
 
     return {
       message: MESSAGES.success,
