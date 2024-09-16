@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { Tooltip } from "antd";
 
-import { EyeOpen, LeftAngle } from "@/components/icons/Icon";
+import { Edit, EyeOpen, LeftAngle } from "@/components/icons/Icon";
 import CustomLink from "@/components/shared/CustomLink";
 import CustomBtn from "@/components/shared/CustomBtn";
 
