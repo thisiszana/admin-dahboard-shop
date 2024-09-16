@@ -85,6 +85,19 @@ export const productsDataSourse = (products) =>
     ),
   }));
 
+export const productOrdersTabDataSourse = (productOrders) =>
+  productOrders.map((order) => ({
+    key: order._id,
+    orderId: (
+      <Link href={`/orders/${order.orderId}`}>
+        {shorterText(order.orderId, 10)}
+      </Link>
+    ),
+    qty: order.quantity.toLocaleString(),
+    discount: order.discount > 0 ? `%${order.discount}` : "_",
+    cost: `$${order.cost.toLocaleString()}`,
+  }));
+
 export const categoryDataSourse = (category) =>
   category.map((c) => ({
     key: c._id,
@@ -104,9 +117,7 @@ export const categoryDataSourse = (category) =>
           />
         </div>
 
-          <p>{shorterText(c.name, 15)}...</p>
-
-
+        <p>{shorterText(c.name, 15)}...</p>
       </Link>
     ),
     date: moment(c.createdAt).calendar(),
@@ -137,9 +148,7 @@ export const categoryDataSourse = (category) =>
         </p>
       </Link>
     ),
-    actions: (
-      <CategoryActions categoryId={c._id} published={c.published} />
-    ),
+    actions: <CategoryActions categoryId={c._id} published={c.published} />,
   }));
 
 export const adminsDataSourse = (admins, currentUserID, currentUserRoll) =>

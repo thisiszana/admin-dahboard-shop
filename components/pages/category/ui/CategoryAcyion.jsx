@@ -6,7 +6,7 @@ import { EyeOpen, LeftAngle } from "@/components/icons/Icon";
 import CustomLink from "@/components/shared/CustomLink";
 import CustomBtn from "@/components/shared/CustomBtn";
 
-export default function CategoryAcyion() {
+export default function CategoryAcyion({id}) {
   return (
     <div className="w-full flex justify-between items-center gap-3">
       <CustomLink

@@ -46,6 +46,16 @@ export const getComments = async () => {
     });
 };
 
+export const getComment = async (id) => {
+  return api
+    .get(`/api/comments/${id}`)
+    .then((res) => res.data)
+    .catch((error) => {
+      console.error("Error fetching comment data:", error);
+      return null;
+    });
+};
+
 export const commentAction = async ({ id, productId, action, value = "" }) => {
   try {
     const response = await api.post(`/api/comments/${id}`, {

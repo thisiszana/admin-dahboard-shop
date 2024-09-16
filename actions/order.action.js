@@ -17,7 +17,6 @@ export const getOrder = async (id) => {
     }
 
     const data = response.data;
-    console.log("data order by id", data);
 
     return {
       order: data.order,
