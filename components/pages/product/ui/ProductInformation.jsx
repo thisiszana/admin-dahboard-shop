@@ -27,9 +27,9 @@ export default function ProductInformation({ info }) {
             className="rounded-box"
           />
         </div>
-        <div className="grid grid-cols-4 gap-2">
+        <div className="flex flex-wrap justify-center gap-2">
           {info.image.slice(1, 5).map((img, index) => (
-            <div key={index} className="w-[100px] h-[100px] gap-x-3 border-1">
+            <div key={index} className="w-[100px] h-[100px] rounded-box gap-x-3 border-1">
               <Image
                 as={NextImage}
                 src={img}
@@ -134,8 +134,8 @@ export default function ProductInformation({ info }) {
             {info.specifications.map((spec) => (
               <div key={spec._id}>
                 <div className="bg-gray-200 py-2 px-3 rounded-lg">
-                  <p className="text-p1 text-xs font-bold">{spec.label}</p>
-                  <p className="text-p1 text-xs my-2">{spec.value}</p>
+                  <p className="text-p1 text-xs font-bold capitalize">{spec.label}</p>
+                  <p className="text-p1 text-xs my-2 capitalize">{spec.value}</p>
                 </div>
               </div>
             ))}

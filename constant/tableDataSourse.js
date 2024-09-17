@@ -51,7 +51,7 @@ export const productsDataSourse = (products) =>
     discount: product.discount || "_",
     orders: (product.orders && product.orders.length) || "_",
     comments: (product.comments && product.comments.length) || "_",
-    // likes: (product.likes && product.likes.length) || "_",
+    likes: (product.likes && product.likes.length) || "_",
     date: moment(product.createdAt).calendar(),
     status: (
       <CustomBadge

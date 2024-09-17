@@ -97,7 +97,7 @@ export default function ProductForm({ type, form, setForm, onChange, id }) {
       <CustomInp
         type="text"
         name={`spec-label-${index}`}
-        label="Specification Label *"
+        label="Label *"
         value={spec.label}
         onChange={(e) =>
           handleSpecificationChange(index, "label", e.target.value)
@@ -107,7 +107,7 @@ export default function ProductForm({ type, form, setForm, onChange, id }) {
       <CustomInp
         type="text"
         name={`spec-value-${index}`}
-        label="Specification Value *"
+        label="Value *"
         value={spec.value}
         onChange={(e) =>
           handleSpecificationChange(index, "value", e.target.value)
