@@ -86,6 +86,12 @@ export default function ProductForm({ type, form, setForm, onChange, id }) {
     });
   };
 
+  const handleRemoveColor = (colorToRemove) => {
+    const updatedColors = colors.filter((color) => color !== colorToRemove);
+    setColors(updatedColors);
+    setForm({ ...form, colors: updatedColors });
+  };
+
   const specificationFields = specifications.map((spec, index) => (
     <div key={index} className="flex gap-4 items-center">
       <CustomInp
@@ -307,38 +313,43 @@ export default function ProductForm({ type, form, setForm, onChange, id }) {
         title="Specifications"
         subtitle="Add or remove specifications"
         content={
-          <>
-            <div className="flex flex-col md:flex-row justify-between items-center gap-20">
-              <div className="flex flex-col gap-4">
-                {specificationFields}
-                <CustomBtn
-                  classNames={`bg-dark1 text-white px-4 py-2 rounded ${
-                    !canAddSpecification ? "opacity-50 cursor-not-allowed" : ""
-                  }`}
-                  type="button"
-                  onClick={handleAddSpecification}
-                  title="Add"
-                  disabled={!canAddSpecification}
-                />
-              </div>
-              <div className="flex flex-col items-center">
-                <HexColorPicker
-                  color={tempColor}
-                  onChange={handleColorChange}
-                  onMouseUp={handleColorSelect}
-                />
-                <div className="mt-2 flex flex-wrap gap-2 w-[200px]">
-                  {colors.map((color, index) => (
-                    <div
-                      key={index}
-                      style={{ backgroundColor: color }}
-                      className="w-8 h-8 rounded-full border"
-                    ></div>
-                  ))}
-                </div>
+          <div className="flex flex-col xl:flex-row justify-between items-center gap-8 lg:gap-20">
+            <div className="flex flex-col gap-4 w-full">
+              {specificationFields}
+              <CustomBtn
+                classNames={`bg-dark1 text-white px-4 py-2 rounded ${
+                  !canAddSpecification ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+                type="button"
+                onClick={handleAddSpecification}
+                title="Add"
+                disabled={!canAddSpecification}
+              />
+            </div>
+            <div className="flex flex-col items-center w-full lg:w-1/2 mt-6 lg:mt-0">
+              <HexColorPicker
+                color={tempColor}
+                onChange={handleColorChange}
+                onMouseUp={handleColorSelect}
+              />
+              <div className="mt-2 flex flex-wrap gap-2 justify-center w-full lg:w-[200px]">
+                {colors.map((color, index) => (
+                  <div
+                    key={index}
+                    className="relative w-8 h-8 rounded-full border"
+                    style={{ backgroundColor: color }}
+                  >
+                    <button
+                      className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs"
+                      onClick={() => handleRemoveColor(color)}
+                    >
+                      X
+                    </button>
+                  </div>
+                ))}
               </div>
             </div>
-          </>
+          </div>
         }
       />
 

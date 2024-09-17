@@ -134,7 +134,7 @@ export default function ProductInformation({ info }) {
             {info.specifications.map((spec) => (
               <div key={spec._id}>
                 <div className="bg-gray-200 py-2 px-3 rounded-lg">
-                  <p className="text-p1 text-[12px] font-bold">{spec.label}</p>
+                  <p className="text-p1 text-xs font-bold">{spec.label}</p>
                   <p className="text-p1 text-xs my-2">{spec.value}</p>
                 </div>
               </div>
