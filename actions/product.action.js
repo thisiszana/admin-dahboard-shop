@@ -33,12 +33,17 @@ export const createProduct = async (data) => {
       title,
       description,
       image,
-      price,
       stock,
-      discount,
       category,
-      keywords,
       brand,
+      price,
+      discount,
+      returnPolicy,
+      warranty,
+      colors,
+      reviews,
+      specifications,
+      keywords,
       published,
     } = data;
 
@@ -46,12 +51,17 @@ export const createProduct = async (data) => {
       title,
       description,
       image,
-      price,
       stock,
-      discount,
       category,
-      keywords,
       brand,
+      price,
+      discount,
+      returnPolicy,
+      warranty,
+      colors,
+      reviews,
+      specifications,
+      keywords,
       published,
       createdBy: session.userId,
     });
@@ -67,6 +77,7 @@ export const createProduct = async (data) => {
       code: STATUS_CODES.success,
     };
   } catch (error) {
+    console.log("error in create product action", error.message)
     return {
       message: MESSAGES.server,
       status: MESSAGES.failed,
@@ -78,7 +89,7 @@ export const createProduct = async (data) => {
 export const getProducts = async (searchParams) => {
   try {
     await connectDB();
-    
+
     const session = getServerSession();
 
     if (!session)

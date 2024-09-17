@@ -233,6 +233,16 @@ export default function ProductForm({ type, form, setForm, onChange, id }) {
     </div>
   );
 
+  const uploadImages = async (images) => {
+    const uploadedImages = await Promise.all(
+      images.map(async (image) => {
+        const uploadResult = await uploadImage(image);
+        return uploadResult.imageUrl;
+      })
+    );
+    return uploadedImages;
+  };
+
   const handleSubmit = async () => {
     if (
       !form.title ||
@@ -248,27 +258,29 @@ export default function ProductForm({ type, form, setForm, onChange, id }) {
     }
 
     setLoading(true);
-    const uploadResult = await uploadImage(form.image[0]);
+
+    const uploadedImages = await uploadImages(form.image);
+
     const payload = {
       ...form,
-      image: uploadResult.imageUrl,
+      image: uploadedImages,
     };
 
-    // let res;
-    // if (type === "CREATE") {
-    //   res = await createProduct(payload);
-    // } else {
-    //   res = await editProduct({ ...payload, id });
-    // }
+    let res;
+    if (type === "CREATE") {
+      res = await createProduct(payload);
+    } else {
+      res = await editProduct({ ...payload, id });
+    }
 
     setLoading(false);
 
-    // if (res.code === 200 || res.code === 201 || res.code === 202) {
-    //   toast.success(res.message);
-    //   router.push("/products");
-    // } else {
-    //   toast.error(res.message);
-    // }
+    if (res.code === 200 || res.code === 201 || res.code === 202) {
+      toast.success(res.message);
+      router.push("/products");
+    } else {
+      toast.error(res.message);
+    }
   };
 
   const keywordSelection = (
@@ -277,7 +289,7 @@ export default function ProductForm({ type, form, setForm, onChange, id }) {
     </div>
   );
 
-  console.log("form", form);
+  // console.log("form", form);
 
   return (
     <div className="space-y-8">

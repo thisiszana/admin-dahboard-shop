@@ -11,7 +11,7 @@ export default function AddProductPage({ data }) {
   const [form, setForm] = useState({
     title: "",
     description: "",
-    image: data?.image || "",
+    image:  [],
     stock: 0,
     category: "",
     brand: "",
