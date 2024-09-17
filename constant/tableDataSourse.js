@@ -24,7 +24,7 @@ export const productsDataSourse = (products) =>
         <div className="w-[100px] h-[100px] flex items-center justify-center">
           <Image
             as={NextImage}
-            src={product.image}
+            src={product.image[0]}
             width={100}
             height={100}
             alt="product"

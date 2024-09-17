@@ -66,6 +66,8 @@ import {
   Brand,
 } from "@/components/icons/Icon";
 
+import { IoIosColorPalette } from "react-icons/io";
+
 export const icons = {
   home: <Home />,
   deliveryTruck: <Truck />,
@@ -128,6 +130,7 @@ export const icons = {
   gaming: <Gaming />,
   printer: <Printer />,
   television: <Television />,
+  color: <IoIosColorPalette />,
 };
 
 export const images = {
