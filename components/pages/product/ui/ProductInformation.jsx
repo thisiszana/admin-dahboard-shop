@@ -17,7 +17,7 @@ export default function ProductInformation({ info }) {
   return (
     <div className="flex flex-col xl:flex-row gap-box">
       <div className="w-full xl:w-[50%] h-fit flex flex-col items-center box border">
-        <div className="w-[500px] h-[500px] flex justify-center mb-4">
+        <div className="w-full xl:w-[50%] flex justify-center mb-4">
           <Image
             as={NextImage}
             src={info.image[0]}
