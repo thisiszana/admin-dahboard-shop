@@ -11,7 +11,7 @@ export default function AddProductPage({ data }) {
   const [form, setForm] = useState({
     title: "",
     description: "",
-    image:  [],
+    image: [],
     stock: 0,
     category: "",
     brand: "",
@@ -19,9 +19,9 @@ export default function AddProductPage({ data }) {
     discount: 0,
     returnPolicy: "",
     warranty: "",
-    colors: [],
+    colors: [] || data?.colors,
     reviews: [{ rating: 0, review: "" }],
-    specifications: [{ label: "", value: "" }],
+    specifications: [{ label: "", value: "" }] || data?.specifications,
     keywords: data?.keywords || [],
     published: false,
   });
