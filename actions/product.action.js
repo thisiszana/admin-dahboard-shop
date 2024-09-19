@@ -52,7 +52,7 @@ export const createProduct = async (data) => {
       description,
       image,
       stock,
-      category,
+      category: category.toLowerCase(),
       brand,
       price,
       discount,
@@ -77,7 +77,7 @@ export const createProduct = async (data) => {
       code: STATUS_CODES.success,
     };
   } catch (error) {
-    console.log("error in create product action", error.message)
+    console.log("error in create product action", error.message);
     return {
       message: MESSAGES.server,
       status: MESSAGES.failed,
@@ -129,6 +129,9 @@ export const getProducts = async (searchParams) => {
     if (category) {
       filters.category = category;
     }
+
+    console.log("category server", category);
+    console.log("filters.category server", filters.category);
 
     if (published) {
       published === "true"

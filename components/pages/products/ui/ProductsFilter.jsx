@@ -11,11 +11,12 @@ import CustomInp from "@/components/shared/form/CustomInp";
 import useSetSearchParams from "@/hooks/setSearchQuery";
 import { Select, SelectItem } from "@nextui-org/react";
 import CustomBtn from "@/components/shared/CustomBtn";
-import { categories } from "@/constant";
+import { getCategories } from "@/actions/category.action";
 
 const ProductsFilter = () => {
   const router = useRouter();
   const { searchParams, setSearchParams, params } = useSetSearchParams();
+  const [categories, setCtategories] = useState([]);
   const [filters, setFilters] = useState([]);
 
   const handleSearchQuery = useDebouncedCallback((query) => {
@@ -40,6 +41,18 @@ const ProductsFilter = () => {
     );
   }, [searchParams]);
 
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const categoridataData = await getCategories();
+      if (categoridataData || categoridataData.category)
+        setCtategories(categoridataData.category);
+    };
+
+    fetchCategories();
+  }, []);
+
+  console.log("cateogory1", categories);
+
   const clearFilters = () => {
     router.replace("/products");
     router.refresh("/products");
@@ -52,7 +65,10 @@ const ProductsFilter = () => {
   const selectFilters = [
     {
       label: "Category",
-      items: categories.map((c) => ({ key: c.query, label: c.title })),
+      items: categories.map((c) => ({
+        key: c.name.toLowerCase(),
+        label: c.name,
+      })),
       onChange: (e) => {
         setSearchParams("page", "1");
         setSearchParams("category", e.target.value.toLowerCase());
@@ -92,6 +108,8 @@ const ProductsFilter = () => {
       },
     },
   ];
+
+  console.log("selectFilters", selectFilters);
 
   return (
     <div className="p-4 w-full">
