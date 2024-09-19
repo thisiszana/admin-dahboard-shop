@@ -22,7 +22,6 @@ export default function RegisterPage() {
     lastName: "",
     username: "",
     password: "",
-    image: "",
     gender: "",
   });
 
@@ -101,7 +100,6 @@ export default function RegisterPage() {
               onChange={changeHandler}
             />
             <RadioList form={form} setForm={setForm} />
-            <UploadedImage form={form} setForm={setForm} />
             <CustomBtn
               type="submit"
               title={"Register"}

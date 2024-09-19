@@ -14,7 +14,7 @@ export const createAdmin = async (data) => {
   try {
     await connectDB();
 
-    const { firstName, lastName, username, password, image, gender } = data;
+    const { firstName, lastName, username, password, gender } = data;
 
     if (!firstName || !username || !password)
       return {
@@ -38,7 +38,6 @@ export const createAdmin = async (data) => {
       lastName,
       username,
       password: hashPassword,
-      image,
       gender: gender || "etc",
     });
 
