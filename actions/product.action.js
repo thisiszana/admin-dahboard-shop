@@ -130,9 +130,6 @@ export const getProducts = async (searchParams) => {
       filters.category = category;
     }
 
-    console.log("category server", category);
-    console.log("filters.category server", filters.category);
-
     if (published) {
       published === "true"
         ? (filters.published = true)

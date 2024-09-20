@@ -51,8 +51,6 @@ const ProductsFilter = () => {
     fetchCategories();
   }, []);
 
-  console.log("cateogory1", categories);
-
   const clearFilters = () => {
     router.replace("/products");
     router.refresh("/products");
@@ -108,8 +106,6 @@ const ProductsFilter = () => {
       },
     },
   ];
-
-  console.log("selectFilters", selectFilters);
 
   return (
     <div className="p-4 w-full">

@@ -11,9 +11,7 @@ export default async function ProductsOverview({ searchParams }) {
   }
   return (
     <>
-      <ProductsList
-        products={JSON.parse(JSON.stringify(data.products))}
-      />
+      <ProductsList products={JSON.parse(JSON.stringify(data.products))} />
       <ProductsPagination
         totalProducts={data.totalProducts}
         totalProductsWithoutFilter={data.totalProductsWithoutFilter}

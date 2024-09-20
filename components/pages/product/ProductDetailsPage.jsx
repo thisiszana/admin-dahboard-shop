@@ -10,5 +10,5 @@ export default async function ProductDetailsPage({ id }) {
     notFound();
   }
 
-  return <Product product={data.product} />;
+  return <Product product={JSON.parse(JSON.stringify(data.product))} />;
 }
