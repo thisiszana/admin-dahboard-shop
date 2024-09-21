@@ -158,7 +158,7 @@ export const editCategory = async (data) => {
 
     const { name, description, image, published, id } = data;
 
-    if (!title || !description || !id)
+    if (!name || !description || !id)
       return {
         message: MESSAGES.fields,
         status: MESSAGES.update,
@@ -212,6 +212,8 @@ export const editCategory = async (data) => {
       code: STATUS_CODES.updated,
     };
   } catch (error) {
+
+    console.log("categories edit error", error.message)
     return {
       message: MESSAGES.server,
       status: MESSAGES.failed,
