@@ -103,7 +103,7 @@ export default function LoginPage() {
                 <div className="space-y-2">
                   <p>
                     Owner usernmae : <span className="font-bold">Zana80</span> /
-                    password : <span className="font-bold">demo1234</span>
+                    password : <span className="font-bold">zana12345</span>
                   </p>
                 </div>
               }
