@@ -59,6 +59,7 @@ export default function ProductInformation({ info }) {
             "--zoom-y": zoomStyle.zoomY,
             "--display": zoomStyle.display,
             "--url": `url(${imgUrl})`,
+            cursor: "zoom-in",
           }}
         >
           <Image
@@ -83,7 +84,6 @@ export default function ProductInformation({ info }) {
               left: 0,
               top: 0,
               zIndex: 10,
-              cursor:pointer,
             }}
           ></div>
         </div>
