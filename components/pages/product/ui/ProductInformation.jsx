@@ -3,6 +3,8 @@
 import NextImage from "next/image";
 import Link from "next/link";
 
+import { useEffect, useState } from "react";
+
 import { Image } from "@nextui-org/react";
 import moment from "moment";
 
@@ -12,30 +14,93 @@ import { Clock } from "@/components/icons/Icon";
 import Avatars from "./Avatars";
 
 export default function ProductInformation({ info }) {
-  console.log(info)
+  const [imgUrl, setImgUrl] = useState("");
+  const [zoomStyle, setZoomStyle] = useState({
+    display: "none",
+    zoomX: "0%",
+    zoomY: "0%",
+  });
+
+  useEffect(() => {
+    if (info) setImgUrl(info?.image[0]);
+  }, [info]);
+
+  const handleMouseMove = (e) => {
+    const imageZoom = e.currentTarget;
+    const pointer = {
+      x: (e.nativeEvent.offsetX * 100) / imageZoom.offsetWidth,
+      y: (e.nativeEvent.offsetY * 100) / imageZoom.offsetHeight,
+    };
+
+    setZoomStyle({
+      display: "block",
+      zoomX: `${pointer.x}%`,
+      zoomY: `${pointer.y}%`,
+    });
+  };
+
+  const handleMouseOut = () => {
+    setZoomStyle({
+      display: "none",
+      zoomX: "0%",
+      zoomY: "0%",
+    });
+  };
+
   return (
     <div className="flex flex-col xl:flex-row gap-box">
       <div className="w-full xl:w-[50%] h-fit flex flex-col items-center box border">
-        <div className="w-full xl:w-[50%] flex justify-center mb-4">
+        <div
+          className="w-full xl:w-[50%] flex justify-center mb-4 relative"
+          onMouseMove={handleMouseMove}
+          onMouseOut={handleMouseOut}
+          style={{
+            "--zoom-x": zoomStyle.zoomX,
+            "--zoom-y": zoomStyle.zoomY,
+            "--display": zoomStyle.display,
+            "--url": `url(${imgUrl})`,
+          }}
+        >
           <Image
             as={NextImage}
-            src={info.image[0]}
+            src={imgUrl}
             width={500}
             height={500}
             alt={info?.title}
             className="rounded-box"
           />
+          <div
+            style={{
+              display: zoomStyle.display === "block" ? "block" : "none",
+              content: '""',
+              width: "100%",
+              height: "100%",
+              backgroundColor: "black",
+              backgroundImage: `url(${imgUrl})`,
+              backgroundSize: "200%",
+              backgroundPosition: `${zoomStyle.zoomX} ${zoomStyle.zoomY}`,
+              position: "absolute",
+              left: 0,
+              top: 0,
+              zIndex: 10,
+              cursor:pointer,
+            }}
+          ></div>
         </div>
         <div className="flex flex-wrap justify-center gap-2">
-          {info.image.slice(1, 5).map((img, index) => (
-            <div key={index} className="w-[100px] h-[100px] rounded-box gap-x-3 border-1">
+          {info.image.map((img, index) => (
+            <div
+              key={index}
+              className="w-[100px] h-[100px] rounded-box gap-x-3 border-1"
+            >
               <Image
                 as={NextImage}
                 src={img}
                 width={100}
                 height={100}
                 alt={`Thumbnail ${index + 1}`}
-                className="rounded-box object-cover"
+                className="rounded-box object-cover cursor-pointer"
+                onClick={() => setImgUrl(img)}
               />
             </div>
           ))}
@@ -117,7 +182,7 @@ export default function ProductInformation({ info }) {
             <span className="cardShadow rounded-lg p-3">{icons.color}</span>
             <p className="text-p1 text-darkGray">Colors :</p>
           </div>
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-2 items-center p-[8px] rounded-full border-1 border-black">
             {info.colors.map((color, index) => (
               <div
                 key={index}
@@ -133,8 +198,12 @@ export default function ProductInformation({ info }) {
             {info.specifications.map((spec) => (
               <div key={spec._id}>
                 <div className="bg-gray-200 py-2 px-3 rounded-lg">
-                  <p className="text-p1 text-xs font-bold capitalize">{spec.label}</p>
-                  <p className="text-p1 text-xs my-2 capitalize">{spec.value}</p>
+                  <p className="text-p1 text-xs font-bold capitalize">
+                    {spec.label}
+                  </p>
+                  <p className="text-p1 text-xs my-2 capitalize">
+                    {spec.value}
+                  </p>
                 </div>
               </div>
             ))}
